@@ -1,0 +1,58 @@
+{
+  "RETURN-001": {
+    "policy_id": "RETURN-001",
+    "category": "Returns",
+    "title": "Standard Return Window",
+    "rule": "Most electronics, fashion and home goods are eligible for return within 7 days of delivery. Item must be unused, in original packaging, and accompanied by the invoice.",
+    "applies_to": ["Laptop", "Phone", "Headphones", "Accessory"],
+    "exceptions": ["Innerwear", "Personal Hygiene", "Perishables"]
+  },
+  "RETURN-002": {
+    "policy_id": "RETURN-002",
+    "category": "Returns",
+    "title": "Damaged on Arrival",
+    "rule": "If an item is delivered damaged, customers must report within 48 hours with photo evidence. Eligible for free replacement or full refund regardless of standard return window.",
+    "applies_to": ["All Categories"],
+    "exceptions": []
+  },
+  "REFUND-001": {
+    "policy_id": "REFUND-001",
+    "category": "Refunds",
+    "title": "Refund Timeline",
+    "rule": "Refunds are processed within 5-7 business days after the returned item passes quality check at our warehouse. UPI and wallet refunds typically settle in 1-2 days; card/net-banking refunds in 5-7 days.",
+    "applies_to": ["All Payment Methods"],
+    "exceptions": []
+  },
+  "WARRANTY-001": {
+    "policy_id": "WARRANTY-001",
+    "category": "Warranty",
+    "title": "Manufacturer Warranty",
+    "rule": "All electronics carry the manufacturer warranty as listed on the product page. ShopEase facilitates warranty claims but service is provided by the brand's authorized service center.",
+    "applies_to": ["Laptop", "Phone", "Headphones"],
+    "exceptions": []
+  },
+  "DELIVERY-001": {
+    "policy_id": "DELIVERY-001",
+    "category": "Delivery",
+    "title": "Lost Shipment",
+    "rule": "If a shipment shows no tracking updates for 7+ days or is marked lost by the carrier, ShopEase will initiate a free replacement or full refund after internal verification. High-value items (above INR 50,000) are flagged for senior review.",
+    "applies_to": ["All Categories"],
+    "exceptions": []
+  },
+  "COUPON-001": {
+    "policy_id": "COUPON-001",
+    "category": "Coupons",
+    "title": "Coupon Application Rules",
+    "rule": "Coupons are applied only if the cart meets the minimum order value and category restrictions stated on the offer. Coupons cannot be combined unless explicitly marked as stackable.",
+    "applies_to": ["All Categories"],
+    "exceptions": []
+  },
+  "COUPON-FESTIVE10": {
+    "policy_id": "COUPON-FESTIVE10",
+    "category": "Coupons",
+    "title": "FESTIVE10 Specifics",
+    "rule": "FESTIVE10 gives 10% off (max INR 1500 discount) on orders above INR 30,000. Not valid on Apple, gift cards or grocery items.",
+    "applies_to": ["Electronics", "Fashion", "Home"],
+    "exceptions": ["Apple", "Gift Cards", "Grocery"]
+  }
+}
