@@ -176,40 +176,64 @@ sequenceDiagram
 | Testing | pytest |
 | Version Control | Git + GitHub |
 
-## Project Structure
+## What is Where — Project Map
+
+| File / Folder | What It Does | Owner |
+|---------------|-------------|-------|
+| **`src/orchestrator/graph.py`** | The main LangGraph workflow — connects all agents into a pipeline | Person 1 |
+| **`src/orchestrator/state.py`** | Shared state schema (TypedDict) that flows between all agents | Person 1 |
+| **`src/orchestrator/router.py`** | Routing logic — decides which agents to call based on intent | Person 1 |
+| **`src/orchestrator/evaluator.py`** | Quality gate — checks confidence and completeness before responding | Person 1 |
+| **`src/agents/intent_classifier.py`** | Classifies customer intent, sentiment, urgency using OpenAI | Person 1 |
+| **`src/agents/response_generator.py`** | Generates grounded, policy-cited customer responses | Person 1 + 4 |
+| **`src/agents/order_context.py`** | Retrieves order/payment/shipment data for the customer | Person 3 |
+| **`src/agents/policy_retrieval.py`** | Searches policy KB and returns relevant rules with citations | Person 2 |
+| **`src/agents/product_advisory.py`** | Compares products, suggests alternatives, checks stock | Person 4 |
+| **`src/agents/workflow_automation.py`** | Executes actions: return, refund check, ticket creation | Person 3 |
+| **`src/agents/escalation_risk.py`** | Risk scoring and escalation routing to human teams | Person 5 |
+| **`src/utils/`** | Helper functions: logging, validation, formatting, retry, metrics | Shared |
+| **`src/config.py`** | API keys, model config, confidence thresholds | Person 1 |
+| **`src/main.py`** | Demo runner — runs sample conversations through the full pipeline | Person 1 |
+| **`src/knowledge/`** | Policy documents, product catalog, FAQs (knowledge base) | Person 2 |
+| **`src/integrations/mock_apis/`** | Mock backend APIs (orders, payments, logistics, CRM) | Person 3 |
+| **`src/ui/customer_chat/`** | Customer-facing chat interface (Streamlit) | Person 4 |
+| **`src/ui/agent_console/`** | Internal agent-assist dashboard | Person 4 |
+| **`src/governance/`** | Audit logs, access control, human approval gates | Person 5 |
+| **`data/mock/`** | Sample orders, customers, and demo conversations | Person 3 |
+| **`tests/`** | Evaluation suite, test cases, metrics | Person 5 |
+| **`docs/architecture.md`** | Full system architecture with agent contracts and state schema | Person 1 |
+| **`docs/team_guides/`** | Detailed step-by-step guides for each team member | Person 1 |
+| **`CONTRIBUTING.md`** | How to clone, setup, and start contributing | Person 1 |
+
+## How It All Connects
 
 ```
-├── README.md
-├── docs/
-│   └── architecture.md
-├── src/
-│   ├── agents/
-│   │   ├── intent_classifier.py
-│   │   ├── order_context.py
-│   │   ├── policy_retrieval.py
-│   │   ├── product_advisory.py
-│   │   ├── workflow_automation.py
-│   │   ├── escalation_risk.py
-│   │   └── response_generation.py
-│   ├── orchestrator/
-│   │   ├── router.py
-│   │   └── state.py
-│   ├── knowledge/
-│   │   ├── policies/
-│   │   ├── products/
-│   │   └── faqs/
-│   ├── integrations/
-│   │   └── mock_apis/
-│   ├── ui/
-│   │   ├── customer_chat/
-│   │   └── agent_console/
-│   └── governance/
-│       └── audit.py
-├── tests/
-├── data/
-│   └── mock/
-├── requirements.txt
-└── .gitignore
+Customer sends message
+       │
+       ▼
+ Intent Classifier ──→ "What do they want? How do they feel?"
+       │
+       ▼
+ Router decides ──→ "Which agents do I need for this intent?"
+       │
+  ┌────┼────┬────────────┐
+  ▼    ▼    ▼            ▼
+Order Policy Product  Workflow    ← teammates build these
+  │    │    │            │
+  └────┼────┴────────────┘
+       │
+       ▼
+ Evaluator ──→ "Do we have enough info? Is quality OK?"
+       │
+       ▼
+ Risk Check ──→ "Safe to answer? Or escalate to human?"
+       │
+  ┌────┴────┐
+  ▼         ▼
+Response  Escalation
+  │         │
+  ▼         ▼
+Customer gets answer or specialist takes over
 ```
 
 ## Team Roles
@@ -222,16 +246,16 @@ sequenceDiagram
 | Person 4 | Product Advisory + UI/UX Engineer | Customer chat UI, agent console, product advisory agent |
 | Person 5 | Escalation, QA, Evaluation + Presentation Lead | Risk agent, audit logs, testing, metrics, final deck |
 
-## 6-Day Timeline
+## 6-Day Execution Timeline
 
-| day | Theme | Key Output |
-|------|-------|-----------|
-| 1 | Scope + Design | Use cases, architecture, mock data schema |
-| 2 | Data + Agent Skeletons | KB, mock APIs, intent/order/policy agents |
-| 3 | Core Agents | Order, policy, workflow, product, risk agents |
-| 4 | UI + Integration | Customer chat + agent console + audit logs |
-| 5 | Evaluation + Fixes | Test report and refined flows |
-| 6 | Final Packaging | Presentation, demo script, final report |
+| Day | Theme | Key Output | Who Drives |
+|-----|-------|-----------|-----------|
+| Day 1 | Scope + Design | Use cases, architecture, mock data schema, repo setup | Person 1 |
+| Day 2 | Data + Agent Skeletons | KB, mock APIs, intent/order/policy agents running | Person 2 + 3 |
+| Day 3 | Core Agents | All 7 agents with real logic, integrated flows | All |
+| Day 4 | UI + Integration | Customer chat + agent console + audit logs | Person 4 + 5 |
+| Day 5 | Evaluation + Fixes | Test report, metrics, refined flows, bug fixes | Person 5 + All |
+| Day 6 | Final Packaging | Presentation, demo script, final report | Person 5 leads |
 
 ## Getting Started
 
@@ -250,10 +274,21 @@ venv\Scripts\activate       # Windows
 pip install -r requirements.txt
 ```
 
-### Running (coming soon)
+### Running the Demo
 
 ```bash
-python -m src.orchestrator.router
+# Run all 7 demo conversations (works in mock mode, no API key needed)
+set USE_MOCK=true
+python -m src.main
+
+# Run a specific demo scenario (1-7)
+python -m src.main --demo 1    # Order tracking
+python -m src.main --demo 2    # Return request
+python -m src.main --demo 3    # Product comparison
+python -m src.main --demo 4    # Damaged product (escalation)
+python -m src.main --demo 5    # Coupon issue
+python -m src.main --demo 6    # Refund status
+python -m src.main --demo 7    # General FAQ
 ```
 
 ## License
