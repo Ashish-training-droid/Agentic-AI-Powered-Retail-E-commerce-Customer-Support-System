@@ -1,1 +1,0 @@
-"""ShopEase Capstone — modules package."""
