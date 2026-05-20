@@ -291,6 +291,53 @@ python -m src.main --demo 6    # Refund status
 python -m src.main --demo 7    # General FAQ
 ```
 
+## Source Code Reference — File-by-File Guide
+
+### Entry Point
+
+| File | Purpose |
+|------|---------|
+| `src/main.py` | **Demo runner** — loads sample conversations from `data/mock/sample_conversations.json`, feeds each message through the full LangGraph pipeline, and prints step-by-step results (intent, order context, policy, workflow action, quality score, risk assessment, and final response). Supports running all 7 demos or a single one via `--demo N`. |
+
+### Configuration
+
+| File | Purpose |
+|------|---------|
+| `src/config.py` | **Central configuration** — loads environment variables (`OPENAI_API_KEY`, `OPENAI_MODEL`, `USE_MOCK`), defines confidence thresholds for routing/evaluation/response serving, and lists all supported intents, sentiments, urgency levels, and channels used across the system. |
+
+### Orchestration Layer (`src/orchestrator/`)
+
+| File | Purpose |
+|------|---------|
+| `src/orchestrator/state.py` | **Shared state schema** — defines the `AgentState` TypedDict that flows through the entire pipeline. Every field an agent reads or writes is declared here (input fields, intent output, order context, policy snippets, product context, workflow results, risk scores, response text, quality scores, and audit trail). |
+| `src/orchestrator/graph.py` | **LangGraph workflow builder** — constructs and compiles the state graph connecting all agent nodes. Wraps every agent with an `error_safe` decorator so a single agent failure never crashes the pipeline. Defines the clarification node (low confidence) and escalation node (high risk). Wires the full flow: `START → classify_intent → [route] → context agents → evaluate → check_risk → generate_response / escalate → END`. |
+| `src/orchestrator/router.py` | **Routing logic** — the "brain" that decides which agents to invoke after each step. Contains the intent-to-agent routing table, confidence-based routing (clarify if < 0.4, proceed if >= 0.7), missing-data checks (skip order agent if no order ID), and four conditional-edge functions (`route_after_intent`, `route_after_order`, `route_after_policy`, `route_after_risk`). |
+| `src/orchestrator/evaluator.py` | **Quality gate** — runs after context-gathering agents and before response generation. Checks intent confidence, order context availability, policy retrieval completeness, product data presence, agent errors in the audit trail, and workflow action failures. Outputs a composite `quality_score` (0–1) and a list of `quality_issues`. |
+
+### Agent Layer (`src/agents/`)
+
+| File | Purpose |
+|------|---------|
+| `src/agents/intent_classifier.py` | **Intent Classification Agent** — classifies the customer message into one of 9 supported intents (order_tracking, return_request, refund_status, product_inquiry, warranty, coupon_issue, delivery_complaint, damaged_product, general_faq). Also detects sentiment (positive/neutral/negative/angry), urgency (low/medium/high/critical), and outputs a confidence score. Uses OpenAI function calling in live mode and keyword-based mock classification when `USE_MOCK=true`. |
+| `src/agents/order_context.py` | **Order Context Agent** — retrieves unified order, shipment, payment, and CRM history for a customer. Tries to find order by direct order ID, then falls back to customer ID lookup. Returns structured order data (status, items, payment, shipment tracking, return history, CRM notes, customer tier) or an empty context with a clear "not found" signal. Currently uses a mock database. |
+| `src/agents/policy_retrieval.py` | **Policy Retrieval Agent** — searches the policy knowledge base and returns matched policy snippets with reference IDs and confidence scores. Covers return, refund, warranty, coupon, delivery, and damaged-product policies. Currently uses keyword-to-policy lookup (to be replaced with RAG/vector retrieval). |
+| `src/agents/product_advisory.py` | **Product Advisory Agent** — compares products, checks stock availability, and provides recommendations. Matches product keywords from the customer message against a mock product catalog (laptops, headphones) and returns side-by-side comparisons with specs, prices, ratings, and a recommendation summary. |
+| `src/agents/workflow_automation.py` | **Workflow Automation Agent** — executes self-service actions based on intent: initiates returns, checks refund status, generates invoice links, creates support tickets, and updates shipping addresses. Flags sensitive high-value actions for human approval. Currently uses mock action functions. |
+| `src/agents/escalation_risk.py` | **Escalation & Risk Agent** — evaluates risk using rule-based scoring (angry sentiment + high-value order, damaged high-value product, low classification confidence, lost shipment). Assigns a risk score (0–1), determines if escalation is required, and routes to the correct human team (fraud_review, refund_specialist, replacement_team, logistics, senior_agent) with a priority level (P1–P4). |
+| `src/agents/response_generator.py` | **Response Generation Agent** — creates the final customer-facing response using all gathered context. Handles fallback scenarios (missing order data, no policy match, agent errors) with helpful fallback messages. In live mode, uses OpenAI to generate policy-grounded, channel-adapted, brand-aligned responses with cited references. In mock mode, uses template-based responses per intent. |
+
+### Utility Layer (`src/utils/`)
+
+| File | Purpose |
+|------|---------|
+| `src/utils/__init__.py` | **Package exports** — re-exports all utility functions for convenient importing (`from src.utils import get_logger, format_currency`, etc.). |
+| `src/utils/logger.py` | **Structured logging** — provides `get_logger()` to create named loggers with both console and file output (`logs/system.log`), and `log_agent_step()` for standardized agent-level log entries with timestamps. |
+| `src/utils/formatters.py` | **Display formatting** — `format_currency()` for INR/USD amounts, `format_timestamp()` for human-readable dates, `truncate_text()` for length-limited output, `format_agent_chain()` for pipeline visualization, `format_order_summary()` for one-line order summaries, and `mask_sensitive()` for masking card numbers and tokens. |
+| `src/utils/validators.py` | **Input validation** — validates order IDs (`SE10234` format), customer IDs (`CUST_1001` format), intents, sentiments, urgency levels, channels, and confidence scores. Also provides `sanitize_user_input()` to strip dangerous characters and enforce length limits, and `extract_order_id_from_message()` to pull order IDs from free-text messages. |
+| `src/utils/retry.py` | **Retry & error handling** — `retry_with_backoff()` decorator for exponential backoff on API calls, `graceful_fallback()` decorator to catch exceptions and return safe defaults, and `classify_error()` to categorize exceptions (api_error, timeout_error, auth_error, etc.) for metrics and routing. |
+| `src/utils/metrics.py` | **Performance tracking** — `track_latency` decorator to measure agent execution time, `AgentMetrics` / `SessionMetrics` dataclasses for per-agent and per-session stats, `compute_resolution_metrics()` to aggregate batch results (resolution rate, escalation rate, avg confidence, intent distribution), and `get_agent_metrics()` / `reset_metrics()` for runtime inspection. |
+| `src/utils/session.py` | **Session management** — `generate_session_id()` creates unique session IDs, `build_initial_state()` constructs a clean `AgentState` from raw customer input (sanitizes message, extracts order ID, sets defaults), and `append_to_history()` adds timestamped entries to conversation history. |
+
 ## License
 
 This project is developed as a capstone for academic purposes.
