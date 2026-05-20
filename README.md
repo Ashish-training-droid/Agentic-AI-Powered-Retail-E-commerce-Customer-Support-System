@@ -222,9 +222,9 @@ sequenceDiagram
 | Person 4 | Product Advisory + UI/UX Engineer | Customer chat UI, agent console, product advisory agent |
 | Person 5 | Escalation, QA, Evaluation + Presentation Lead | Risk agent, audit logs, testing, metrics, final deck |
 
-## 6-Week Timeline
+## 6-Day Timeline
 
-| Week | Theme | Key Output |
+| day | Theme | Key Output |
 |------|-------|-----------|
 | 1 | Scope + Design | Use cases, architecture, mock data schema |
 | 2 | Data + Agent Skeletons | KB, mock APIs, intent/order/policy agents |
