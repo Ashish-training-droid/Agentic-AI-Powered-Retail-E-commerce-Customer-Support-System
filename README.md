@@ -240,7 +240,7 @@ Customer gets answer or specialist takes over
 
 | Person | Role | Primary Ownership |
 |--------|------|-------------------|
-| Person 1 | Project Lead + Orchestration Architect | Architecture, agent router, state schema, integration |
+| Person 1 | Project Help + Orchestration Architect | Architecture, agent router, state schema, integration |
 | Person 2 | Knowledge Base + Policy Retrieval Engineer | Policy KB, FAQ, product catalog, RAG retrieval |
 | Person 3 | Mock API + Workflow Automation Engineer | Mock APIs, order context agent, workflow automation |
 | Person 4 | Product Advisory + UI/UX Engineer | Customer chat UI, agent console, product advisory agent |
