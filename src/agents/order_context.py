@@ -70,12 +70,32 @@ MOCK_CUSTOMER_ORDERS = {
 }
 
 
+def _try_extract_order_id(state: AgentState) -> str:
+    """Try to get order ID from state or extract from message."""
+    order_id = state.get("order_id", "")
+    if order_id:
+        return order_id
+
+    # Try extracting from message
+    import re
+    message = state.get("message", "")
+    match = re.search(r"SE\d{4,6}", message, re.IGNORECASE)
+    if match:
+        return match.group(0).upper()
+    return ""
+
+
 def fetch_order_context(state: AgentState) -> AgentState:
     """
     LangGraph node: retrieves order context for the customer.
 
     Reads: customer_id, order_id, intent, message
     Writes: order_context, order_id, customer_tier, agents_called, audit_trail
+
+    Handles missing data gracefully:
+    - If order_id not in state, tries to extract from message
+    - If order not found in DB, returns empty context with clear signal
+    - Never crashes — always returns valid state update
 
     TODO(Person 3): Replace mock lookup with calls to:
       - get_order_status(order_id)
@@ -84,19 +104,38 @@ def fetch_order_context(state: AgentState) -> AgentState:
       - get_crm_history(customer_id)
       - get_return_status(order_id)
     """
-    customer_id = state.get("customer_id", "CUST_1001")
-    order_id = state.get("order_id", "")
+    customer_id = state.get("customer_id", "")
+    order_id = _try_extract_order_id(state)
 
-    # Try direct order_id lookup first
+    order_data = {}
+    lookup_method = "none"
+
+    # Strategy 1: Direct order_id lookup
     if order_id and order_id in MOCK_ORDERS:
         order_data = MOCK_ORDERS[order_id]
-    else:
-        # Fall back to customer's most recent order
+        lookup_method = "order_id"
+
+    # Strategy 2: Fall back to customer's most recent order
+    elif customer_id:
         customer_orders = MOCK_CUSTOMER_ORDERS.get(customer_id, [])
         if customer_orders:
             order_data = MOCK_ORDERS.get(customer_orders[0], {})
-        else:
-            order_data = {}
+            lookup_method = "customer_id"
+
+    # Strategy 3: Nothing found — return empty with clear signal
+    if not order_data:
+        return {
+            "order_context": {},
+            "order_id": "",
+            "customer_tier": "regular",
+            "agents_called": ["order_context"],
+            "audit_trail": [{
+                "agent": "order_context",
+                "action": "fetch_order",
+                "timestamp": datetime.now(timezone.utc).isoformat(),
+                "details": f"NOT_FOUND: order_id='{order_id}', customer_id='{customer_id}'",
+            }],
+        }
 
     return {
         "order_context": order_data,
@@ -107,6 +146,6 @@ def fetch_order_context(state: AgentState) -> AgentState:
             "agent": "order_context",
             "action": "fetch_order",
             "timestamp": datetime.now(timezone.utc).isoformat(),
-            "details": f"order_id={order_data.get('order_id', 'none')}, status={order_data.get('status', 'unknown')}",
+            "details": f"found via {lookup_method}: order_id={order_data.get('order_id')}, status={order_data.get('status')}",
         }],
     }

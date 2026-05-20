@@ -81,8 +81,73 @@ def _build_context_prompt(state: AgentState) -> str:
     return "\n".join(parts)
 
 
+def _generate_fallback_response(state: AgentState) -> dict | None:
+    """
+    Generate a helpful fallback response when data is missing.
+    Returns None if no fallback is needed (data is available).
+    """
+    intent = state.get("intent", "")
+    order_ctx = state.get("order_context", {})
+    policy_snippets = state.get("policy_snippets", [])
+    quality_issues = state.get("quality_issues", [])
+
+    # Case 1: Order-related intent but no order data found
+    if intent in ("order_tracking", "return_request", "refund_status", "delivery_complaint", "damaged_product"):
+        if not order_ctx or not order_ctx.get("order_id"):
+            return {
+                "response_text": (
+                    "I'd like to help you with that, but I wasn't able to locate your order. "
+                    "Could you please share your order ID? It starts with 'SE' followed by numbers "
+                    "(e.g., SE10234). You can find it in your order confirmation email or under "
+                    "'My Orders' in your account."
+                ),
+                "confidence": 0.70,
+                "references_cited": [],
+                "suggested_next_action": "Please share your order ID so I can look up your details.",
+                "internal_notes": "Fallback: order not found, requesting order ID from customer",
+            }
+
+    # Case 2: Policy-dependent intent but no policy matched
+    if intent in ("return_request", "refund_status", "warranty", "coupon_issue") and not policy_snippets:
+        return {
+            "response_text": (
+                "I want to give you accurate information, but I'm having trouble finding the "
+                "specific policy for your situation. Let me connect you with a specialist who "
+                "can review your case and provide the correct guidance. "
+                "In the meantime, you can check our general policies at shopease.com/policies."
+            ),
+            "confidence": 0.60,
+            "references_cited": [],
+            "suggested_next_action": "A specialist will review your case for the exact policy details.",
+            "internal_notes": "Fallback: no policy match found, suggesting specialist",
+        }
+
+    # Case 3: Agent errors detected in audit trail
+    audit_trail = state.get("audit_trail", [])
+    has_errors = any("ERROR" in entry.get("action", "") for entry in audit_trail)
+    if has_errors:
+        return {
+            "response_text": (
+                "I'm experiencing a temporary issue looking up your information. "
+                "I apologize for the inconvenience. Please try again in a moment, "
+                "or I can connect you with our support team who can help you directly."
+            ),
+            "confidence": 0.55,
+            "references_cited": [],
+            "suggested_next_action": "Please try again or say 'connect me to support' for human assistance.",
+            "internal_notes": f"Fallback: agent errors detected in pipeline",
+        }
+
+    return None
+
+
 def _mock_generate_response(state: AgentState) -> dict:
     """Rule-based response generation when no API key is available."""
+    # Check if fallback is needed first
+    fallback = _generate_fallback_response(state)
+    if fallback:
+        return fallback
+
     intent = state.get("intent", "")
     order_ctx = state.get("order_context", {})
     action_result = state.get("action_result", {})
@@ -175,23 +240,27 @@ def generate_response(state: AgentState) -> AgentState:
     Writes: response_text, response_confidence, references_cited, suggested_next_action,
             agents_called, audit_trail
     """
-    if USE_MOCK or not OPENAI_API_KEY:
+    # Check for fallback scenarios FIRST (missing data, errors)
+    fallback = _generate_fallback_response(state)
+    if fallback:
+        result = fallback
+    elif USE_MOCK or not OPENAI_API_KEY:
         result = _mock_generate_response(state)
     else:
-        llm = ChatOpenAI(
-            model=OPENAI_MODEL,
-            api_key=OPENAI_API_KEY,
-            temperature=0.3,
-        )
-        context_prompt = _build_context_prompt(state)
-        messages = [
-            SystemMessage(content=RESPONSE_SYSTEM_PROMPT),
-            HumanMessage(content=context_prompt),
-        ]
-        response = llm.invoke(messages)
         try:
+            llm = ChatOpenAI(
+                model=OPENAI_MODEL,
+                api_key=OPENAI_API_KEY,
+                temperature=0.3,
+            )
+            context_prompt = _build_context_prompt(state)
+            messages = [
+                SystemMessage(content=RESPONSE_SYSTEM_PROMPT),
+                HumanMessage(content=context_prompt),
+            ]
+            response = llm.invoke(messages)
             result = json.loads(response.content)
-        except json.JSONDecodeError:
+        except (json.JSONDecodeError, Exception):
             result = _mock_generate_response(state)
 
     return {

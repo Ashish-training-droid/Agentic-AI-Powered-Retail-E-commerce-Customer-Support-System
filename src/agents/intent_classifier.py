@@ -88,22 +88,34 @@ def classify_intent(state: AgentState) -> AgentState:
     message = state.get("message", "")
     channel = state.get("channel", "web")
 
-    if USE_MOCK or not OPENAI_API_KEY:
+    # Handle empty or very short messages
+    if not message or len(message.strip()) < 3:
+        result = {
+            "intent": "general_faq",
+            "sub_intent": None,
+            "sentiment": "neutral",
+            "urgency": "low",
+            "confidence": 0.2,
+        }
+    elif USE_MOCK or not OPENAI_API_KEY:
         result = _mock_classify(message)
     else:
-        llm = ChatOpenAI(
-            model=OPENAI_MODEL,
-            api_key=OPENAI_API_KEY,
-            temperature=0.0,
-        )
-        messages = [
-            SystemMessage(content=INTENT_SYSTEM_PROMPT),
-            HumanMessage(content=f"Channel: {channel}\nCustomer message: {message}"),
-        ]
-        response = llm.invoke(messages)
         try:
+            llm = ChatOpenAI(
+                model=OPENAI_MODEL,
+                api_key=OPENAI_API_KEY,
+                temperature=0.0,
+            )
+            messages = [
+                SystemMessage(content=INTENT_SYSTEM_PROMPT),
+                HumanMessage(content=f"Channel: {channel}\nCustomer message: {message}"),
+            ]
+            response = llm.invoke(messages)
             result = json.loads(response.content)
         except json.JSONDecodeError:
+            result = _mock_classify(message)
+        except Exception:
+            # API timeout, rate limit, network error — fall back to rule-based
             result = _mock_classify(message)
 
     intent = result.get("intent", "general_faq")
