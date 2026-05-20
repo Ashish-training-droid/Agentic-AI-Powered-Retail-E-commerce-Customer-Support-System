@@ -1,0 +1,59 @@
+{
+    "policy_category": "refund",
+    "version": "1.0",
+    "last_updated": "2026-05-20",
+    "rules": [
+      {
+        "policy_id": "POL-REF-TIME-001",
+        "category": "refund",
+        "subcategory": "timeline",
+        "rule": "Refunds are processed within 5-7 business days after return pickup is completed and quality check is passed.",
+        "conditions": [
+          "Return must be picked up successfully",
+          "Item must pass quality inspection at warehouse"
+        ],
+        "exceptions": [
+          "Refunds may be delayed during peak sale events",
+          "Bank holidays may extend the timeline"
+        ],
+        "applicable_to": ["all_categories"],
+        "keywords": ["refund", "money back", "when", "timeline", "processing"],
+        "effective_from": "2026-01-01",
+        "last_updated": "2026-05-01"
+      },
+      {
+        "policy_id": "POL-REF-METHOD-001",
+        "category": "refund",
+        "subcategory": "payment_method",
+        "rule": "UPI and wallet refunds are credited within 24 hours. Credit/debit card refunds take 5-7 business days. EMI refunds are reversed in next billing cycle.",
+        "conditions": [
+          "Refund credited to original payment method",
+          "Bank processing time may vary"
+        ],
+        "exceptions": [
+          "COD orders are refunded to ShopEase wallet or bank account on customer choice"
+        ],
+        "applicable_to": ["all_categories"],
+        "keywords": ["refund", "UPI", "card", "wallet", "EMI", "payment"],
+        "effective_from": "2026-01-01",
+        "last_updated": "2026-05-01"
+      },
+      {
+        "policy_id": "POL-REF-PARTIAL-001",
+        "category": "refund",
+        "subcategory": "partial",
+        "rule": "Partial refunds are issued when a multi-item order has only some items returned. Shipping charges are non-refundable unless the entire order is returned.",
+        "conditions": [
+          "Only returned items are refunded",
+          "Original shipping charges deducted on partial returns"
+        ],
+        "exceptions": [
+          "Damaged item returns include full shipping refund"
+        ],
+        "applicable_to": ["all_categories"],
+        "keywords": ["partial refund", "shipping", "multi-item"],
+        "effective_from": "2026-01-01",
+        "last_updated": "2026-05-01"
+      }
+    ]
+  }

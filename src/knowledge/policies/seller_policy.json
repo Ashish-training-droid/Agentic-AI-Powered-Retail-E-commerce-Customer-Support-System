@@ -1,0 +1,41 @@
+{
+    "policy_category": "seller",
+    "version": "1.0",
+    "last_updated": "2026-05-20",
+    "rules": [
+      {
+        "policy_id": "POL-SEL-FULFILL-001",
+        "category": "seller",
+        "subcategory": "fulfillment",
+        "rule": "ShopEase-fulfilled orders follow ShopEase return and refund policies. Seller-fulfilled orders may have seller-specific terms displayed on the product page.",
+        "conditions": [
+          "Check 'Sold by' tag on product page",
+          "Seller terms shown before purchase"
+        ],
+        "exceptions": [
+          "ShopEase Assured items always follow ShopEase policy"
+        ],
+        "applicable_to": ["all_categories"],
+        "keywords": ["seller", "third party", "fulfilled by"],
+        "effective_from": "2026-01-01",
+        "last_updated": "2026-05-01"
+      },
+      {
+        "policy_id": "POL-SEL-DISPUTE-001",
+        "category": "seller",
+        "subcategory": "dispute",
+        "rule": "Seller disputes are mediated by ShopEase Customer Protection within 5 business days. Wrong item, counterfeit, or missing items are eligible for full refund.",
+        "conditions": [
+          "Photo evidence required",
+          "Report within 7 days of delivery"
+        ],
+        "exceptions": [
+          "Counterfeit complaints involve seller penalty review"
+        ],
+        "applicable_to": ["all_categories"],
+        "keywords": ["wrong item", "counterfeit", "fake", "seller dispute", "missing item"],
+        "effective_from": "2026-01-01",
+        "last_updated": "2026-05-01"
+      }
+    ]
+  }

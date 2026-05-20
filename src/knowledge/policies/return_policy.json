@@ -1,0 +1,84 @@
+{
+    "policy_category": "return",
+    "version": "1.0",
+    "last_updated": "2026-05-20",
+    "rules": [
+      {
+        "policy_id": "POL-RET-ELEC-001",
+        "category": "return",
+        "subcategory": "electronics",
+        "rule": "Electronics can be returned within 7 days of delivery if unopened and in original packaging.",
+        "conditions": [
+          "Item must be within 7 days of delivery",
+          "Item must be unopened",
+          "Original packaging must be intact",
+          "All accessories and manuals must be included"
+        ],
+        "exceptions": [
+          "Software licenses are non-returnable",
+          "Customized or engraved items cannot be returned",
+          "Items damaged due to misuse are not eligible"
+        ],
+        "applicable_to": ["electronics", "headphones", "laptops", "phones", "accessories"],
+        "keywords": ["return", "send back", "give back", "electronics", "laptop", "phone", "headphones"],
+        "effective_from": "2026-01-01",
+        "last_updated": "2026-05-01"
+      },
+      {
+        "policy_id": "POL-RET-FASH-001",
+        "category": "return",
+        "subcategory": "fashion",
+        "rule": "Fashion items can be returned within 15 days of delivery. Items must be unworn with original tags attached.",
+        "conditions": [
+          "Item must be within 15 days of delivery",
+          "Original tags must be attached",
+          "Item must be unworn and unwashed",
+          "Original packaging preferred"
+        ],
+        "exceptions": [
+          "Innerwear and swimwear are non-returnable for hygiene reasons",
+          "Customized fashion items cannot be returned"
+        ],
+        "applicable_to": ["fashion", "clothing", "shoes", "accessories"],
+        "keywords": ["return", "fashion", "clothing", "shoes", "shirt", "dress"],
+        "effective_from": "2026-01-01",
+        "last_updated": "2026-05-01"
+      },
+      {
+        "policy_id": "POL-RET-GROC-001",
+        "category": "return",
+        "subcategory": "groceries",
+        "rule": "Groceries and perishable items are non-returnable except in case of damage or expired products at delivery.",
+        "conditions": [
+          "Damage or expiry must be reported within 24 hours",
+          "Photo evidence required"
+        ],
+        "exceptions": [
+          "Sealed packaged groceries within shelf life cannot be returned"
+        ],
+        "applicable_to": ["groceries", "perishables", "food"],
+        "keywords": ["return", "groceries", "food", "expired", "perishable"],
+        "effective_from": "2026-01-01",
+        "last_updated": "2026-05-01"
+      },
+      {
+        "policy_id": "POL-RET-HOME-001",
+        "category": "return",
+        "subcategory": "home_goods",
+        "rule": "Home and kitchen items can be returned within 10 days if unused and in original packaging.",
+        "conditions": [
+          "Within 10 days of delivery",
+          "Item must be unused",
+          "Original packaging required"
+        ],
+        "exceptions": [
+          "Customized furniture is non-returnable",
+          "Mattresses cannot be returned once unpacked"
+        ],
+        "applicable_to": ["home", "kitchen", "furniture", "decor"],
+        "keywords": ["return", "home", "kitchen", "furniture"],
+        "effective_from": "2026-01-01",
+        "last_updated": "2026-05-01"
+      }
+    ]
+  }

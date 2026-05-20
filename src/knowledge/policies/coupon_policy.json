@@ -1,0 +1,75 @@
+{
+    "policy_category": "coupon",
+    "version": "1.0",
+    "last_updated": "2026-05-20",
+    "rules": [
+      {
+        "policy_id": "POL-CPN-ELIG-001",
+        "category": "coupon",
+        "subcategory": "eligibility",
+        "rule": "Coupons are valid only on items marked 'coupon eligible'. Minimum cart value and category restrictions apply as per the coupon terms.",
+        "conditions": [
+          "Item must be coupon-eligible",
+          "Minimum cart value must be met",
+          "Coupon must be applied before payment"
+        ],
+        "exceptions": [
+          "Already discounted items may not be eligible",
+          "Flash sale items excluded"
+        ],
+        "applicable_to": ["all_categories"],
+        "keywords": ["coupon", "discount code", "promo", "not applied", "not working"],
+        "effective_from": "2026-01-01",
+        "last_updated": "2026-05-01"
+      },
+      {
+        "policy_id": "POL-CPN-STACK-001",
+        "category": "coupon",
+        "subcategory": "stacking",
+        "rule": "Only one coupon can be applied per order. Coupons cannot be combined with flash sale prices or bank offers.",
+        "conditions": [
+          "Single coupon per order",
+          "Customer must choose best applicable offer"
+        ],
+        "exceptions": [
+          "Bank offers may stack with select coupons during festivals (specified in T&C)"
+        ],
+        "applicable_to": ["all_categories"],
+        "keywords": ["multiple coupons", "stack coupon", "combine coupon"],
+        "effective_from": "2026-01-01",
+        "last_updated": "2026-05-01"
+      },
+      {
+        "policy_id": "POL-CPN-EXP-001",
+        "category": "coupon",
+        "subcategory": "expiry",
+        "rule": "Expired coupons cannot be reactivated. Goodwill coupons issued by support are valid for 30 days from issuance.",
+        "conditions": [
+          "Coupons must be used before expiry date",
+          "Goodwill coupons follow 30-day rule"
+        ],
+        "exceptions": [],
+        "applicable_to": ["all_categories"],
+        "keywords": ["expired coupon", "coupon expiry", "validity"],
+        "effective_from": "2026-01-01",
+        "last_updated": "2026-05-01"
+      },
+      {
+        "policy_id": "POL-CPN-FIRST-001",
+        "category": "coupon",
+        "subcategory": "first_order",
+        "rule": "First-order coupons (e.g., WELCOME100) can only be used by new customers on their first paid order.",
+        "conditions": [
+          "Account must have zero successful prior orders",
+          "Coupon code must be entered at checkout"
+        ],
+        "exceptions": [
+          "Cancelled orders do not count toward 'first order' status"
+        ],
+        "applicable_to": ["all_categories"],
+        "keywords": ["welcome coupon", "first order", "new user"],
+        "effective_from": "2026-01-01",
+        "last_updated": "2026-05-01"
+      }
+    ]
+  }

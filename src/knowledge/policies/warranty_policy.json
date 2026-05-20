@@ -1,0 +1,60 @@
+{
+    "policy_category": "warranty",
+    "version": "1.0",
+    "last_updated": "2026-05-20",
+    "rules": [
+      {
+        "policy_id": "POL-WAR-ELEC-001",
+        "category": "warranty",
+        "subcategory": "electronics",
+        "rule": "Electronics carry a 1-year manufacturer warranty from date of delivery. Physical damage and water damage are not covered.",
+        "conditions": [
+          "Original invoice required for warranty claim",
+          "Manufacturing defects covered",
+          "Claim through authorized service center"
+        ],
+        "exceptions": [
+          "Physical damage not covered",
+          "Water/liquid damage not covered",
+          "Damage from misuse not covered"
+        ],
+        "applicable_to": ["electronics", "phones", "laptops", "appliances"],
+        "keywords": ["warranty", "manufacturer", "defect", "broken", "not working"],
+        "effective_from": "2026-01-01",
+        "last_updated": "2026-05-01"
+      },
+      {
+        "policy_id": "POL-WAR-EXT-001",
+        "category": "warranty",
+        "subcategory": "extended",
+        "rule": "Extended warranty of 2 years is available for purchase on select electronics at checkout. Covers manufacturing defects only.",
+        "conditions": [
+          "Must be purchased at order time",
+          "Original invoice required for claims"
+        ],
+        "exceptions": [
+          "Cannot be purchased after delivery",
+          "Non-transferable"
+        ],
+        "applicable_to": ["electronics"],
+        "keywords": ["extended warranty", "2 year", "additional warranty"],
+        "effective_from": "2026-01-01",
+        "last_updated": "2026-05-01"
+      },
+      {
+        "policy_id": "POL-WAR-CLAIM-001",
+        "category": "warranty",
+        "subcategory": "claim_process",
+        "rule": "Warranty claims are processed by visiting the brand's authorized service center with the ShopEase invoice. ShopEase assists by sharing invoice and warranty details.",
+        "conditions": [
+          "Customer initiates claim with brand",
+          "ShopEase provides invoice copy on request"
+        ],
+        "exceptions": [],
+        "applicable_to": ["all_warranty_eligible_items"],
+        "keywords": ["claim warranty", "service center", "warranty process"],
+        "effective_from": "2026-01-01",
+        "last_updated": "2026-05-01"
+      }
+    ]
+  }

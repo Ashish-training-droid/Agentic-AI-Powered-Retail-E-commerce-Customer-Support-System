@@ -1,0 +1,57 @@
+{
+    "policy_category": "general",
+    "version": "1.0",
+    "last_updated": "2026-05-20",
+    "rules": [
+      {
+        "policy_id": "POL-GEN-DMG-001",
+        "category": "damaged_product",
+        "subcategory": "reporting",
+        "rule": "Damaged or defective products must be reported within 48 hours of delivery with photo evidence. Customer is eligible for free replacement or full refund.",
+        "conditions": [
+          "Report within 48 hours of delivery",
+          "Photo or video evidence mandatory",
+          "Original packaging photo helpful"
+        ],
+        "exceptions": [
+          "Damage caused after delivery is not eligible"
+        ],
+        "applicable_to": ["all_categories"],
+        "keywords": ["damaged", "broken", "defective", "not working", "cracked"],
+        "effective_from": "2026-01-01",
+        "last_updated": "2026-05-01"
+      },
+      {
+        "policy_id": "POL-GEN-CANCEL-001",
+        "category": "cancellation",
+        "subcategory": "before_shipping",
+        "rule": "Orders can be cancelled free of charge before they are shipped. Once shipped, cancellation is not allowed; customer can refuse delivery or initiate return.",
+        "conditions": [
+          "Order status must be 'Processing'",
+          "Refund initiated automatically on cancellation"
+        ],
+        "exceptions": [
+          "Customized items cannot be cancelled once production starts"
+        ],
+        "applicable_to": ["all_categories"],
+        "keywords": ["cancel", "cancellation", "stop order"],
+        "effective_from": "2026-01-01",
+        "last_updated": "2026-05-01"
+      },
+      {
+        "policy_id": "POL-GEN-HVI-001",
+        "category": "high_value",
+        "subcategory": "verification",
+        "rule": "Items priced above 20000 require OTP-based delivery verification. Returns require tamper-proof packaging and detailed quality inspection (7-10 days).",
+        "conditions": [
+          "OTP delivery confirmation",
+          "Tamper-proof return packaging"
+        ],
+        "exceptions": [],
+        "applicable_to": ["high_value_items"],
+        "keywords": ["high value", "expensive", "OTP", "verification"],
+        "effective_from": "2026-01-01",
+        "last_updated": "2026-05-01"
+      }
+    ]
+  }
