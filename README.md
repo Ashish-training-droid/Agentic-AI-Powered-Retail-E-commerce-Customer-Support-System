@@ -353,6 +353,74 @@ The prototype uses JSON/CSV files for data. The architecture is designed so the 
 
 All agent function signatures stay the same — just swap the implementation behind `get_order_status()`, `retrieve_policy()`, etc. See [`docs/architecture.md`](docs/architecture.md#8-scalability-and-production-deployment) for full details.
 
+## Current Progress (as of Day 1)
+
+### What's Built and Working
+
+| Component | Status | Details |
+|-----------|--------|---------|
+| Git repo + GitHub remote | Done | All code on `main`, teammates have branch access |
+| README + Architecture docs | Done | Full system design, agent contracts, state schema, mermaid diagrams |
+| Team guides (Person 2-5) | Done | Step-by-step instructions in `docs/team_guides/` |
+| LangGraph orchestration graph | Done | `src/orchestrator/graph.py` — full pipeline with conditional routing |
+| Shared state schema | Done | `src/orchestrator/state.py` — TypedDict flowing between all agents |
+| Intent Classifier (OpenAI) | Done | `src/agents/intent_classifier.py` — GPT-4o + mock fallback |
+| Router with confidence checks | Done | `src/orchestrator/router.py` — routes by intent, handles missing data |
+| Evaluator / Quality Gate | Done | `src/orchestrator/evaluator.py` — checks completeness before response |
+| Response Generator | Done | `src/agents/response_generator.py` — grounded responses with citations |
+| Error-safe wrappers | Done | `src/orchestrator/graph.py` — no agent crash kills the pipeline |
+| Fallback responses | Done | Asks for order ID, suggests specialist, requests clarification |
+| Clarification path | Done | Low confidence (< 0.4) asks customer to rephrase |
+| Helper utilities | Done | `src/utils/` — logger, validators, formatters, retry, metrics, session |
+| Test suite | Done | `tests/` — resilience, intent, router tests (10+ 12 + 13 cases) |
+| Scalability docs | Done | JSON-to-Azure migration path documented |
+| 7 demo conversations | Done | `python -m src.main` runs all scenarios end-to-end |
+
+### What's Pending (from Teammates)
+
+| Who | What They Need to Deliver | Their Branch |
+|-----|--------------------------|-------------|
+| Person 2 | Policy KB (15+ rules), FAQ, Product catalog, RAG retrieval agent | Not started yet |
+| Person 3 | Mock data JSONs, Order Context Agent, Workflow Agent, API functions | Not started yet |
+| Person 4 | Streamlit UI (customer chat + agent console), Product Advisory Agent | `ui-agent-aditi` (ready, not merged yet) |
+| Person 5 | Risk matrix, Escalation Agent, Audit logs, Evaluation suite, Final deck | Not started yet |
+
+### How to Continue (for Next Cursor Session)
+
+1. **Check for new branches:** `git fetch --all` then `git branch -r` to see teammate submissions
+2. **Run the system:** `python -m src.main` (works in mock mode, no API key needed)
+3. **Run with OpenAI:** Set `USE_MOCK=false` in `.env` and provide `OPENAI_API_KEY`
+4. **When Person 2/3 deliver:** Merge their branches, their code replaces the stubs in `src/agents/`
+5. **When ready to integrate Person 4:** Merge `ui-agent-aditi`, move files into `src/ui/`, wire to real orchestrator
+6. **Final integration:** All agents use real data → run full evaluation → prepare presentation
+
+### Key Design Decisions Made
+
+- **LangGraph** for orchestration (not simple if/else) — gives us a real agent graph with conditional edges
+- **OpenAI GPT-4o** for classification and response generation (with mock fallback for offline work)
+- **Shared TypedDict state** — all agents read/write to one state object, no direct agent-to-agent calls
+- **Error-safe wrappers** — any agent can fail without crashing the pipeline
+- **Mock-first development** — system runs end-to-end without any external service
+- **Confidence-based routing** — low confidence asks for clarification instead of guessing wrong
+- **Person 4's UI is separate for now** — will integrate after Person 2/3 deliver real data
+
+### Git History Summary
+
+```
+Day 1 commits (Person 1):
+- Initial repo setup + README + architecture docs
+- Full LangGraph orchestration with 7 agents
+- Helper utilities (logger, validators, formatters, retry, metrics)
+- Team guides for Person 2-5
+- Resilient routing + error handling + fallback responses
+- Test suites
+- Scalability documentation
+
+Person 4 (Aditi):
+- Branch: ui-agent-aditi (Streamlit UI, product advisory, demo script)
+- Status: Ready but not merged into main yet (waiting for P2/P3 data)
+```
+
 ## License
 
 This project is developed as a capstone for academic purposes.
