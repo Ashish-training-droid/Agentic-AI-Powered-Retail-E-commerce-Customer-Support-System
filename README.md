@@ -338,6 +338,21 @@ python -m src.main --demo 7    # General FAQ
 | `src/utils/metrics.py` | **Performance tracking** — `track_latency` decorator to measure agent execution time, `AgentMetrics` / `SessionMetrics` dataclasses for per-agent and per-session stats, `compute_resolution_metrics()` to aggregate batch results (resolution rate, escalation rate, avg confidence, intent distribution), and `get_agent_metrics()` / `reset_metrics()` for runtime inspection. |
 | `src/utils/session.py` | **Session management** — `generate_session_id()` creates unique session IDs, `build_initial_state()` constructs a clean `AgentState` from raw customer input (sanitizes message, extracts order ID, sets defaults), and `append_to_history()` adds timestamped entries to conversation history. |
 
+## Production Roadmap
+
+The prototype uses JSON/CSV files for data. The architecture is designed so the data layer can be swapped to enterprise-grade services **without changing any agent or orchestration code**:
+
+| Prototype | Production | Why |
+|-----------|-----------|-----|
+| JSON files | Azure Cosmos DB | Scalable NoSQL for orders, customers, products |
+| Keyword matching | Azure AI Search | Vector embeddings for policy RAG retrieval |
+| OpenAI API | Azure OpenAI Service | Enterprise SLA, data privacy, token budgets |
+| Local logs | PostgreSQL | Audit compliance with SQL queries |
+| In-memory | Redis | Session cache for multi-turn conversations |
+| `python -m src.main` | Azure App Service | Auto-scaling hosted API |
+
+All agent function signatures stay the same — just swap the implementation behind `get_order_status()`, `retrieve_policy()`, etc. See [`docs/architecture.md`](docs/architecture.md#8-scalability-and-production-deployment) for full details.
+
 ## License
 
 This project is developed as a capstone for academic purposes.

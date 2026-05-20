@@ -407,3 +407,117 @@ sequenceDiagram
     State->>UI: Deliver response
     UI->>Customer: Display answer
 ```
+
+## 8. Scalability and Production Deployment
+
+### Current State — Prototype
+
+The prototype uses **JSON/CSV files** and **in-memory mock API functions** for all data. This is intentional:
+
+- Fast iteration — no cloud setup, no credentials, no cost
+- Works offline — every team member can run locally
+- Easy to debug — data is readable text files
+- Focus on AI logic — not infrastructure
+
+### Production Architecture
+
+The system is designed with **clean interfaces** so the data layer can be swapped without changing any agent logic, orchestration, or routing.
+
+```mermaid
+flowchart LR
+    subgraph current [Current - Prototype]
+        JSON[JSON/CSV Files]
+        MockAPI[Mock API Functions]
+        LocalEmbed[Local Embeddings]
+    end
+
+    subgraph production [Production - Scalable]
+        CosmosDB["Azure Cosmos DB"]
+        PostgreSQL["PostgreSQL"]
+        AISearch["Azure AI Search"]
+        BlobStorage["Azure Blob Storage"]
+        Redis["Redis Cache"]
+        AzureOpenAI["Azure OpenAI Service"]
+    end
+
+    JSON -->|"swap via config"| CosmosDB
+    MockAPI -->|"same interface"| PostgreSQL
+    LocalEmbed -->|"embed + index"| AISearch
+```
+
+### Service Mapping
+
+| Current (Prototype) | Production (Azure) | Purpose |
+|--------------------|--------------------|---------|
+| `data/mock/orders.json` | Azure Cosmos DB | Order, payment, shipment records |
+| `data/mock/customers.json` | Azure Cosmos DB | Customer profiles and tier |
+| `src/knowledge/policies/` | Azure AI Search + Blob Storage | Policy documents with vector search (RAG) |
+| `src/knowledge/products/` | Azure Cosmos DB | Product catalog with full-text search |
+| `logs/audit.jsonl` | PostgreSQL | Audit trail with SQL querying |
+| In-memory state | Redis | Session cache for multi-turn conversations |
+| OpenAI API | Azure OpenAI Service | LLM calls with enterprise SLA and data privacy |
+| `python -m src.main` | Azure App Service / AKS | Hosted API with auto-scaling |
+
+### What Stays the Same (No Code Changes)
+
+These components are **infrastructure-agnostic** — they work identically whether data comes from JSON or a database:
+
+- LangGraph orchestration graph (`src/orchestrator/graph.py`)
+- Agent state schema (`src/orchestrator/state.py`)
+- Router logic (`src/orchestrator/router.py`)
+- Evaluator / quality gate (`src/orchestrator/evaluator.py`)
+- Intent Classifier prompts and logic
+- Response Generator prompts and logic
+- All agent function signatures and return formats
+
+### How to Swap (Example)
+
+Current mock implementation:
+
+```python
+# src/integrations/mock_apis/order_api.py (current)
+def get_order_status(order_id: str) -> dict:
+    orders = json.load(open("data/mock/orders.json"))
+    order = next((o for o in orders if o["order_id"] == order_id), None)
+    if not order:
+        return {"success": False, "error": "Order not found"}
+    return {"success": True, **order}
+```
+
+Production swap (same interface, different backend):
+
+```python
+# src/integrations/azure_apis/order_api.py (production)
+from azure.cosmos import CosmosClient
+
+def get_order_status(order_id: str) -> dict:
+    container = CosmosClient(URL, KEY).get_database("shopease").get_container("orders")
+    results = list(container.query_items(
+        query="SELECT * FROM orders o WHERE o.order_id = @id",
+        parameters=[{"name": "@id", "value": order_id}],
+    ))
+    if not results:
+        return {"success": False, "error": "Order not found"}
+    return {"success": True, **results[0]}
+```
+
+The agent code (`src/agents/order_context.py`) calls `get_order_status()` either way — it doesn't know or care where the data lives.
+
+### Scaling Considerations
+
+| Concern | Solution |
+|---------|----------|
+| High traffic (1000+ concurrent users) | Azure App Service with auto-scale, Redis session cache |
+| Large policy corpus (1000+ documents) | Azure AI Search with vector embeddings for RAG |
+| Audit compliance | PostgreSQL with immutable append-only logs, Azure Monitor |
+| Multi-region deployment | Cosmos DB global distribution, Azure Front Door |
+| Cost control | Azure OpenAI with token budgets, caching frequent queries |
+| Data privacy (PII) | Azure Private Endpoints, data encryption at rest, PII masking |
+
+### Why This Matters for the Capstone
+
+This architecture demonstrates:
+1. **Separation of concerns** — AI logic is decoupled from data infrastructure
+2. **Production thinking** — designed for real-world deployment from day one
+3. **Enterprise readiness** — Azure services provide SLA, compliance, and scale
+4. **Incremental migration** — can move one service at a time (e.g., just orders first)
