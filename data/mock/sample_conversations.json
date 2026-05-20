@@ -1,0 +1,65 @@
+[
+  {
+    "id": "demo_1_order_tracking",
+    "description": "Customer asks where their order is (happy path)",
+    "customer_id": "CUST_1001",
+    "channel": "web",
+    "message": "Where is my order SE10234? It was supposed to arrive yesterday.",
+    "expected_intent": "order_tracking",
+    "expected_outcome": "Provide shipment status and ETA"
+  },
+  {
+    "id": "demo_2_return_request",
+    "description": "Customer wants to return shoes (policy + workflow)",
+    "customer_id": "CUST_1002",
+    "channel": "mobile",
+    "message": "I want to return the running shoes I bought last week. They don't fit properly.",
+    "expected_intent": "return_request",
+    "expected_outcome": "Check policy, initiate return, provide pickup date"
+  },
+  {
+    "id": "demo_3_product_inquiry",
+    "description": "Student comparing laptops for college (advisory)",
+    "customer_id": "CUST_1004",
+    "channel": "web",
+    "message": "I'm looking for a laptop for college. Can you compare the HP Pavilion and Lenovo IdeaPad? Which one is better for programming and everyday use?",
+    "expected_intent": "product_inquiry",
+    "expected_outcome": "Compare specs, recommend best option for student"
+  },
+  {
+    "id": "demo_4_damaged_product",
+    "description": "VIP customer reports damaged expensive phone (escalation path)",
+    "customer_id": "CUST_1003",
+    "channel": "web",
+    "message": "I received my Samsung Galaxy S24 with a cracked screen! This is a Rs 75000 phone and it arrived broken. I'm extremely frustrated and want this resolved immediately!",
+    "expected_intent": "damaged_product",
+    "expected_outcome": "Escalate to replacement team due to high value + angry sentiment"
+  },
+  {
+    "id": "demo_5_coupon_issue",
+    "description": "Customer's coupon wasn't applied (policy retrieval)",
+    "customer_id": "CUST_1004",
+    "channel": "email",
+    "message": "I tried to apply coupon code SAVE20 on my cart but it says 'coupon not applicable'. My cart total is Rs 3500 and I'm buying a laptop sleeve. Why isn't it working?",
+    "expected_intent": "coupon_issue",
+    "expected_outcome": "Explain coupon eligibility rules and restrictions"
+  },
+  {
+    "id": "demo_6_refund_status",
+    "description": "Customer asking about refund timeline",
+    "customer_id": "CUST_1002",
+    "channel": "social",
+    "message": "I returned my shoes 5 days ago and still haven't received my refund. When will I get my money back?",
+    "expected_intent": "refund_status",
+    "expected_outcome": "Check refund status, explain timeline by payment method"
+  },
+  {
+    "id": "demo_7_general_faq",
+    "description": "Generic question (direct response path)",
+    "customer_id": "CUST_1001",
+    "channel": "web",
+    "message": "What payment methods do you accept?",
+    "expected_intent": "general_faq",
+    "expected_outcome": "Provide general information"
+  }
+]
