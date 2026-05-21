@@ -180,10 +180,31 @@ def route_after_policy(state: AgentState) -> Literal["execute_workflow", "evalua
         return "evaluate"
 
 
-def route_after_risk(state: AgentState) -> Literal["generate_response", "escalate"]:
+def route_after_risk(state: AgentState) -> Literal["generate_response", "await_approval", "escalate"]:
     """
-    LangGraph conditional edge: after risk check, either generate response or escalate.
+    LangGraph conditional edge: after risk check, route to one of three terminals.
+
+    Bands (set by ``src.agents.escalation_risk``):
+        * "escalate"           -> hand off to ``escalate`` terminal (no AI response served)
+        * "approval_required"  -> generate draft, then ``await_approval`` (HITL queue)
+        * "auto" / unset       -> generate response and serve directly
+
+    ``escalation_required`` is kept for backwards compatibility — any agent
+    that sets it forces the escalate path even if ``risk_band`` was not set.
     """
     if state.get("escalation_required", False):
         return "escalate"
+    if str(state.get("risk_band") or "").lower() == "approval_required":
+        return "await_approval"
     return "generate_response"
+
+
+def route_after_response(state: AgentState) -> Literal["await_approval", "end"]:
+    """LangGraph conditional edge after response generation.
+
+    If risk decided we need human approval, the freshly-drafted response is
+    parked in the approval queue instead of being served to the customer.
+    """
+    if str(state.get("risk_band") or "").lower() == "approval_required":
+        return "await_approval"
+    return "end"

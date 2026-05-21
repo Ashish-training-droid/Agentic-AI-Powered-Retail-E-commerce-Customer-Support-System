@@ -1,0 +1,286 @@
+{
+  "version": "1.0",
+  "description": "End-to-end evaluation cases for the ShopEase agentic pipeline. Person 5 owns this file.",
+  "categories": ["routine", "escalation", "edge_case", "negative"],
+  "cases": [
+    {
+      "id": "TC_001",
+      "category": "routine",
+      "message": "Where is my order SE10234?",
+      "customer_id": "CUST_1001",
+      "channel": "web",
+      "expected": {
+        "intent": "order_tracking",
+        "escalation": false,
+        "risk_band": "auto",
+        "min_confidence": 0.7,
+        "should_contain_any": ["SE10234"]
+      }
+    },
+    {
+      "id": "TC_002",
+      "category": "routine",
+      "message": "I want to return my Nike shoes from order SE10567",
+      "customer_id": "CUST_1002",
+      "channel": "web",
+      "expected": {
+        "intent": "return_request",
+        "escalation": false,
+        "min_confidence": 0.6,
+        "should_have_policy_refs": true
+      }
+    },
+    {
+      "id": "TC_003",
+      "category": "routine",
+      "message": "When will my refund be credited? Order SE10567 returned 3 days ago.",
+      "customer_id": "CUST_1002",
+      "channel": "web",
+      "expected": {
+        "intent": "refund_status",
+        "escalation": false,
+        "should_have_policy_refs": true
+      }
+    },
+    {
+      "id": "TC_004",
+      "category": "routine",
+      "message": "How do I claim warranty on my Sony headphones SE10234?",
+      "customer_id": "CUST_1001",
+      "channel": "web",
+      "expected": {
+        "intent": "warranty",
+        "escalation": false,
+        "should_have_policy_refs": true
+      }
+    },
+    {
+      "id": "TC_005",
+      "category": "routine",
+      "message": "My coupon FESTIVE10 is not being applied at checkout. Cart value is Rs 4500.",
+      "customer_id": "CUST_1001",
+      "channel": "web",
+      "expected": {
+        "intent": "coupon_issue",
+        "escalation": false,
+        "should_have_policy_refs": true
+      }
+    },
+    {
+      "id": "TC_006",
+      "category": "routine",
+      "message": "Compare HP Pavilion vs Lenovo IdeaPad for college student",
+      "customer_id": "CUST_1004",
+      "channel": "web",
+      "expected": {
+        "intent": "product_inquiry",
+        "escalation": false,
+        "risk_band": "auto"
+      }
+    },
+    {
+      "id": "TC_007",
+      "category": "routine",
+      "message": "Can you send me the invoice for order SE10111?",
+      "customer_id": "CUST_1004",
+      "channel": "web",
+      "expected": {
+        "escalation": false
+      }
+    },
+    {
+      "id": "TC_008",
+      "category": "routine",
+      "message": "What payment methods do you accept?",
+      "customer_id": "CUST_1001",
+      "channel": "web",
+      "expected": {
+        "intent": "general_faq",
+        "escalation": false,
+        "risk_band": "auto"
+      }
+    },
+    {
+      "id": "TC_009",
+      "category": "routine",
+      "message": "My order SE10567 was delivered, please confirm",
+      "customer_id": "CUST_1002",
+      "channel": "web",
+      "expected": {
+        "escalation": false
+      }
+    },
+    {
+      "id": "TC_010",
+      "category": "routine",
+      "message": "Where is my order? Address change possible? Order ID SE10111",
+      "customer_id": "CUST_1004",
+      "channel": "web",
+      "expected": {
+        "escalation": false
+      }
+    },
+    {
+      "id": "TC_011",
+      "category": "escalation",
+      "message": "I received my Samsung Galaxy S24 with a cracked screen! This is a Rs 75000 phone and it arrived broken! I'm furious!",
+      "customer_id": "CUST_1003",
+      "channel": "web",
+      "expected": {
+        "intent": "damaged_product",
+        "escalation": true,
+        "risk_band": "escalate",
+        "min_priority": "P2",
+        "should_route_team_any": ["senior_agent", "replacement_team"]
+      }
+    },
+    {
+      "id": "TC_012",
+      "category": "escalation",
+      "message": "My package marked lost on order SE10111, the laptop never arrived",
+      "customer_id": "CUST_1004",
+      "channel": "web",
+      "expected": {
+        "intent": "delivery_complaint",
+        "escalation_or_approval": true,
+        "should_route_team_any": ["logistics", "senior_agent"]
+      }
+    },
+    {
+      "id": "TC_013",
+      "category": "escalation",
+      "message": "asdfgh zxcvbn random text",
+      "customer_id": "CUST_1001",
+      "channel": "web",
+      "expected": {
+        "escalation_or_approval_or_clarify": true
+      }
+    },
+    {
+      "id": "TC_014",
+      "category": "escalation",
+      "message": "I want a refund. Order SE10890. Please process immediately.",
+      "customer_id": "CUST_1003",
+      "channel": "web",
+      "expected": {
+        "intent": "refund_status",
+        "should_route_team_any": ["refund_specialist", "senior_agent", "replacement_team"]
+      }
+    },
+    {
+      "id": "TC_015",
+      "category": "escalation",
+      "message": "I am very angry, this is the third time I am calling about my MacBook return. Order SE10567.",
+      "customer_id": "CUST_1002",
+      "channel": "web",
+      "expected": {
+        "escalation_or_approval": true,
+        "sentiment_should_be_any": ["angry", "negative"]
+      }
+    },
+    {
+      "id": "TC_016",
+      "category": "edge_case",
+      "message": "hi",
+      "customer_id": "CUST_1001",
+      "channel": "web",
+      "expected": {
+        "should_clarify": true
+      }
+    },
+    {
+      "id": "TC_017",
+      "category": "edge_case",
+      "message": "",
+      "customer_id": "CUST_1001",
+      "channel": "web",
+      "expected": {
+        "should_clarify_or_handle": true
+      }
+    },
+    {
+      "id": "TC_018",
+      "category": "edge_case",
+      "message": "I want to return my order and also know warranty and refund and the coupon and where is my order this is a very long message with many intents in it please help me with all of these issues at once because i have many problems",
+      "customer_id": "CUST_1001",
+      "channel": "web",
+      "expected": {
+        "escalation_or_approval_or_clarify": true
+      }
+    },
+    {
+      "id": "TC_019",
+      "category": "edge_case",
+      "message": "ORDER SE10234 STATUS PLEASE",
+      "customer_id": "CUST_1001",
+      "channel": "web",
+      "expected": {
+        "intent": "order_tracking",
+        "escalation": false
+      }
+    },
+    {
+      "id": "TC_020",
+      "category": "edge_case",
+      "message": "where is my package",
+      "customer_id": "",
+      "channel": "web",
+      "expected": {
+        "should_clarify_or_handle": true
+      }
+    },
+    {
+      "id": "TC_021",
+      "category": "negative",
+      "message": "Where is my order SE10234?",
+      "customer_id": "CUST_1001",
+      "channel": "web",
+      "expected": {
+        "escalation": false,
+        "must_not_contain_any": ["fraud", "refund processed", "money credited"]
+      }
+    },
+    {
+      "id": "TC_022",
+      "category": "negative",
+      "message": "Compare iPhone 15 and Samsung Galaxy S24",
+      "customer_id": "CUST_1001",
+      "channel": "web",
+      "expected": {
+        "escalation": false,
+        "must_not_contain_any": ["return initiated", "refund"]
+      }
+    },
+    {
+      "id": "TC_023",
+      "category": "negative",
+      "message": "What payment methods do you accept?",
+      "customer_id": "CUST_1001",
+      "channel": "web",
+      "expected": {
+        "escalation": false,
+        "must_not_contain_any": ["order ID", "tracking number"]
+      }
+    },
+    {
+      "id": "TC_024",
+      "category": "negative",
+      "message": "Just thanks for the help",
+      "customer_id": "CUST_1001",
+      "channel": "web",
+      "expected": {
+        "escalation": false
+      }
+    },
+    {
+      "id": "TC_025",
+      "category": "negative",
+      "message": "Please give me a free gift for my loyalty",
+      "customer_id": "CUST_1001",
+      "channel": "web",
+      "expected": {
+        "must_not_contain_any": ["free gift will be sent", "gift approved"]
+      }
+    }
+  ]
+}

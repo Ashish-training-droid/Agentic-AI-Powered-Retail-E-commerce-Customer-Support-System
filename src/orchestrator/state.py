@@ -59,10 +59,18 @@ class AgentState(TypedDict, total=False):
 
     # --- Escalation & Risk output ---
     risk_score: float
+    risk_band: str                 # "auto" | "approval_required" | "escalate"
+    risk_factors: list[dict]       # per-factor breakdown (name, raw, weight, contribution, detail)
+    matched_routes: list[dict]     # all matched escalation routes, severity-sorted
     escalation_required: bool
     escalation_reason: str
     target_team: str
     priority: str
+    sla_target: str                # ISO8601 deadline for human follow-up
+
+    # --- Human-in-the-Loop (HITL) ---
+    approval_status: str           # "auto" | "pending" | "approved" | "rejected" | "n/a"
+    approval_id: str               # ID assigned by governance.approval_queue
 
     # --- Response Generation output ---
     response_text: str
