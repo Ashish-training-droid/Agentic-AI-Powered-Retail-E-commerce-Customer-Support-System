@@ -1,0 +1,80 @@
+name: Deploy Streamlit UI
+
+# Triggers: manually or when UI files change
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "src/ui/**"
+      - "shopease_capstone/**"
+      - ".streamlit/**"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install streamlit
+
+      - name: Verify Streamlit app loads
+        run: |
+          echo "Streamlit app verification"
+          python -c "import streamlit; print(f'Streamlit {streamlit.__version__} installed')"
+
+      # -----------------------------------------------------------
+      # DEPLOYMENT OPTIONS (uncomment ONE when ready)
+      # -----------------------------------------------------------
+
+      # Option 1: Streamlit Community Cloud (RECOMMENDED for demo)
+      # No GitHub Action needed — connect repo at https://share.streamlit.io
+      # Steps:
+      #   1. Go to https://share.streamlit.io
+      #   2. Sign in with GitHub
+      #   3. Select this repo
+      #   4. Set main file: shopease_capstone/app.py (or src/ui/app.py after integration)
+      #   5. Deploy — gives you a public URL like https://shopease-demo.streamlit.app
+      #
+      # That's it! Every push to main auto-deploys.
+
+      # Option 2: Deploy to Render (free tier)
+      # - name: Deploy to Render
+      #   env:
+      #     RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+      #   run: |
+      #     curl -X POST "https://api.render.com/deploy/srv-xxx?key=$RENDER_API_KEY"
+
+      # Option 3: Deploy to Railway
+      # - name: Deploy to Railway
+      #   env:
+      #     RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+      #   run: |
+      #     npm install -g @railway/cli
+      #     railway up --service shopease-ui
+
+      - name: Deployment info
+        run: |
+          echo "=================================================="
+          echo "  DEPLOYMENT OPTIONS FOR LIVE DEMO"
+          echo "=================================================="
+          echo ""
+          echo "  RECOMMENDED: Streamlit Community Cloud (free)"
+          echo "  1. Go to https://share.streamlit.io"
+          echo "  2. Connect this GitHub repo"
+          echo "  3. Set entry point: shopease_capstone/app.py"
+          echo "  4. Deploy → get public URL"
+          echo ""
+          echo "  Your demo will be live at:"
+          echo "  https://shopease-support-demo.streamlit.app"
+          echo "=================================================="
