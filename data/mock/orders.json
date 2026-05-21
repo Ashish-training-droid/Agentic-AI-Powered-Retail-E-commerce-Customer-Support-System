@@ -1,0 +1,4557 @@
+{
+  "meta": {
+    "source": "ShopEase Mock Business Systems",
+    "version": "1.0",
+    "last_updated": "2026-05-21",
+    "currency": "INR",
+    "catalog_version": "1.2"
+  },
+  "orders": [
+    {
+      "order_id": "SE10234",
+      "customer_id": "CUST_1001",
+      "status": "shipped",
+      "placed_on": "2026-05-15",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "WH-100",
+          "name": "Sony WH-1000XM5",
+          "quantity": 1,
+          "unit_price": 24999,
+          "line_total": 24999,
+          "category": "electronics",
+          "subcategory": "headphones"
+        }
+      ],
+      "subtotal": 24999,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 24999,
+      "currency": "INR",
+      "shipping_address": "123 MG Road, Koramangala, Bangalore, Karnataka 560001",
+      "payment_id": "PAY_10234",
+      "shipment_id": "SHIP_10234",
+      "demo_scenario": "shipped_tracking",
+      "expected_delivery": "2026-05-20"
+    },
+    {
+      "order_id": "SE10567",
+      "customer_id": "CUST_1002",
+      "status": "delivered",
+      "placed_on": "2026-05-10",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "FA-502",
+          "name": "Adidas Ultraboost 22",
+          "quantity": 1,
+          "unit_price": 14999,
+          "line_total": 14999,
+          "category": "fashion",
+          "subcategory": "shoes"
+        }
+      ],
+      "subtotal": 14999,
+      "discount": 1500,
+      "coupon_code": "RUN10",
+      "total_amount": 13499,
+      "currency": "INR",
+      "shipping_address": "778 Brigade Road, Flat 966, Bangalore, Karnataka 560001",
+      "payment_id": "PAY_10567",
+      "shipment_id": "SHIP_10567",
+      "demo_scenario": "return_eligible",
+      "delivered_on": "2026-05-14",
+      "expected_delivery": "2026-05-17"
+    },
+    {
+      "order_id": "SE10890",
+      "customer_id": "CUST_1003",
+      "status": "delivered",
+      "placed_on": "2026-05-08",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "PH-301",
+          "name": "Samsung Galaxy S24",
+          "quantity": 1,
+          "unit_price": 74999,
+          "line_total": 74999,
+          "category": "electronics",
+          "subcategory": "phones"
+        }
+      ],
+      "subtotal": 74999,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 74999,
+      "currency": "INR",
+      "shipping_address": "748 Salt Lake Sector V, Hyderabad, Telangana 500001",
+      "payment_id": "PAY_10890",
+      "shipment_id": "SHIP_10890",
+      "demo_scenario": "damaged_product",
+      "delivered_on": "2026-05-12",
+      "damage_reported": true,
+      "expected_delivery": "2026-05-12"
+    },
+    {
+      "order_id": "SE10111",
+      "customer_id": "CUST_1004",
+      "status": "processing",
+      "placed_on": "2026-05-18",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "LP-203",
+          "name": "Lenovo IdeaPad Slim 3",
+          "quantity": 1,
+          "unit_price": 42990,
+          "line_total": 42990,
+          "category": "electronics",
+          "subcategory": "laptops"
+        },
+        {
+          "item_id": "ITEM_002",
+          "product_id": "AC-401",
+          "name": "Logitech MX Master 3S",
+          "quantity": 1,
+          "unit_price": 9495,
+          "line_total": 9495,
+          "category": "electronics",
+          "subcategory": "accessories"
+        }
+      ],
+      "subtotal": 52485,
+      "discount": 0,
+      "coupon_code": "SAVE20",
+      "total_amount": 52485,
+      "currency": "INR",
+      "shipping_address": "390 Linking Road, Flat 1029, Chennai, Tamil Nadu 600001",
+      "payment_id": "PAY_10111",
+      "shipment_id": "SHIP_10111",
+      "demo_scenario": "coupon_issue",
+      "coupon_status": "rejected",
+      "coupon_rejection_reason": "Coupon not applicable on selected items in cart"
+    },
+    {
+      "order_id": "SE10999",
+      "customer_id": "CUST_1005",
+      "status": "shipped",
+      "placed_on": "2026-05-05",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "TV-1101",
+          "name": "LG 43 inch OLED evo C3",
+          "quantity": 1,
+          "unit_price": 124990,
+          "line_total": 124990,
+          "category": "electronics",
+          "subcategory": "tv"
+        }
+      ],
+      "subtotal": 124990,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 124990,
+      "currency": "INR",
+      "shipping_address": "389 Linking Road, Pune, Maharashtra 411001",
+      "payment_id": "PAY_10999",
+      "shipment_id": "SHIP_10999",
+      "demo_scenario": "lost_shipment",
+      "expected_delivery": "2026-05-10"
+    },
+    {
+      "order_id": "SE10333",
+      "customer_id": "CUST_1006",
+      "status": "cancelled",
+      "placed_on": "2026-05-17",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "HM-605",
+          "name": "LG 1.5 Ton 5 Star Inverter Split AC",
+          "quantity": 1,
+          "unit_price": 42990,
+          "line_total": 42990,
+          "category": "home",
+          "subcategory": "appliances"
+        }
+      ],
+      "subtotal": 42990,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 42990,
+      "currency": "INR",
+      "shipping_address": "406 Salt Lake Sector V, Flat 393, Kolkata, West Bengal 700001",
+      "payment_id": "PAY_10333",
+      "shipment_id": "SHIP_10333",
+      "demo_scenario": "cancelled_order",
+      "cancelled_on": "2026-05-18",
+      "cancellation_reason": "Customer requested cancellation before dispatch"
+    },
+    {
+      "order_id": "SE10456",
+      "customer_id": "CUST_1007",
+      "status": "delivered",
+      "placed_on": "2026-04-28",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "FA-501",
+          "name": "Nike Air Force 1",
+          "quantity": 1,
+          "unit_price": 7995,
+          "line_total": 7995,
+          "category": "fashion",
+          "subcategory": "shoes"
+        }
+      ],
+      "subtotal": 7995,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 7995,
+      "currency": "INR",
+      "shipping_address": "882 Park Street, Ahmedabad, Gujarat 380001",
+      "payment_id": "PAY_10456",
+      "shipment_id": "SHIP_10456",
+      "demo_scenario": "refund_processing",
+      "delivered_on": "2026-05-03",
+      "expected_delivery": "2026-05-05"
+    },
+    {
+      "order_id": "SE10777",
+      "customer_id": "CUST_1008",
+      "status": "payment_failed",
+      "placed_on": "2026-05-19",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "LP-202",
+          "name": "HP Pavilion 14",
+          "quantity": 1,
+          "unit_price": 64999,
+          "line_total": 64999,
+          "category": "electronics",
+          "subcategory": "laptops"
+        }
+      ],
+      "subtotal": 64999,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 64999,
+      "currency": "INR",
+      "shipping_address": "769 Linking Road, Flat 1413, Jaipur, Rajasthan 302001",
+      "payment_id": "PAY_10777",
+      "shipment_id": "SHIP_10777",
+      "demo_scenario": "payment_failed"
+    },
+    {
+      "order_id": "SE10666",
+      "customer_id": "CUST_1009",
+      "status": "delivered",
+      "placed_on": "2026-05-01",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "WH-103",
+          "name": "Apple AirPods Pro 2",
+          "quantity": 1,
+          "unit_price": 21900,
+          "line_total": 21900,
+          "category": "electronics",
+          "subcategory": "headphones"
+        },
+        {
+          "item_id": "ITEM_002",
+          "product_id": "AC-400",
+          "name": "Anker PowerCore 20000",
+          "quantity": 1,
+          "unit_price": 2999,
+          "line_total": 2999,
+          "category": "electronics",
+          "subcategory": "accessories"
+        }
+      ],
+      "subtotal": 24899,
+      "discount": 3285,
+      "coupon_code": "AUDIO15",
+      "total_amount": 21614,
+      "currency": "INR",
+      "shipping_address": "624 FC Road, Flat 414, Lucknow, Uttar Pradesh 226001",
+      "payment_id": "PAY_10666",
+      "shipment_id": "SHIP_10666",
+      "demo_scenario": "invoice_generation",
+      "delivered_on": "2026-05-06",
+      "invoice_requested": true,
+      "expected_delivery": "2026-05-04"
+    },
+    {
+      "order_id": "SE10888",
+      "customer_id": "CUST_1010",
+      "status": "delivered",
+      "placed_on": "2026-05-07",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "HM-600",
+          "name": "Philips Air Fryer HD9252",
+          "quantity": 1,
+          "unit_price": 8999,
+          "line_total": 8999,
+          "category": "home",
+          "subcategory": "kitchen"
+        }
+      ],
+      "subtotal": 8999,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 8999,
+      "currency": "INR",
+      "shipping_address": "970 Park Street, Flat 276, Kochi, Kerala 682001",
+      "payment_id": "PAY_10888",
+      "shipment_id": "SHIP_10888",
+      "demo_scenario": "replacement_request",
+      "delivered_on": "2026-05-11",
+      "replacement_requested": true,
+      "expected_delivery": "2026-05-10"
+    },
+    {
+      "order_id": "SE10001",
+      "customer_id": "CUST_1011",
+      "status": "delivered",
+      "placed_on": "2026-04-22",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "SP-902",
+          "name": "Decathlon Domyos 10kg Dumbbell Set",
+          "quantity": 1,
+          "unit_price": 1899,
+          "line_total": 1899,
+          "category": "sports",
+          "subcategory": "fitness"
+        }
+      ],
+      "subtotal": 1899,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 1899,
+      "currency": "INR",
+      "shipping_address": "952 FC Road, Flat 739, Chandigarh, Chandigarh 160001",
+      "payment_id": "PAY_10001",
+      "shipment_id": "SHIP_10001",
+      "expected_delivery": "2026-04-29",
+      "delivered_on": "2026-04-27"
+    },
+    {
+      "order_id": "SE10002",
+      "customer_id": "CUST_1012",
+      "status": "shipped",
+      "placed_on": "2025-11-12",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "SP-905",
+          "name": "Hero Sprint Pro Roadster 26T Cycle",
+          "quantity": 2,
+          "unit_price": 8499,
+          "line_total": 16998,
+          "category": "sports",
+          "subcategory": "cycling"
+        },
+        {
+          "item_id": "ITEM_002",
+          "product_id": "GR-1702",
+          "name": "Amul Pure Ghee 1L Tin",
+          "quantity": 1,
+          "unit_price": 660,
+          "line_total": 660,
+          "category": "grocery",
+          "subcategory": "dairy"
+        },
+        {
+          "item_id": "ITEM_003",
+          "product_id": "PH-302",
+          "name": "OnePlus 12",
+          "quantity": 2,
+          "unit_price": 64999,
+          "line_total": 129998,
+          "category": "electronics",
+          "subcategory": "phones"
+        }
+      ],
+      "subtotal": 147656,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 147656,
+      "currency": "INR",
+      "shipping_address": "226 MG Road, Indore, Madhya Pradesh 452001",
+      "payment_id": "PAY_10002",
+      "shipment_id": "SHIP_10002",
+      "expected_delivery": "2025-11-17"
+    },
+    {
+      "order_id": "SE10003",
+      "customer_id": "CUST_1013",
+      "status": "processing",
+      "placed_on": "2026-04-08",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "AC-401",
+          "name": "Logitech MX Master 3S",
+          "quantity": 1,
+          "unit_price": 9495,
+          "line_total": 9495,
+          "category": "electronics",
+          "subcategory": "accessories"
+        }
+      ],
+      "subtotal": 9495,
+      "discount": 1000,
+      "coupon_code": "NEWUSER",
+      "total_amount": 8495,
+      "currency": "INR",
+      "shipping_address": "591 Salt Lake Sector V, Flat 598, Bhopal, Madhya Pradesh 462001",
+      "payment_id": "PAY_10003",
+      "shipment_id": "SHIP_10003"
+    },
+    {
+      "order_id": "SE10004",
+      "customer_id": "CUST_1014",
+      "status": "cancelled",
+      "placed_on": "2025-12-11",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "CM-1201",
+          "name": "GoPro HERO12 Black",
+          "quantity": 2,
+          "unit_price": 41990,
+          "line_total": 83980,
+          "category": "electronics",
+          "subcategory": "cameras"
+        }
+      ],
+      "subtotal": 83980,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 83980,
+      "currency": "INR",
+      "shipping_address": "413 Anna Salai, Nagpur, Maharashtra 440001",
+      "payment_id": "PAY_10004",
+      "shipment_id": "SHIP_10004",
+      "cancelled_on": "2025-12-11",
+      "cancellation_reason": "Customer cancelled before shipment"
+    },
+    {
+      "order_id": "SE10005",
+      "customer_id": "CUST_1015",
+      "status": "delivered",
+      "placed_on": "2026-03-28",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "SP-901",
+          "name": "Nivia Storm Football Size 5",
+          "quantity": 2,
+          "unit_price": 599,
+          "line_total": 1198,
+          "category": "sports",
+          "subcategory": "team-sports"
+        }
+      ],
+      "subtotal": 1198,
+      "discount": 500,
+      "coupon_code": "FEST25",
+      "total_amount": 698,
+      "currency": "INR",
+      "shipping_address": "52 MG Road, Surat, Gujarat 395001",
+      "payment_id": "PAY_10005",
+      "shipment_id": "SHIP_10005",
+      "expected_delivery": "2026-04-02",
+      "delivered_on": "2026-04-01"
+    },
+    {
+      "order_id": "SE10006",
+      "customer_id": "CUST_1016",
+      "status": "delivered",
+      "placed_on": "2026-04-08",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "FA-502",
+          "name": "Adidas Ultraboost 22",
+          "quantity": 2,
+          "unit_price": 14999,
+          "line_total": 29998,
+          "category": "fashion",
+          "subcategory": "shoes"
+        },
+        {
+          "item_id": "ITEM_002",
+          "product_id": "BK-804",
+          "name": "Rich Dad Poor Dad by Robert Kiyosaki",
+          "quantity": 1,
+          "unit_price": 349,
+          "line_total": 349,
+          "category": "books",
+          "subcategory": "finance"
+        }
+      ],
+      "subtotal": 30347,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 30347,
+      "currency": "INR",
+      "shipping_address": "293 Hitech City Road, Flat 1239, Visakhapatnam, Andhra Pradesh 530001",
+      "payment_id": "PAY_10006",
+      "shipment_id": "SHIP_10006",
+      "expected_delivery": "2026-04-13",
+      "delivered_on": "2026-04-11"
+    },
+    {
+      "order_id": "SE10007",
+      "customer_id": "CUST_1017",
+      "status": "returned",
+      "placed_on": "2025-12-15",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "HM-603",
+          "name": "Dyson V8 Absolute Cordless Vacuum",
+          "quantity": 2,
+          "unit_price": 32900,
+          "line_total": 65800,
+          "category": "home",
+          "subcategory": "cleaning"
+        }
+      ],
+      "subtotal": 65800,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 65800,
+      "currency": "INR",
+      "shipping_address": "515 Brigade Road, Coimbatore, Tamil Nadu 641001",
+      "payment_id": "PAY_10007",
+      "shipment_id": "SHIP_10007",
+      "expected_delivery": "2025-12-19"
+    },
+    {
+      "order_id": "SE10008",
+      "customer_id": "CUST_1018",
+      "status": "delivered",
+      "placed_on": "2026-04-23",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "BT-701",
+          "name": "The Ordinary Niacinamide 10% + Zinc 1%",
+          "quantity": 2,
+          "unit_price": 750,
+          "line_total": 1500,
+          "category": "beauty",
+          "subcategory": "skincare"
+        },
+        {
+          "item_id": "ITEM_002",
+          "product_id": "PH-304",
+          "name": "Redmi Note 13 Pro",
+          "quantity": 1,
+          "unit_price": 25999,
+          "line_total": 25999,
+          "category": "electronics",
+          "subcategory": "phones"
+        }
+      ],
+      "subtotal": 27499,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 27499,
+      "currency": "INR",
+      "shipping_address": "430 Anna Salai, Thiruvananthapuram, Kerala 695001",
+      "payment_id": "PAY_10008",
+      "shipment_id": "SHIP_10008",
+      "expected_delivery": "2026-04-29",
+      "delivered_on": "2026-04-29"
+    },
+    {
+      "order_id": "SE10009",
+      "customer_id": "CUST_1019",
+      "status": "processing",
+      "placed_on": "2026-03-01",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "SP-905",
+          "name": "Hero Sprint Pro Roadster 26T Cycle",
+          "quantity": 2,
+          "unit_price": 8499,
+          "line_total": 16998,
+          "category": "sports",
+          "subcategory": "cycling"
+        }
+      ],
+      "subtotal": 16998,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 16998,
+      "currency": "INR",
+      "shipping_address": "103 Park Street, Gurgaon, Haryana 122001",
+      "payment_id": "PAY_10009",
+      "shipment_id": "SHIP_10009"
+    },
+    {
+      "order_id": "SE10010",
+      "customer_id": "CUST_1020",
+      "status": "delivered",
+      "placed_on": "2026-01-17",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "PH-304",
+          "name": "Redmi Note 13 Pro",
+          "quantity": 1,
+          "unit_price": 25999,
+          "line_total": 25999,
+          "category": "electronics",
+          "subcategory": "phones"
+        }
+      ],
+      "subtotal": 25999,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 25999,
+      "currency": "INR",
+      "shipping_address": "827 MG Road, Flat 1468, Mumbai, Maharashtra 400001",
+      "payment_id": "PAY_10010",
+      "shipment_id": "SHIP_10010",
+      "expected_delivery": "2026-01-23",
+      "delivered_on": "2026-01-19"
+    },
+    {
+      "order_id": "SE10011",
+      "customer_id": "CUST_1021",
+      "status": "shipped",
+      "placed_on": "2026-03-06",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "SW-360",
+          "name": "Apple Watch Series 9",
+          "quantity": 2,
+          "unit_price": 41900,
+          "line_total": 83800,
+          "category": "electronics",
+          "subcategory": "smartwatches"
+        }
+      ],
+      "subtotal": 83800,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 83800,
+      "currency": "INR",
+      "shipping_address": "704 Linking Road, Flat 1136, Delhi, Delhi 110001",
+      "payment_id": "PAY_10011",
+      "shipment_id": "SHIP_10011",
+      "expected_delivery": "2026-03-13"
+    },
+    {
+      "order_id": "SE10012",
+      "customer_id": "CUST_1022",
+      "status": "shipped",
+      "placed_on": "2026-04-15",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "ST-1602",
+          "name": "Faber-Castell Color Pencils 24 Shades",
+          "quantity": 2,
+          "unit_price": 299,
+          "line_total": 598,
+          "category": "stationery",
+          "subcategory": "art"
+        }
+      ],
+      "subtotal": 598,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 598,
+      "currency": "INR",
+      "shipping_address": "760 Salt Lake Sector V, Flat 1230, Bangalore, Karnataka 560001",
+      "payment_id": "PAY_10012",
+      "shipment_id": "SHIP_10012",
+      "expected_delivery": "2026-04-20"
+    },
+    {
+      "order_id": "SE10013",
+      "customer_id": "CUST_1023",
+      "status": "confirmed",
+      "placed_on": "2026-01-02",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "WH-102",
+          "name": "JBL Tune 770NC",
+          "quantity": 1,
+          "unit_price": 7999,
+          "line_total": 7999,
+          "category": "electronics",
+          "subcategory": "headphones"
+        }
+      ],
+      "subtotal": 7999,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 7999,
+      "currency": "INR",
+      "shipping_address": "316 Anna Salai, Flat 182, Hyderabad, Telangana 500001",
+      "payment_id": "PAY_10013",
+      "shipment_id": "SHIP_10013"
+    },
+    {
+      "order_id": "SE10014",
+      "customer_id": "CUST_1024",
+      "status": "delivered",
+      "placed_on": "2025-12-08",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "TB-352",
+          "name": "Xiaomi Pad 6",
+          "quantity": 1,
+          "unit_price": 26999,
+          "line_total": 26999,
+          "category": "electronics",
+          "subcategory": "tablets"
+        }
+      ],
+      "subtotal": 26999,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 26999,
+      "currency": "INR",
+      "shipping_address": "26 Brigade Road, Flat 781, Chennai, Tamil Nadu 600001",
+      "payment_id": "PAY_10014",
+      "shipment_id": "SHIP_10014",
+      "expected_delivery": "2025-12-12",
+      "delivered_on": "2025-12-14"
+    },
+    {
+      "order_id": "SE10015",
+      "customer_id": "CUST_1025",
+      "status": "processing",
+      "placed_on": "2026-03-15",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "AC-400",
+          "name": "Anker PowerCore 20000",
+          "quantity": 2,
+          "unit_price": 2999,
+          "line_total": 5998,
+          "category": "electronics",
+          "subcategory": "accessories"
+        }
+      ],
+      "subtotal": 5998,
+      "discount": 2000,
+      "coupon_code": "NEWUSER",
+      "total_amount": 3998,
+      "currency": "INR",
+      "shipping_address": "229 MG Road, Pune, Maharashtra 411001",
+      "payment_id": "PAY_10015",
+      "shipment_id": "SHIP_10015"
+    },
+    {
+      "order_id": "SE10016",
+      "customer_id": "CUST_1026",
+      "status": "delivered",
+      "placed_on": "2026-04-18",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "FA-501",
+          "name": "Nike Air Force 1",
+          "quantity": 1,
+          "unit_price": 7995,
+          "line_total": 7995,
+          "category": "fashion",
+          "subcategory": "shoes"
+        }
+      ],
+      "subtotal": 7995,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 7995,
+      "currency": "INR",
+      "shipping_address": "183 Linking Road, Kolkata, West Bengal 700001",
+      "payment_id": "PAY_10016",
+      "shipment_id": "SHIP_10016",
+      "expected_delivery": "2026-04-25",
+      "delivered_on": "2026-04-22"
+    },
+    {
+      "order_id": "SE10017",
+      "customer_id": "CUST_1027",
+      "status": "shipped",
+      "placed_on": "2025-11-17",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "TV-1101",
+          "name": "LG 43 inch OLED evo C3",
+          "quantity": 1,
+          "unit_price": 124990,
+          "line_total": 124990,
+          "category": "electronics",
+          "subcategory": "tv"
+        },
+        {
+          "item_id": "ITEM_002",
+          "product_id": "LP-204",
+          "name": "ASUS ROG Strix G16",
+          "quantity": 2,
+          "unit_price": 154990,
+          "line_total": 309980,
+          "category": "electronics",
+          "subcategory": "laptops"
+        }
+      ],
+      "subtotal": 434970,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 434970,
+      "currency": "INR",
+      "shipping_address": "2 FC Road, Flat 846, Ahmedabad, Gujarat 380001",
+      "payment_id": "PAY_10017",
+      "shipment_id": "SHIP_10017",
+      "expected_delivery": "2025-11-21"
+    },
+    {
+      "order_id": "SE10018",
+      "customer_id": "CUST_1028",
+      "status": "shipped",
+      "placed_on": "2026-04-16",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "GR-1701",
+          "name": "Fortune Sunlite Refined Sunflower Oil 1L Pouch",
+          "quantity": 1,
+          "unit_price": 169,
+          "line_total": 169,
+          "category": "grocery",
+          "subcategory": "staples"
+        }
+      ],
+      "subtotal": 169,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 169,
+      "currency": "INR",
+      "shipping_address": "568 Brigade Road, Flat 493, Jaipur, Rajasthan 302001",
+      "payment_id": "PAY_10018",
+      "shipment_id": "SHIP_10018",
+      "expected_delivery": "2026-04-23"
+    },
+    {
+      "order_id": "SE10019",
+      "customer_id": "CUST_1029",
+      "status": "shipped",
+      "placed_on": "2026-04-20",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "PH-302",
+          "name": "OnePlus 12",
+          "quantity": 2,
+          "unit_price": 64999,
+          "line_total": 129998,
+          "category": "electronics",
+          "subcategory": "phones"
+        }
+      ],
+      "subtotal": 129998,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 129998,
+      "currency": "INR",
+      "shipping_address": "671 Anna Salai, Flat 1053, Lucknow, Uttar Pradesh 226001",
+      "payment_id": "PAY_10019",
+      "shipment_id": "SHIP_10019",
+      "expected_delivery": "2026-04-25"
+    },
+    {
+      "order_id": "SE10020",
+      "customer_id": "CUST_1030",
+      "status": "returned",
+      "placed_on": "2026-02-14",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "TB-350",
+          "name": "Apple iPad Air M2",
+          "quantity": 1,
+          "unit_price": 59900,
+          "line_total": 59900,
+          "category": "electronics",
+          "subcategory": "tablets"
+        },
+        {
+          "item_id": "ITEM_002",
+          "product_id": "HM-610",
+          "name": "Philips Hue White & Color Ambiance Smart Bulb E27",
+          "quantity": 2,
+          "unit_price": 4499,
+          "line_total": 8998,
+          "category": "home",
+          "subcategory": "lighting"
+        }
+      ],
+      "subtotal": 68898,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 68898,
+      "currency": "INR",
+      "shipping_address": "689 Linking Road, Kochi, Kerala 682001",
+      "payment_id": "PAY_10020",
+      "shipment_id": "SHIP_10020",
+      "expected_delivery": "2026-02-19"
+    },
+    {
+      "order_id": "SE10021",
+      "customer_id": "CUST_1031",
+      "status": "shipped",
+      "placed_on": "2026-01-29",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "PT-1502",
+          "name": "PetSafe Easy Walk Dog Harness Medium",
+          "quantity": 2,
+          "unit_price": 1899,
+          "line_total": 3798,
+          "category": "pets",
+          "subcategory": "accessories"
+        }
+      ],
+      "subtotal": 3798,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 3798,
+      "currency": "INR",
+      "shipping_address": "410 FC Road, Chandigarh, Chandigarh 160001",
+      "payment_id": "PAY_10021",
+      "shipment_id": "SHIP_10021",
+      "expected_delivery": "2026-02-05"
+    },
+    {
+      "order_id": "SE10022",
+      "customer_id": "CUST_1032",
+      "status": "confirmed",
+      "placed_on": "2026-04-18",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "HM-610",
+          "name": "Philips Hue White & Color Ambiance Smart Bulb E27",
+          "quantity": 1,
+          "unit_price": 4499,
+          "line_total": 4499,
+          "category": "home",
+          "subcategory": "lighting"
+        }
+      ],
+      "subtotal": 4499,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 4499,
+      "currency": "INR",
+      "shipping_address": "821 Salt Lake Sector V, Flat 1468, Indore, Madhya Pradesh 452001",
+      "payment_id": "PAY_10022",
+      "shipment_id": "SHIP_10022"
+    },
+    {
+      "order_id": "SE10023",
+      "customer_id": "CUST_1033",
+      "status": "delivered",
+      "placed_on": "2025-11-24",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "TY-1000",
+          "name": "LEGO Classic Creative Bricks 484 pcs",
+          "quantity": 1,
+          "unit_price": 2999,
+          "line_total": 2999,
+          "category": "toys",
+          "subcategory": "building-blocks"
+        }
+      ],
+      "subtotal": 2999,
+      "discount": 2000,
+      "coupon_code": null,
+      "total_amount": 999,
+      "currency": "INR",
+      "shipping_address": "282 Salt Lake Sector V, Flat 259, Bhopal, Madhya Pradesh 462001",
+      "payment_id": "PAY_10023",
+      "shipment_id": "SHIP_10023",
+      "expected_delivery": "2025-12-01",
+      "delivered_on": "2025-11-27"
+    },
+    {
+      "order_id": "SE10024",
+      "customer_id": "CUST_1034",
+      "status": "refund_initiated",
+      "placed_on": "2026-04-22",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "BK-803",
+          "name": "The Psychology of Money by Morgan Housel",
+          "quantity": 1,
+          "unit_price": 299,
+          "line_total": 299,
+          "category": "books",
+          "subcategory": "finance"
+        },
+        {
+          "item_id": "ITEM_002",
+          "product_id": "PH-300",
+          "name": "iPhone 15",
+          "quantity": 1,
+          "unit_price": 79900,
+          "line_total": 79900,
+          "category": "electronics",
+          "subcategory": "phones"
+        }
+      ],
+      "subtotal": 80199,
+      "discount": 1000,
+      "coupon_code": null,
+      "total_amount": 79199,
+      "currency": "INR",
+      "shipping_address": "425 Hitech City Road, Flat 778, Nagpur, Maharashtra 440001",
+      "payment_id": "PAY_10024",
+      "shipment_id": "SHIP_10024",
+      "expected_delivery": "2026-04-25"
+    },
+    {
+      "order_id": "SE10025",
+      "customer_id": "CUST_1035",
+      "status": "returned",
+      "placed_on": "2026-03-15",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "BT-702",
+          "name": "Maybelline Fit Me Matte Foundation",
+          "quantity": 2,
+          "unit_price": 549,
+          "line_total": 1098,
+          "category": "beauty",
+          "subcategory": "makeup"
+        }
+      ],
+      "subtotal": 1098,
+      "discount": 2000,
+      "coupon_code": "NEWUSER",
+      "total_amount": -902,
+      "currency": "INR",
+      "shipping_address": "772 Hitech City Road, Surat, Gujarat 395001",
+      "payment_id": "PAY_10025",
+      "shipment_id": "SHIP_10025",
+      "expected_delivery": "2026-03-20"
+    },
+    {
+      "order_id": "SE10026",
+      "customer_id": "CUST_1036",
+      "status": "refund_initiated",
+      "placed_on": "2025-11-02",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "FA-505",
+          "name": "Puma Smash V2 Sneakers",
+          "quantity": 2,
+          "unit_price": 2999,
+          "line_total": 5998,
+          "category": "fashion",
+          "subcategory": "shoes"
+        }
+      ],
+      "subtotal": 5998,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 5998,
+      "currency": "INR",
+      "shipping_address": "547 MG Road, Visakhapatnam, Andhra Pradesh 530001",
+      "payment_id": "PAY_10026",
+      "shipment_id": "SHIP_10026",
+      "expected_delivery": "2025-11-08"
+    },
+    {
+      "order_id": "SE10027",
+      "customer_id": "CUST_1037",
+      "status": "delivered",
+      "placed_on": "2026-01-20",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "LP-200",
+          "name": "MacBook Air M3",
+          "quantity": 2,
+          "unit_price": 114900,
+          "line_total": 229800,
+          "category": "electronics",
+          "subcategory": "laptops"
+        }
+      ],
+      "subtotal": 229800,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 229800,
+      "currency": "INR",
+      "shipping_address": "346 Hitech City Road, Flat 670, Coimbatore, Tamil Nadu 641001",
+      "payment_id": "PAY_10027",
+      "shipment_id": "SHIP_10027",
+      "expected_delivery": "2026-01-27",
+      "delivered_on": "2026-01-25"
+    },
+    {
+      "order_id": "SE10028",
+      "customer_id": "CUST_1038",
+      "status": "delivered",
+      "placed_on": "2025-11-28",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "SP-903",
+          "name": "SG Sunny Tonny Kashmir Willow Cricket Bat",
+          "quantity": 2,
+          "unit_price": 2499,
+          "line_total": 4998,
+          "category": "sports",
+          "subcategory": "cricket"
+        },
+        {
+          "item_id": "ITEM_002",
+          "product_id": "CM-1200",
+          "name": "Canon EOS R50 Mirrorless Camera",
+          "quantity": 1,
+          "unit_price": 71990,
+          "line_total": 71990,
+          "category": "electronics",
+          "subcategory": "cameras"
+        }
+      ],
+      "subtotal": 76988,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 76988,
+      "currency": "INR",
+      "shipping_address": "205 MG Road, Thiruvananthapuram, Kerala 695001",
+      "payment_id": "PAY_10028",
+      "shipment_id": "SHIP_10028",
+      "expected_delivery": "2025-12-02",
+      "delivered_on": "2025-12-03"
+    },
+    {
+      "order_id": "SE10029",
+      "customer_id": "CUST_1039",
+      "status": "delivered",
+      "placed_on": "2026-01-29",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "PH-304",
+          "name": "Redmi Note 13 Pro",
+          "quantity": 1,
+          "unit_price": 25999,
+          "line_total": 25999,
+          "category": "electronics",
+          "subcategory": "phones"
+        }
+      ],
+      "subtotal": 25999,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 25999,
+      "currency": "INR",
+      "shipping_address": "797 Brigade Road, Gurgaon, Haryana 122001",
+      "payment_id": "PAY_10029",
+      "shipment_id": "SHIP_10029",
+      "expected_delivery": "2026-02-03",
+      "delivered_on": "2026-02-01"
+    },
+    {
+      "order_id": "SE10030",
+      "customer_id": "CUST_1040",
+      "status": "delivered",
+      "placed_on": "2026-03-01",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "SP-904",
+          "name": "Boldfit Yoga Mat 6mm Anti-Skid",
+          "quantity": 2,
+          "unit_price": 699,
+          "line_total": 1398,
+          "category": "sports",
+          "subcategory": "yoga"
+        },
+        {
+          "item_id": "ITEM_002",
+          "product_id": "MN-1401",
+          "name": "LG UltraGear 27GP850 27 inch QHD Gaming Monitor",
+          "quantity": 2,
+          "unit_price": 32990,
+          "line_total": 65980,
+          "category": "electronics",
+          "subcategory": "monitors"
+        },
+        {
+          "item_id": "ITEM_003",
+          "product_id": "CM-1201",
+          "name": "GoPro HERO12 Black",
+          "quantity": 2,
+          "unit_price": 41990,
+          "line_total": 83980,
+          "category": "electronics",
+          "subcategory": "cameras"
+        }
+      ],
+      "subtotal": 151358,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 151358,
+      "currency": "INR",
+      "shipping_address": "816 MG Road, Flat 812, Mumbai, Maharashtra 400001",
+      "payment_id": "PAY_10030",
+      "shipment_id": "SHIP_10030",
+      "expected_delivery": "2026-03-07",
+      "delivered_on": "2026-03-05"
+    },
+    {
+      "order_id": "SE10031",
+      "customer_id": "CUST_1041",
+      "status": "shipped",
+      "placed_on": "2026-03-22",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "LP-204",
+          "name": "ASUS ROG Strix G16",
+          "quantity": 1,
+          "unit_price": 154990,
+          "line_total": 154990,
+          "category": "electronics",
+          "subcategory": "laptops"
+        },
+        {
+          "item_id": "ITEM_002",
+          "product_id": "PT-1500",
+          "name": "Pedigree Adult Dry Dog Food Chicken & Veg 3kg",
+          "quantity": 2,
+          "unit_price": 749,
+          "line_total": 1498,
+          "category": "pets",
+          "subcategory": "dog-food"
+        }
+      ],
+      "subtotal": 156488,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 156488,
+      "currency": "INR",
+      "shipping_address": "752 Linking Road, Flat 1362, Delhi, Delhi 110001",
+      "payment_id": "PAY_10031",
+      "shipment_id": "SHIP_10031",
+      "expected_delivery": "2026-03-25"
+    },
+    {
+      "order_id": "SE10032",
+      "customer_id": "CUST_1042",
+      "status": "delivered",
+      "placed_on": "2026-02-21",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "BT-701",
+          "name": "The Ordinary Niacinamide 10% + Zinc 1%",
+          "quantity": 1,
+          "unit_price": 750,
+          "line_total": 750,
+          "category": "beauty",
+          "subcategory": "skincare"
+        },
+        {
+          "item_id": "ITEM_002",
+          "product_id": "GR-1703",
+          "name": "Tata Tea Premium 1kg",
+          "quantity": 1,
+          "unit_price": 545,
+          "line_total": 545,
+          "category": "grocery",
+          "subcategory": "beverages"
+        }
+      ],
+      "subtotal": 1295,
+      "discount": 2000,
+      "coupon_code": "NEWUSER",
+      "total_amount": -705,
+      "currency": "INR",
+      "shipping_address": "345 MG Road, Flat 1113, Bangalore, Karnataka 560001",
+      "payment_id": "PAY_10032",
+      "shipment_id": "SHIP_10032",
+      "expected_delivery": "2026-02-28",
+      "delivered_on": "2026-02-27"
+    },
+    {
+      "order_id": "SE10033",
+      "customer_id": "CUST_1043",
+      "status": "cancelled",
+      "placed_on": "2026-03-23",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "SP-904",
+          "name": "Boldfit Yoga Mat 6mm Anti-Skid",
+          "quantity": 2,
+          "unit_price": 699,
+          "line_total": 1398,
+          "category": "sports",
+          "subcategory": "yoga"
+        }
+      ],
+      "subtotal": 1398,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 1398,
+      "currency": "INR",
+      "shipping_address": "88 FC Road, Flat 933, Hyderabad, Telangana 500001",
+      "payment_id": "PAY_10033",
+      "shipment_id": "SHIP_10033",
+      "cancelled_on": "2026-03-23",
+      "cancellation_reason": "Customer cancelled before shipment"
+    },
+    {
+      "order_id": "SE10034",
+      "customer_id": "CUST_1044",
+      "status": "delivered",
+      "placed_on": "2025-11-22",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "HM-605",
+          "name": "LG 1.5 Ton 5 Star Inverter Split AC",
+          "quantity": 2,
+          "unit_price": 42990,
+          "line_total": 85980,
+          "category": "home",
+          "subcategory": "appliances"
+        },
+        {
+          "item_id": "ITEM_002",
+          "product_id": "PT-1501",
+          "name": "Whiskas Adult Cat Dry Food Ocean Fish 1.1kg",
+          "quantity": 1,
+          "unit_price": 415,
+          "line_total": 415,
+          "category": "pets",
+          "subcategory": "cat-food"
+        }
+      ],
+      "subtotal": 86395,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 86395,
+      "currency": "INR",
+      "shipping_address": "378 Salt Lake Sector V, Flat 1234, Chennai, Tamil Nadu 600001",
+      "payment_id": "PAY_10034",
+      "shipment_id": "SHIP_10034",
+      "expected_delivery": "2025-11-27",
+      "delivered_on": "2025-11-28"
+    },
+    {
+      "order_id": "SE10035",
+      "customer_id": "CUST_1045",
+      "status": "shipped",
+      "placed_on": "2026-03-05",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "FA-500",
+          "name": "Levi's 511 Slim Jeans",
+          "quantity": 2,
+          "unit_price": 2799,
+          "line_total": 5598,
+          "category": "fashion",
+          "subcategory": "clothing"
+        }
+      ],
+      "subtotal": 5598,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 5598,
+      "currency": "INR",
+      "shipping_address": "123 Brigade Road, Pune, Maharashtra 411001",
+      "payment_id": "PAY_10035",
+      "shipment_id": "SHIP_10035",
+      "expected_delivery": "2026-03-09"
+    },
+    {
+      "order_id": "SE10036",
+      "customer_id": "CUST_1046",
+      "status": "returned",
+      "placed_on": "2025-12-10",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "WH-104",
+          "name": "boAt Rockerz 450",
+          "quantity": 2,
+          "unit_price": 1499,
+          "line_total": 2998,
+          "category": "electronics",
+          "subcategory": "headphones"
+        },
+        {
+          "item_id": "ITEM_002",
+          "product_id": "PT-1502",
+          "name": "PetSafe Easy Walk Dog Harness Medium",
+          "quantity": 1,
+          "unit_price": 1899,
+          "line_total": 1899,
+          "category": "pets",
+          "subcategory": "accessories"
+        }
+      ],
+      "subtotal": 4897,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 4897,
+      "currency": "INR",
+      "shipping_address": "281 MG Road, Flat 212, Kolkata, West Bengal 700001",
+      "payment_id": "PAY_10036",
+      "shipment_id": "SHIP_10036",
+      "expected_delivery": "2025-12-14"
+    },
+    {
+      "order_id": "SE10037",
+      "customer_id": "CUST_1047",
+      "status": "shipped",
+      "placed_on": "2026-01-19",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "TV-1102",
+          "name": "Mi 4A 32 inch HD Smart TV",
+          "quantity": 1,
+          "unit_price": 13499,
+          "line_total": 13499,
+          "category": "electronics",
+          "subcategory": "tv"
+        }
+      ],
+      "subtotal": 13499,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 13499,
+      "currency": "INR",
+      "shipping_address": "259 Salt Lake Sector V, Ahmedabad, Gujarat 380001",
+      "payment_id": "PAY_10037",
+      "shipment_id": "SHIP_10037",
+      "expected_delivery": "2026-01-25"
+    },
+    {
+      "order_id": "SE10038",
+      "customer_id": "CUST_1048",
+      "status": "processing",
+      "placed_on": "2025-12-06",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "SW-361",
+          "name": "Samsung Galaxy Watch 6",
+          "quantity": 1,
+          "unit_price": 27999,
+          "line_total": 27999,
+          "category": "electronics",
+          "subcategory": "smartwatches"
+        }
+      ],
+      "subtotal": 27999,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 27999,
+      "currency": "INR",
+      "shipping_address": "621 FC Road, Flat 1171, Jaipur, Rajasthan 302001",
+      "payment_id": "PAY_10038",
+      "shipment_id": "SHIP_10038"
+    },
+    {
+      "order_id": "SE10039",
+      "customer_id": "CUST_1049",
+      "status": "refund_initiated",
+      "placed_on": "2025-11-24",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "TV-1102",
+          "name": "Mi 4A 32 inch HD Smart TV",
+          "quantity": 1,
+          "unit_price": 13499,
+          "line_total": 13499,
+          "category": "electronics",
+          "subcategory": "tv"
+        }
+      ],
+      "subtotal": 13499,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 13499,
+      "currency": "INR",
+      "shipping_address": "677 Park Street, Lucknow, Uttar Pradesh 226001",
+      "payment_id": "PAY_10039",
+      "shipment_id": "SHIP_10039",
+      "expected_delivery": "2025-11-28"
+    },
+    {
+      "order_id": "SE10040",
+      "customer_id": "CUST_1050",
+      "status": "shipped",
+      "placed_on": "2025-12-06",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "BK-802",
+          "name": "Deep Work by Cal Newport",
+          "quantity": 2,
+          "unit_price": 399,
+          "line_total": 798,
+          "category": "books",
+          "subcategory": "self-help"
+        },
+        {
+          "item_id": "ITEM_002",
+          "product_id": "FA-501",
+          "name": "Nike Air Force 1",
+          "quantity": 1,
+          "unit_price": 7995,
+          "line_total": 7995,
+          "category": "fashion",
+          "subcategory": "shoes"
+        },
+        {
+          "item_id": "ITEM_003",
+          "product_id": "WH-103",
+          "name": "Apple AirPods Pro 2",
+          "quantity": 2,
+          "unit_price": 21900,
+          "line_total": 43800,
+          "category": "electronics",
+          "subcategory": "headphones"
+        }
+      ],
+      "subtotal": 52593,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 52593,
+      "currency": "INR",
+      "shipping_address": "724 Linking Road, Kochi, Kerala 682001",
+      "payment_id": "PAY_10040",
+      "shipment_id": "SHIP_10040",
+      "expected_delivery": "2025-12-09"
+    },
+    {
+      "order_id": "SE10041",
+      "customer_id": "CUST_1051",
+      "status": "delivered",
+      "placed_on": "2025-12-31",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "SW-360",
+          "name": "Apple Watch Series 9",
+          "quantity": 2,
+          "unit_price": 41900,
+          "line_total": 83800,
+          "category": "electronics",
+          "subcategory": "smartwatches"
+        }
+      ],
+      "subtotal": 83800,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 83800,
+      "currency": "INR",
+      "shipping_address": "812 Linking Road, Flat 1319, Chandigarh, Chandigarh 160001",
+      "payment_id": "PAY_10041",
+      "shipment_id": "SHIP_10041",
+      "expected_delivery": "2026-01-05",
+      "delivered_on": "2026-01-02"
+    },
+    {
+      "order_id": "SE10042",
+      "customer_id": "CUST_1052",
+      "status": "processing",
+      "placed_on": "2026-01-14",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "SP-904",
+          "name": "Boldfit Yoga Mat 6mm Anti-Skid",
+          "quantity": 1,
+          "unit_price": 699,
+          "line_total": 699,
+          "category": "sports",
+          "subcategory": "yoga"
+        }
+      ],
+      "subtotal": 699,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 699,
+      "currency": "INR",
+      "shipping_address": "41 Hitech City Road, Flat 761, Indore, Madhya Pradesh 452001",
+      "payment_id": "PAY_10042",
+      "shipment_id": "SHIP_10042"
+    },
+    {
+      "order_id": "SE10043",
+      "customer_id": "CUST_1053",
+      "status": "shipped",
+      "placed_on": "2026-03-01",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "FA-510",
+          "name": "Biba Women Cotton Anarkali Kurta",
+          "quantity": 1,
+          "unit_price": 1699,
+          "line_total": 1699,
+          "category": "fashion",
+          "subcategory": "clothing"
+        }
+      ],
+      "subtotal": 1699,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 1699,
+      "currency": "INR",
+      "shipping_address": "186 Hitech City Road, Flat 1401, Bhopal, Madhya Pradesh 462001",
+      "payment_id": "PAY_10043",
+      "shipment_id": "SHIP_10043",
+      "expected_delivery": "2026-03-04"
+    },
+    {
+      "order_id": "SE10044",
+      "customer_id": "CUST_1054",
+      "status": "delivered",
+      "placed_on": "2026-05-08",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "PT-1502",
+          "name": "PetSafe Easy Walk Dog Harness Medium",
+          "quantity": 1,
+          "unit_price": 1899,
+          "line_total": 1899,
+          "category": "pets",
+          "subcategory": "accessories"
+        }
+      ],
+      "subtotal": 1899,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 1899,
+      "currency": "INR",
+      "shipping_address": "834 MG Road, Nagpur, Maharashtra 440001",
+      "payment_id": "PAY_10044",
+      "shipment_id": "SHIP_10044",
+      "expected_delivery": "2026-05-13",
+      "delivered_on": "2026-05-11"
+    },
+    {
+      "order_id": "SE10045",
+      "customer_id": "CUST_1055",
+      "status": "confirmed",
+      "placed_on": "2026-02-26",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "TB-351",
+          "name": "Samsung Galaxy Tab S9",
+          "quantity": 1,
+          "unit_price": 72999,
+          "line_total": 72999,
+          "category": "electronics",
+          "subcategory": "tablets"
+        }
+      ],
+      "subtotal": 72999,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 72999,
+      "currency": "INR",
+      "shipping_address": "371 Salt Lake Sector V, Flat 1381, Surat, Gujarat 395001",
+      "payment_id": "PAY_10045",
+      "shipment_id": "SHIP_10045"
+    },
+    {
+      "order_id": "SE10046",
+      "customer_id": "CUST_1001",
+      "status": "processing",
+      "placed_on": "2026-05-12",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "HM-608",
+          "name": "Boltt 3-Layer Memory Foam Queen Mattress",
+          "quantity": 2,
+          "unit_price": 17999,
+          "line_total": 35998,
+          "category": "home",
+          "subcategory": "bedding"
+        }
+      ],
+      "subtotal": 35998,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 35998,
+      "currency": "INR",
+      "shipping_address": "90 Hitech City Road, Delhi, Delhi 110001",
+      "payment_id": "PAY_10046",
+      "shipment_id": "SHIP_10046"
+    },
+    {
+      "order_id": "SE10047",
+      "customer_id": "CUST_1002",
+      "status": "shipped",
+      "placed_on": "2026-03-08",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "TV-1101",
+          "name": "LG 43 inch OLED evo C3",
+          "quantity": 2,
+          "unit_price": 124990,
+          "line_total": 249980,
+          "category": "electronics",
+          "subcategory": "tv"
+        },
+        {
+          "item_id": "ITEM_002",
+          "product_id": "SP-901",
+          "name": "Nivia Storm Football Size 5",
+          "quantity": 1,
+          "unit_price": 599,
+          "line_total": 599,
+          "category": "sports",
+          "subcategory": "team-sports"
+        }
+      ],
+      "subtotal": 250579,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 250579,
+      "currency": "INR",
+      "shipping_address": "778 Brigade Road, Flat 966, Bangalore, Karnataka 560001",
+      "payment_id": "PAY_10047",
+      "shipment_id": "SHIP_10047",
+      "expected_delivery": "2026-03-13"
+    },
+    {
+      "order_id": "SE10048",
+      "customer_id": "CUST_1003",
+      "status": "processing",
+      "placed_on": "2026-01-15",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "PH-303",
+          "name": "Google Pixel 8",
+          "quantity": 1,
+          "unit_price": 59999,
+          "line_total": 59999,
+          "category": "electronics",
+          "subcategory": "phones"
+        }
+      ],
+      "subtotal": 59999,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 59999,
+      "currency": "INR",
+      "shipping_address": "748 Salt Lake Sector V, Hyderabad, Telangana 500001",
+      "payment_id": "PAY_10048",
+      "shipment_id": "SHIP_10048"
+    },
+    {
+      "order_id": "SE10049",
+      "customer_id": "CUST_1004",
+      "status": "shipped",
+      "placed_on": "2025-11-15",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "TV-1100",
+          "name": "Sony Bravia 55 inch 4K Google TV",
+          "quantity": 2,
+          "unit_price": 67990,
+          "line_total": 135980,
+          "category": "electronics",
+          "subcategory": "tv"
+        }
+      ],
+      "subtotal": 135980,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 135980,
+      "currency": "INR",
+      "shipping_address": "390 Linking Road, Flat 1029, Chennai, Tamil Nadu 600001",
+      "payment_id": "PAY_10049",
+      "shipment_id": "SHIP_10049",
+      "expected_delivery": "2025-11-18"
+    },
+    {
+      "order_id": "SE10050",
+      "customer_id": "CUST_1005",
+      "status": "delivered",
+      "placed_on": "2026-03-26",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "FA-503",
+          "name": "Tommy Hilfiger Polo T-Shirt",
+          "quantity": 2,
+          "unit_price": 1999,
+          "line_total": 3998,
+          "category": "fashion",
+          "subcategory": "clothing"
+        }
+      ],
+      "subtotal": 3998,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 3998,
+      "currency": "INR",
+      "shipping_address": "389 Linking Road, Pune, Maharashtra 411001",
+      "payment_id": "PAY_10050",
+      "shipment_id": "SHIP_10050",
+      "expected_delivery": "2026-03-29",
+      "delivered_on": "2026-04-01"
+    },
+    {
+      "order_id": "SE10051",
+      "customer_id": "CUST_1006",
+      "status": "shipped",
+      "placed_on": "2025-11-07",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "PT-1501",
+          "name": "Whiskas Adult Cat Dry Food Ocean Fish 1.1kg",
+          "quantity": 2,
+          "unit_price": 415,
+          "line_total": 830,
+          "category": "pets",
+          "subcategory": "cat-food"
+        }
+      ],
+      "subtotal": 830,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 830,
+      "currency": "INR",
+      "shipping_address": "406 Salt Lake Sector V, Flat 393, Kolkata, West Bengal 700001",
+      "payment_id": "PAY_10051",
+      "shipment_id": "SHIP_10051",
+      "expected_delivery": "2025-11-11"
+    },
+    {
+      "order_id": "SE10052",
+      "customer_id": "CUST_1007",
+      "status": "confirmed",
+      "placed_on": "2026-02-24",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "MN-1400",
+          "name": "Dell UltraSharp U2723QE 27 inch 4K Monitor",
+          "quantity": 1,
+          "unit_price": 64990,
+          "line_total": 64990,
+          "category": "electronics",
+          "subcategory": "monitors"
+        }
+      ],
+      "subtotal": 64990,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 64990,
+      "currency": "INR",
+      "shipping_address": "882 Park Street, Ahmedabad, Gujarat 380001",
+      "payment_id": "PAY_10052",
+      "shipment_id": "SHIP_10052"
+    },
+    {
+      "order_id": "SE10053",
+      "customer_id": "CUST_1008",
+      "status": "processing",
+      "placed_on": "2026-04-29",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "HM-604",
+          "name": "Eureka Forbes Forbes Pro Vacuum Cleaner",
+          "quantity": 1,
+          "unit_price": 4999,
+          "line_total": 4999,
+          "category": "home",
+          "subcategory": "cleaning"
+        }
+      ],
+      "subtotal": 4999,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 4999,
+      "currency": "INR",
+      "shipping_address": "769 Linking Road, Flat 1413, Jaipur, Rajasthan 302001",
+      "payment_id": "PAY_10053",
+      "shipment_id": "SHIP_10053"
+    },
+    {
+      "order_id": "SE10054",
+      "customer_id": "CUST_1009",
+      "status": "shipped",
+      "placed_on": "2026-03-22",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "HM-609",
+          "name": "Wakefit Microfibre Solid Pillow (Pack of 2)",
+          "quantity": 2,
+          "unit_price": 599,
+          "line_total": 1198,
+          "category": "home",
+          "subcategory": "bedding"
+        }
+      ],
+      "subtotal": 1198,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 1198,
+      "currency": "INR",
+      "shipping_address": "624 FC Road, Flat 414, Lucknow, Uttar Pradesh 226001",
+      "payment_id": "PAY_10054",
+      "shipment_id": "SHIP_10054",
+      "expected_delivery": "2026-03-26"
+    },
+    {
+      "order_id": "SE10055",
+      "customer_id": "CUST_1010",
+      "status": "processing",
+      "placed_on": "2026-04-24",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "HM-606",
+          "name": "Samsung 253L Frost-Free Double Door Refrigerator",
+          "quantity": 1,
+          "unit_price": 27490,
+          "line_total": 27490,
+          "category": "home",
+          "subcategory": "appliances"
+        }
+      ],
+      "subtotal": 27490,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 27490,
+      "currency": "INR",
+      "shipping_address": "970 Park Street, Flat 276, Kochi, Kerala 682001",
+      "payment_id": "PAY_10055",
+      "shipment_id": "SHIP_10055"
+    },
+    {
+      "order_id": "SE10056",
+      "customer_id": "CUST_1011",
+      "status": "processing",
+      "placed_on": "2026-05-01",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "SW-362",
+          "name": "Noise ColorFit Pro 5",
+          "quantity": 1,
+          "unit_price": 3499,
+          "line_total": 3499,
+          "category": "electronics",
+          "subcategory": "smartwatches"
+        }
+      ],
+      "subtotal": 3499,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 3499,
+      "currency": "INR",
+      "shipping_address": "952 FC Road, Flat 739, Chandigarh, Chandigarh 160001",
+      "payment_id": "PAY_10056",
+      "shipment_id": "SHIP_10056"
+    },
+    {
+      "order_id": "SE10057",
+      "customer_id": "CUST_1012",
+      "status": "processing",
+      "placed_on": "2025-11-24",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "SP-904",
+          "name": "Boldfit Yoga Mat 6mm Anti-Skid",
+          "quantity": 2,
+          "unit_price": 699,
+          "line_total": 1398,
+          "category": "sports",
+          "subcategory": "yoga"
+        }
+      ],
+      "subtotal": 1398,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 1398,
+      "currency": "INR",
+      "shipping_address": "226 MG Road, Indore, Madhya Pradesh 452001",
+      "payment_id": "PAY_10057",
+      "shipment_id": "SHIP_10057"
+    },
+    {
+      "order_id": "SE10058",
+      "customer_id": "CUST_1013",
+      "status": "delivered",
+      "placed_on": "2026-05-16",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "PT-1500",
+          "name": "Pedigree Adult Dry Dog Food Chicken & Veg 3kg",
+          "quantity": 2,
+          "unit_price": 749,
+          "line_total": 1498,
+          "category": "pets",
+          "subcategory": "dog-food"
+        }
+      ],
+      "subtotal": 1498,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 1498,
+      "currency": "INR",
+      "shipping_address": "591 Salt Lake Sector V, Flat 598, Bhopal, Madhya Pradesh 462001",
+      "payment_id": "PAY_10058",
+      "shipment_id": "SHIP_10058",
+      "expected_delivery": "2026-05-23",
+      "delivered_on": "2026-05-21"
+    },
+    {
+      "order_id": "SE10059",
+      "customer_id": "CUST_1014",
+      "status": "delivered",
+      "placed_on": "2026-02-27",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "GR-1700",
+          "name": "Tata Sampann Unpolished Toor Dal 1kg",
+          "quantity": 1,
+          "unit_price": 189,
+          "line_total": 189,
+          "category": "grocery",
+          "subcategory": "staples"
+        }
+      ],
+      "subtotal": 189,
+      "discount": 500,
+      "coupon_code": "NEWUSER",
+      "total_amount": -311,
+      "currency": "INR",
+      "shipping_address": "413 Anna Salai, Nagpur, Maharashtra 440001",
+      "payment_id": "PAY_10059",
+      "shipment_id": "SHIP_10059",
+      "expected_delivery": "2026-03-03",
+      "delivered_on": "2026-03-03"
+    },
+    {
+      "order_id": "SE10060",
+      "customer_id": "CUST_1015",
+      "status": "refund_initiated",
+      "placed_on": "2026-02-28",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "HM-610",
+          "name": "Philips Hue White & Color Ambiance Smart Bulb E27",
+          "quantity": 1,
+          "unit_price": 4499,
+          "line_total": 4499,
+          "category": "home",
+          "subcategory": "lighting"
+        }
+      ],
+      "subtotal": 4499,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 4499,
+      "currency": "INR",
+      "shipping_address": "52 MG Road, Surat, Gujarat 395001",
+      "payment_id": "PAY_10060",
+      "shipment_id": "SHIP_10060",
+      "expected_delivery": "2026-03-03"
+    },
+    {
+      "order_id": "SE10061",
+      "customer_id": "CUST_1016",
+      "status": "confirmed",
+      "placed_on": "2026-05-04",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "SW-361",
+          "name": "Samsung Galaxy Watch 6",
+          "quantity": 2,
+          "unit_price": 27999,
+          "line_total": 55998,
+          "category": "electronics",
+          "subcategory": "smartwatches"
+        }
+      ],
+      "subtotal": 55998,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 55998,
+      "currency": "INR",
+      "shipping_address": "293 Hitech City Road, Flat 1239, Visakhapatnam, Andhra Pradesh 530001",
+      "payment_id": "PAY_10061",
+      "shipment_id": "SHIP_10061"
+    },
+    {
+      "order_id": "SE10062",
+      "customer_id": "CUST_1017",
+      "status": "delivered",
+      "placed_on": "2025-11-13",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "FA-507",
+          "name": "American Tourister Sky Tracer 55cm Cabin Trolley",
+          "quantity": 1,
+          "unit_price": 4799,
+          "line_total": 4799,
+          "category": "fashion",
+          "subcategory": "bags"
+        },
+        {
+          "item_id": "ITEM_002",
+          "product_id": "CM-1200",
+          "name": "Canon EOS R50 Mirrorless Camera",
+          "quantity": 1,
+          "unit_price": 71990,
+          "line_total": 71990,
+          "category": "electronics",
+          "subcategory": "cameras"
+        }
+      ],
+      "subtotal": 76789,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 76789,
+      "currency": "INR",
+      "shipping_address": "515 Brigade Road, Coimbatore, Tamil Nadu 641001",
+      "payment_id": "PAY_10062",
+      "shipment_id": "SHIP_10062",
+      "expected_delivery": "2025-11-16",
+      "delivered_on": "2025-11-17"
+    },
+    {
+      "order_id": "SE10063",
+      "customer_id": "CUST_1018",
+      "status": "returned",
+      "placed_on": "2026-03-26",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "TY-1000",
+          "name": "LEGO Classic Creative Bricks 484 pcs",
+          "quantity": 2,
+          "unit_price": 2999,
+          "line_total": 5998,
+          "category": "toys",
+          "subcategory": "building-blocks"
+        }
+      ],
+      "subtotal": 5998,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 5998,
+      "currency": "INR",
+      "shipping_address": "430 Anna Salai, Thiruvananthapuram, Kerala 695001",
+      "payment_id": "PAY_10063",
+      "shipment_id": "SHIP_10063",
+      "expected_delivery": "2026-04-02"
+    },
+    {
+      "order_id": "SE10064",
+      "customer_id": "CUST_1019",
+      "status": "confirmed",
+      "placed_on": "2026-02-09",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "PH-305",
+          "name": "Nothing Phone 2a",
+          "quantity": 1,
+          "unit_price": 23999,
+          "line_total": 23999,
+          "category": "electronics",
+          "subcategory": "phones"
+        }
+      ],
+      "subtotal": 23999,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 23999,
+      "currency": "INR",
+      "shipping_address": "103 Park Street, Gurgaon, Haryana 122001",
+      "payment_id": "PAY_10064",
+      "shipment_id": "SHIP_10064"
+    },
+    {
+      "order_id": "SE10065",
+      "customer_id": "CUST_1020",
+      "status": "delivered",
+      "placed_on": "2026-03-13",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "GR-1703",
+          "name": "Tata Tea Premium 1kg",
+          "quantity": 2,
+          "unit_price": 545,
+          "line_total": 1090,
+          "category": "grocery",
+          "subcategory": "beverages"
+        }
+      ],
+      "subtotal": 1090,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 1090,
+      "currency": "INR",
+      "shipping_address": "827 MG Road, Flat 1468, Mumbai, Maharashtra 400001",
+      "payment_id": "PAY_10065",
+      "shipment_id": "SHIP_10065",
+      "expected_delivery": "2026-03-19",
+      "delivered_on": "2026-03-16"
+    },
+    {
+      "order_id": "SE10066",
+      "customer_id": "CUST_1021",
+      "status": "returned",
+      "placed_on": "2025-11-05",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "BT-706",
+          "name": "Wild Stone Code Platinum Perfume 100ml",
+          "quantity": 2,
+          "unit_price": 999,
+          "line_total": 1998,
+          "category": "beauty",
+          "subcategory": "fragrance"
+        },
+        {
+          "item_id": "ITEM_002",
+          "product_id": "BT-701",
+          "name": "The Ordinary Niacinamide 10% + Zinc 1%",
+          "quantity": 2,
+          "unit_price": 750,
+          "line_total": 1500,
+          "category": "beauty",
+          "subcategory": "skincare"
+        }
+      ],
+      "subtotal": 3498,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 3498,
+      "currency": "INR",
+      "shipping_address": "704 Linking Road, Flat 1136, Delhi, Delhi 110001",
+      "payment_id": "PAY_10066",
+      "shipment_id": "SHIP_10066",
+      "expected_delivery": "2025-11-10"
+    },
+    {
+      "order_id": "SE10067",
+      "customer_id": "CUST_1022",
+      "status": "confirmed",
+      "placed_on": "2025-12-14",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "BT-705",
+          "name": "Bombay Shaving Company Sensitive Skin Razor Kit",
+          "quantity": 1,
+          "unit_price": 799,
+          "line_total": 799,
+          "category": "beauty",
+          "subcategory": "grooming"
+        },
+        {
+          "item_id": "ITEM_002",
+          "product_id": "BT-704",
+          "name": "Dove Intense Repair Shampoo 650ml",
+          "quantity": 1,
+          "unit_price": 549,
+          "line_total": 549,
+          "category": "beauty",
+          "subcategory": "haircare"
+        }
+      ],
+      "subtotal": 1348,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 1348,
+      "currency": "INR",
+      "shipping_address": "760 Salt Lake Sector V, Flat 1230, Bangalore, Karnataka 560001",
+      "payment_id": "PAY_10067",
+      "shipment_id": "SHIP_10067"
+    },
+    {
+      "order_id": "SE10068",
+      "customer_id": "CUST_1023",
+      "status": "shipped",
+      "placed_on": "2026-05-18",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "GR-1700",
+          "name": "Tata Sampann Unpolished Toor Dal 1kg",
+          "quantity": 1,
+          "unit_price": 189,
+          "line_total": 189,
+          "category": "grocery",
+          "subcategory": "staples"
+        }
+      ],
+      "subtotal": 189,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 189,
+      "currency": "INR",
+      "shipping_address": "316 Anna Salai, Flat 182, Hyderabad, Telangana 500001",
+      "payment_id": "PAY_10068",
+      "shipment_id": "SHIP_10068",
+      "expected_delivery": "2026-05-25"
+    },
+    {
+      "order_id": "SE10069",
+      "customer_id": "CUST_1024",
+      "status": "processing",
+      "placed_on": "2026-01-27",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "AC-400",
+          "name": "Anker PowerCore 20000",
+          "quantity": 2,
+          "unit_price": 2999,
+          "line_total": 5998,
+          "category": "electronics",
+          "subcategory": "accessories"
+        }
+      ],
+      "subtotal": 5998,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 5998,
+      "currency": "INR",
+      "shipping_address": "26 Brigade Road, Flat 781, Chennai, Tamil Nadu 600001",
+      "payment_id": "PAY_10069",
+      "shipment_id": "SHIP_10069"
+    },
+    {
+      "order_id": "SE10070",
+      "customer_id": "CUST_1025",
+      "status": "delivered",
+      "placed_on": "2026-01-29",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "HM-604",
+          "name": "Eureka Forbes Forbes Pro Vacuum Cleaner",
+          "quantity": 1,
+          "unit_price": 4999,
+          "line_total": 4999,
+          "category": "home",
+          "subcategory": "cleaning"
+        },
+        {
+          "item_id": "ITEM_002",
+          "product_id": "HM-602",
+          "name": "Bajaj Majesty Mixer Grinder 750W",
+          "quantity": 2,
+          "unit_price": 3499,
+          "line_total": 6998,
+          "category": "home",
+          "subcategory": "kitchen"
+        }
+      ],
+      "subtotal": 11997,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 11997,
+      "currency": "INR",
+      "shipping_address": "229 MG Road, Pune, Maharashtra 411001",
+      "payment_id": "PAY_10070",
+      "shipment_id": "SHIP_10070",
+      "expected_delivery": "2026-02-05",
+      "delivered_on": "2026-02-02"
+    },
+    {
+      "order_id": "SE10071",
+      "customer_id": "CUST_1026",
+      "status": "delivered",
+      "placed_on": "2026-02-22",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "GR-1703",
+          "name": "Tata Tea Premium 1kg",
+          "quantity": 1,
+          "unit_price": 545,
+          "line_total": 545,
+          "category": "grocery",
+          "subcategory": "beverages"
+        }
+      ],
+      "subtotal": 545,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 545,
+      "currency": "INR",
+      "shipping_address": "183 Linking Road, Kolkata, West Bengal 700001",
+      "payment_id": "PAY_10071",
+      "shipment_id": "SHIP_10071",
+      "expected_delivery": "2026-02-27",
+      "delivered_on": "2026-02-27"
+    },
+    {
+      "order_id": "SE10072",
+      "customer_id": "CUST_1027",
+      "status": "delivered",
+      "placed_on": "2025-11-14",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "ST-1600",
+          "name": "Classmate Pulse Notebook A5 (Pack of 6)",
+          "quantity": 1,
+          "unit_price": 540,
+          "line_total": 540,
+          "category": "stationery",
+          "subcategory": "notebooks"
+        }
+      ],
+      "subtotal": 540,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 540,
+      "currency": "INR",
+      "shipping_address": "2 FC Road, Flat 846, Ahmedabad, Gujarat 380001",
+      "payment_id": "PAY_10072",
+      "shipment_id": "SHIP_10072",
+      "expected_delivery": "2025-11-17",
+      "delivered_on": "2025-11-19"
+    },
+    {
+      "order_id": "SE10073",
+      "customer_id": "CUST_1028",
+      "status": "shipped",
+      "placed_on": "2025-11-16",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "HM-602",
+          "name": "Bajaj Majesty Mixer Grinder 750W",
+          "quantity": 2,
+          "unit_price": 3499,
+          "line_total": 6998,
+          "category": "home",
+          "subcategory": "kitchen"
+        }
+      ],
+      "subtotal": 6998,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 6998,
+      "currency": "INR",
+      "shipping_address": "568 Brigade Road, Flat 493, Jaipur, Rajasthan 302001",
+      "payment_id": "PAY_10073",
+      "shipment_id": "SHIP_10073",
+      "expected_delivery": "2025-11-19"
+    },
+    {
+      "order_id": "SE10074",
+      "customer_id": "CUST_1029",
+      "status": "shipped",
+      "placed_on": "2026-04-04",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "AC-401",
+          "name": "Logitech MX Master 3S",
+          "quantity": 1,
+          "unit_price": 9495,
+          "line_total": 9495,
+          "category": "electronics",
+          "subcategory": "accessories"
+        },
+        {
+          "item_id": "ITEM_002",
+          "product_id": "HM-603",
+          "name": "Dyson V8 Absolute Cordless Vacuum",
+          "quantity": 1,
+          "unit_price": 32900,
+          "line_total": 32900,
+          "category": "home",
+          "subcategory": "cleaning"
+        }
+      ],
+      "subtotal": 42395,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 42395,
+      "currency": "INR",
+      "shipping_address": "671 Anna Salai, Flat 1053, Lucknow, Uttar Pradesh 226001",
+      "payment_id": "PAY_10074",
+      "shipment_id": "SHIP_10074",
+      "expected_delivery": "2026-04-07"
+    },
+    {
+      "order_id": "SE10075",
+      "customer_id": "CUST_1030",
+      "status": "delivered",
+      "placed_on": "2025-11-04",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "CM-1200",
+          "name": "Canon EOS R50 Mirrorless Camera",
+          "quantity": 2,
+          "unit_price": 71990,
+          "line_total": 143980,
+          "category": "electronics",
+          "subcategory": "cameras"
+        }
+      ],
+      "subtotal": 143980,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 143980,
+      "currency": "INR",
+      "shipping_address": "689 Linking Road, Kochi, Kerala 682001",
+      "payment_id": "PAY_10075",
+      "shipment_id": "SHIP_10075",
+      "expected_delivery": "2025-11-09",
+      "delivered_on": "2025-11-08"
+    },
+    {
+      "order_id": "SE10076",
+      "customer_id": "CUST_1031",
+      "status": "shipped",
+      "placed_on": "2026-01-03",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "AC-401",
+          "name": "Logitech MX Master 3S",
+          "quantity": 1,
+          "unit_price": 9495,
+          "line_total": 9495,
+          "category": "electronics",
+          "subcategory": "accessories"
+        }
+      ],
+      "subtotal": 9495,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 9495,
+      "currency": "INR",
+      "shipping_address": "410 FC Road, Chandigarh, Chandigarh 160001",
+      "payment_id": "PAY_10076",
+      "shipment_id": "SHIP_10076",
+      "expected_delivery": "2026-01-06"
+    },
+    {
+      "order_id": "SE10077",
+      "customer_id": "CUST_1032",
+      "status": "processing",
+      "placed_on": "2026-02-28",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "WH-101",
+          "name": "Bose QuietComfort 45",
+          "quantity": 2,
+          "unit_price": 26900,
+          "line_total": 53800,
+          "category": "electronics",
+          "subcategory": "headphones"
+        },
+        {
+          "item_id": "ITEM_002",
+          "product_id": "FA-506",
+          "name": "H&M Oversized Hoodie",
+          "quantity": 1,
+          "unit_price": 1499,
+          "line_total": 1499,
+          "category": "fashion",
+          "subcategory": "clothing"
+        }
+      ],
+      "subtotal": 55299,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 55299,
+      "currency": "INR",
+      "shipping_address": "821 Salt Lake Sector V, Flat 1468, Indore, Madhya Pradesh 452001",
+      "payment_id": "PAY_10077",
+      "shipment_id": "SHIP_10077"
+    },
+    {
+      "order_id": "SE10078",
+      "customer_id": "CUST_1033",
+      "status": "delivered",
+      "placed_on": "2026-02-15",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "TB-351",
+          "name": "Samsung Galaxy Tab S9",
+          "quantity": 2,
+          "unit_price": 72999,
+          "line_total": 145998,
+          "category": "electronics",
+          "subcategory": "tablets"
+        }
+      ],
+      "subtotal": 145998,
+      "discount": 2000,
+      "coupon_code": "FEST25",
+      "total_amount": 143998,
+      "currency": "INR",
+      "shipping_address": "282 Salt Lake Sector V, Flat 259, Bhopal, Madhya Pradesh 462001",
+      "payment_id": "PAY_10078",
+      "shipment_id": "SHIP_10078",
+      "expected_delivery": "2026-02-22",
+      "delivered_on": "2026-02-20"
+    },
+    {
+      "order_id": "SE10079",
+      "customer_id": "CUST_1034",
+      "status": "delivered",
+      "placed_on": "2025-11-30",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "PH-304",
+          "name": "Redmi Note 13 Pro",
+          "quantity": 1,
+          "unit_price": 25999,
+          "line_total": 25999,
+          "category": "electronics",
+          "subcategory": "phones"
+        },
+        {
+          "item_id": "ITEM_002",
+          "product_id": "LP-202",
+          "name": "HP Pavilion 14",
+          "quantity": 1,
+          "unit_price": 64999,
+          "line_total": 64999,
+          "category": "electronics",
+          "subcategory": "laptops"
+        }
+      ],
+      "subtotal": 90998,
+      "discount": 1000,
+      "coupon_code": "NEWUSER",
+      "total_amount": 89998,
+      "currency": "INR",
+      "shipping_address": "425 Hitech City Road, Flat 778, Nagpur, Maharashtra 440001",
+      "payment_id": "PAY_10079",
+      "shipment_id": "SHIP_10079",
+      "expected_delivery": "2025-12-04",
+      "delivered_on": "2025-12-06"
+    },
+    {
+      "order_id": "SE10080",
+      "customer_id": "CUST_1035",
+      "status": "processing",
+      "placed_on": "2026-02-10",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "CM-1201",
+          "name": "GoPro HERO12 Black",
+          "quantity": 2,
+          "unit_price": 41990,
+          "line_total": 83980,
+          "category": "electronics",
+          "subcategory": "cameras"
+        }
+      ],
+      "subtotal": 83980,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 83980,
+      "currency": "INR",
+      "shipping_address": "772 Hitech City Road, Surat, Gujarat 395001",
+      "payment_id": "PAY_10080",
+      "shipment_id": "SHIP_10080"
+    },
+    {
+      "order_id": "SE10081",
+      "customer_id": "CUST_1036",
+      "status": "delivered",
+      "placed_on": "2026-03-01",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "LP-202",
+          "name": "HP Pavilion 14",
+          "quantity": 1,
+          "unit_price": 64999,
+          "line_total": 64999,
+          "category": "electronics",
+          "subcategory": "laptops"
+        }
+      ],
+      "subtotal": 64999,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 64999,
+      "currency": "INR",
+      "shipping_address": "547 MG Road, Visakhapatnam, Andhra Pradesh 530001",
+      "payment_id": "PAY_10081",
+      "shipment_id": "SHIP_10081",
+      "expected_delivery": "2026-03-04",
+      "delivered_on": "2026-03-05"
+    },
+    {
+      "order_id": "SE10082",
+      "customer_id": "CUST_1037",
+      "status": "shipped",
+      "placed_on": "2026-01-29",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "PT-1502",
+          "name": "PetSafe Easy Walk Dog Harness Medium",
+          "quantity": 1,
+          "unit_price": 1899,
+          "line_total": 1899,
+          "category": "pets",
+          "subcategory": "accessories"
+        }
+      ],
+      "subtotal": 1899,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 1899,
+      "currency": "INR",
+      "shipping_address": "346 Hitech City Road, Flat 670, Coimbatore, Tamil Nadu 641001",
+      "payment_id": "PAY_10082",
+      "shipment_id": "SHIP_10082",
+      "expected_delivery": "2026-02-01"
+    },
+    {
+      "order_id": "SE10083",
+      "customer_id": "CUST_1038",
+      "status": "delivered",
+      "placed_on": "2025-12-29",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "HM-608",
+          "name": "Boltt 3-Layer Memory Foam Queen Mattress",
+          "quantity": 2,
+          "unit_price": 17999,
+          "line_total": 35998,
+          "category": "home",
+          "subcategory": "bedding"
+        }
+      ],
+      "subtotal": 35998,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 35998,
+      "currency": "INR",
+      "shipping_address": "205 MG Road, Thiruvananthapuram, Kerala 695001",
+      "payment_id": "PAY_10083",
+      "shipment_id": "SHIP_10083",
+      "expected_delivery": "2026-01-02",
+      "delivered_on": "2026-01-03"
+    },
+    {
+      "order_id": "SE10084",
+      "customer_id": "CUST_1039",
+      "status": "confirmed",
+      "placed_on": "2026-02-23",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "WH-102",
+          "name": "JBL Tune 770NC",
+          "quantity": 1,
+          "unit_price": 7999,
+          "line_total": 7999,
+          "category": "electronics",
+          "subcategory": "headphones"
+        },
+        {
+          "item_id": "ITEM_002",
+          "product_id": "FA-503",
+          "name": "Tommy Hilfiger Polo T-Shirt",
+          "quantity": 1,
+          "unit_price": 1999,
+          "line_total": 1999,
+          "category": "fashion",
+          "subcategory": "clothing"
+        }
+      ],
+      "subtotal": 9998,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 9998,
+      "currency": "INR",
+      "shipping_address": "797 Brigade Road, Gurgaon, Haryana 122001",
+      "payment_id": "PAY_10084",
+      "shipment_id": "SHIP_10084"
+    },
+    {
+      "order_id": "SE10085",
+      "customer_id": "CUST_1040",
+      "status": "refund_initiated",
+      "placed_on": "2026-03-28",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "FA-507",
+          "name": "American Tourister Sky Tracer 55cm Cabin Trolley",
+          "quantity": 2,
+          "unit_price": 4799,
+          "line_total": 9598,
+          "category": "fashion",
+          "subcategory": "bags"
+        }
+      ],
+      "subtotal": 9598,
+      "discount": 2000,
+      "coupon_code": "FEST25",
+      "total_amount": 7598,
+      "currency": "INR",
+      "shipping_address": "816 MG Road, Flat 812, Mumbai, Maharashtra 400001",
+      "payment_id": "PAY_10085",
+      "shipment_id": "SHIP_10085",
+      "expected_delivery": "2026-04-04"
+    },
+    {
+      "order_id": "SE10086",
+      "customer_id": "CUST_1041",
+      "status": "delivered",
+      "placed_on": "2026-02-18",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "BT-706",
+          "name": "Wild Stone Code Platinum Perfume 100ml",
+          "quantity": 1,
+          "unit_price": 999,
+          "line_total": 999,
+          "category": "beauty",
+          "subcategory": "fragrance"
+        }
+      ],
+      "subtotal": 999,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 999,
+      "currency": "INR",
+      "shipping_address": "752 Linking Road, Flat 1362, Delhi, Delhi 110001",
+      "payment_id": "PAY_10086",
+      "shipment_id": "SHIP_10086",
+      "expected_delivery": "2026-02-25",
+      "delivered_on": "2026-02-23"
+    },
+    {
+      "order_id": "SE10087",
+      "customer_id": "CUST_1042",
+      "status": "shipped",
+      "placed_on": "2026-01-16",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "FA-511",
+          "name": "Allen Solly Men Slim Fit Formal Shirt",
+          "quantity": 2,
+          "unit_price": 1299,
+          "line_total": 2598,
+          "category": "fashion",
+          "subcategory": "clothing"
+        }
+      ],
+      "subtotal": 2598,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 2598,
+      "currency": "INR",
+      "shipping_address": "345 MG Road, Flat 1113, Bangalore, Karnataka 560001",
+      "payment_id": "PAY_10087",
+      "shipment_id": "SHIP_10087",
+      "expected_delivery": "2026-01-20"
+    },
+    {
+      "order_id": "SE10088",
+      "customer_id": "CUST_1043",
+      "status": "delivered",
+      "placed_on": "2025-11-24",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "PH-300",
+          "name": "iPhone 15",
+          "quantity": 2,
+          "unit_price": 79900,
+          "line_total": 159800,
+          "category": "electronics",
+          "subcategory": "phones"
+        }
+      ],
+      "subtotal": 159800,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 159800,
+      "currency": "INR",
+      "shipping_address": "88 FC Road, Flat 933, Hyderabad, Telangana 500001",
+      "payment_id": "PAY_10088",
+      "shipment_id": "SHIP_10088",
+      "expected_delivery": "2025-12-01",
+      "delivered_on": "2025-11-27"
+    },
+    {
+      "order_id": "SE10089",
+      "customer_id": "CUST_1044",
+      "status": "payment_failed",
+      "placed_on": "2026-01-17",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "FA-500",
+          "name": "Levi's 511 Slim Jeans",
+          "quantity": 2,
+          "unit_price": 2799,
+          "line_total": 5598,
+          "category": "fashion",
+          "subcategory": "clothing"
+        }
+      ],
+      "subtotal": 5598,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 5598,
+      "currency": "INR",
+      "shipping_address": "378 Salt Lake Sector V, Flat 1234, Chennai, Tamil Nadu 600001",
+      "payment_id": "PAY_10089",
+      "shipment_id": "SHIP_10089"
+    },
+    {
+      "order_id": "SE10090",
+      "customer_id": "CUST_1045",
+      "status": "delivered",
+      "placed_on": "2026-04-16",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "HM-602",
+          "name": "Bajaj Majesty Mixer Grinder 750W",
+          "quantity": 2,
+          "unit_price": 3499,
+          "line_total": 6998,
+          "category": "home",
+          "subcategory": "kitchen"
+        }
+      ],
+      "subtotal": 6998,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 6998,
+      "currency": "INR",
+      "shipping_address": "123 Brigade Road, Pune, Maharashtra 411001",
+      "payment_id": "PAY_10090",
+      "shipment_id": "SHIP_10090",
+      "expected_delivery": "2026-04-21",
+      "delivered_on": "2026-04-20"
+    },
+    {
+      "order_id": "SE10091",
+      "customer_id": "CUST_1046",
+      "status": "delivered",
+      "placed_on": "2025-12-27",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "TY-1001",
+          "name": "Funskool Monopoly Board Game",
+          "quantity": 1,
+          "unit_price": 899,
+          "line_total": 899,
+          "category": "toys",
+          "subcategory": "board-games"
+        }
+      ],
+      "subtotal": 899,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 899,
+      "currency": "INR",
+      "shipping_address": "281 MG Road, Flat 212, Kolkata, West Bengal 700001",
+      "payment_id": "PAY_10091",
+      "shipment_id": "SHIP_10091",
+      "expected_delivery": "2025-12-31",
+      "delivered_on": "2025-12-29"
+    },
+    {
+      "order_id": "SE10092",
+      "customer_id": "CUST_1047",
+      "status": "delivered",
+      "placed_on": "2026-03-06",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "PT-1501",
+          "name": "Whiskas Adult Cat Dry Food Ocean Fish 1.1kg",
+          "quantity": 2,
+          "unit_price": 415,
+          "line_total": 830,
+          "category": "pets",
+          "subcategory": "cat-food"
+        }
+      ],
+      "subtotal": 830,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 830,
+      "currency": "INR",
+      "shipping_address": "259 Salt Lake Sector V, Ahmedabad, Gujarat 380001",
+      "payment_id": "PAY_10092",
+      "shipment_id": "SHIP_10092",
+      "expected_delivery": "2026-03-12",
+      "delivered_on": "2026-03-11"
+    },
+    {
+      "order_id": "SE10093",
+      "customer_id": "CUST_1048",
+      "status": "confirmed",
+      "placed_on": "2025-11-18",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "FA-510",
+          "name": "Biba Women Cotton Anarkali Kurta",
+          "quantity": 1,
+          "unit_price": 1699,
+          "line_total": 1699,
+          "category": "fashion",
+          "subcategory": "clothing"
+        },
+        {
+          "item_id": "ITEM_002",
+          "product_id": "WH-104",
+          "name": "boAt Rockerz 450",
+          "quantity": 1,
+          "unit_price": 1499,
+          "line_total": 1499,
+          "category": "electronics",
+          "subcategory": "headphones"
+        },
+        {
+          "item_id": "ITEM_003",
+          "product_id": "LP-204",
+          "name": "ASUS ROG Strix G16",
+          "quantity": 2,
+          "unit_price": 154990,
+          "line_total": 309980,
+          "category": "electronics",
+          "subcategory": "laptops"
+        }
+      ],
+      "subtotal": 313178,
+      "discount": 2000,
+      "coupon_code": "SAVE10",
+      "total_amount": 311178,
+      "currency": "INR",
+      "shipping_address": "621 FC Road, Flat 1171, Jaipur, Rajasthan 302001",
+      "payment_id": "PAY_10093",
+      "shipment_id": "SHIP_10093"
+    },
+    {
+      "order_id": "SE10094",
+      "customer_id": "CUST_1049",
+      "status": "delivered",
+      "placed_on": "2026-03-18",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "HM-609",
+          "name": "Wakefit Microfibre Solid Pillow (Pack of 2)",
+          "quantity": 2,
+          "unit_price": 599,
+          "line_total": 1198,
+          "category": "home",
+          "subcategory": "bedding"
+        }
+      ],
+      "subtotal": 1198,
+      "discount": 1000,
+      "coupon_code": "FEST25",
+      "total_amount": 198,
+      "currency": "INR",
+      "shipping_address": "677 Park Street, Lucknow, Uttar Pradesh 226001",
+      "payment_id": "PAY_10094",
+      "shipment_id": "SHIP_10094",
+      "expected_delivery": "2026-03-23",
+      "delivered_on": "2026-03-20"
+    },
+    {
+      "order_id": "SE10095",
+      "customer_id": "CUST_1050",
+      "status": "processing",
+      "placed_on": "2025-11-21",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "BK-800",
+          "name": "Atomic Habits by James Clear",
+          "quantity": 2,
+          "unit_price": 499,
+          "line_total": 998,
+          "category": "books",
+          "subcategory": "self-help"
+        }
+      ],
+      "subtotal": 998,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 998,
+      "currency": "INR",
+      "shipping_address": "724 Linking Road, Kochi, Kerala 682001",
+      "payment_id": "PAY_10095",
+      "shipment_id": "SHIP_10095"
+    },
+    {
+      "order_id": "SE10096",
+      "customer_id": "CUST_1051",
+      "status": "confirmed",
+      "placed_on": "2025-11-15",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "PH-301",
+          "name": "Samsung Galaxy S24",
+          "quantity": 2,
+          "unit_price": 74999,
+          "line_total": 149998,
+          "category": "electronics",
+          "subcategory": "phones"
+        },
+        {
+          "item_id": "ITEM_002",
+          "product_id": "TY-1000",
+          "name": "LEGO Classic Creative Bricks 484 pcs",
+          "quantity": 2,
+          "unit_price": 2999,
+          "line_total": 5998,
+          "category": "toys",
+          "subcategory": "building-blocks"
+        }
+      ],
+      "subtotal": 155996,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 155996,
+      "currency": "INR",
+      "shipping_address": "812 Linking Road, Flat 1319, Chandigarh, Chandigarh 160001",
+      "payment_id": "PAY_10096",
+      "shipment_id": "SHIP_10096"
+    },
+    {
+      "order_id": "SE10097",
+      "customer_id": "CUST_1052",
+      "status": "delivered",
+      "placed_on": "2026-01-09",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "PH-302",
+          "name": "OnePlus 12",
+          "quantity": 1,
+          "unit_price": 64999,
+          "line_total": 64999,
+          "category": "electronics",
+          "subcategory": "phones"
+        }
+      ],
+      "subtotal": 64999,
+      "discount": 2000,
+      "coupon_code": "NEWUSER",
+      "total_amount": 62999,
+      "currency": "INR",
+      "shipping_address": "41 Hitech City Road, Flat 761, Indore, Madhya Pradesh 452001",
+      "payment_id": "PAY_10097",
+      "shipment_id": "SHIP_10097",
+      "expected_delivery": "2026-01-12",
+      "delivered_on": "2026-01-11"
+    },
+    {
+      "order_id": "SE10098",
+      "customer_id": "CUST_1053",
+      "status": "processing",
+      "placed_on": "2026-01-16",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "GR-1703",
+          "name": "Tata Tea Premium 1kg",
+          "quantity": 2,
+          "unit_price": 545,
+          "line_total": 1090,
+          "category": "grocery",
+          "subcategory": "beverages"
+        }
+      ],
+      "subtotal": 1090,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 1090,
+      "currency": "INR",
+      "shipping_address": "186 Hitech City Road, Flat 1401, Bhopal, Madhya Pradesh 462001",
+      "payment_id": "PAY_10098",
+      "shipment_id": "SHIP_10098"
+    },
+    {
+      "order_id": "SE10099",
+      "customer_id": "CUST_1054",
+      "status": "cancelled",
+      "placed_on": "2025-11-20",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "FA-507",
+          "name": "American Tourister Sky Tracer 55cm Cabin Trolley",
+          "quantity": 1,
+          "unit_price": 4799,
+          "line_total": 4799,
+          "category": "fashion",
+          "subcategory": "bags"
+        },
+        {
+          "item_id": "ITEM_002",
+          "product_id": "BT-702",
+          "name": "Maybelline Fit Me Matte Foundation",
+          "quantity": 1,
+          "unit_price": 549,
+          "line_total": 549,
+          "category": "beauty",
+          "subcategory": "makeup"
+        }
+      ],
+      "subtotal": 5348,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 5348,
+      "currency": "INR",
+      "shipping_address": "834 MG Road, Nagpur, Maharashtra 440001",
+      "payment_id": "PAY_10099",
+      "shipment_id": "SHIP_10099",
+      "cancelled_on": "2025-11-20",
+      "cancellation_reason": "Customer cancelled before shipment"
+    },
+    {
+      "order_id": "SE10100",
+      "customer_id": "CUST_1055",
+      "status": "shipped",
+      "placed_on": "2026-04-24",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "BK-800",
+          "name": "Atomic Habits by James Clear",
+          "quantity": 2,
+          "unit_price": 499,
+          "line_total": 998,
+          "category": "books",
+          "subcategory": "self-help"
+        }
+      ],
+      "subtotal": 998,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 998,
+      "currency": "INR",
+      "shipping_address": "371 Salt Lake Sector V, Flat 1381, Surat, Gujarat 395001",
+      "payment_id": "PAY_10100",
+      "shipment_id": "SHIP_10100",
+      "expected_delivery": "2026-05-01"
+    },
+    {
+      "order_id": "SE10101",
+      "customer_id": "CUST_1001",
+      "status": "delivered",
+      "placed_on": "2026-01-21",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "GR-1703",
+          "name": "Tata Tea Premium 1kg",
+          "quantity": 1,
+          "unit_price": 545,
+          "line_total": 545,
+          "category": "grocery",
+          "subcategory": "beverages"
+        }
+      ],
+      "subtotal": 545,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 545,
+      "currency": "INR",
+      "shipping_address": "90 Hitech City Road, Delhi, Delhi 110001",
+      "payment_id": "PAY_10101",
+      "shipment_id": "SHIP_10101",
+      "expected_delivery": "2026-01-26",
+      "delivered_on": "2026-01-23"
+    },
+    {
+      "order_id": "SE10102",
+      "customer_id": "CUST_1002",
+      "status": "delivered",
+      "placed_on": "2026-01-30",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "HM-610",
+          "name": "Philips Hue White & Color Ambiance Smart Bulb E27",
+          "quantity": 2,
+          "unit_price": 4499,
+          "line_total": 8998,
+          "category": "home",
+          "subcategory": "lighting"
+        }
+      ],
+      "subtotal": 8998,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 8998,
+      "currency": "INR",
+      "shipping_address": "778 Brigade Road, Flat 966, Bangalore, Karnataka 560001",
+      "payment_id": "PAY_10102",
+      "shipment_id": "SHIP_10102",
+      "expected_delivery": "2026-02-06",
+      "delivered_on": "2026-02-01"
+    },
+    {
+      "order_id": "SE10103",
+      "customer_id": "CUST_1003",
+      "status": "payment_failed",
+      "placed_on": "2026-01-17",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "FA-504",
+          "name": "Fossil Gen 6 Smartwatch",
+          "quantity": 1,
+          "unit_price": 18995,
+          "line_total": 18995,
+          "category": "fashion",
+          "subcategory": "watches"
+        },
+        {
+          "item_id": "ITEM_002",
+          "product_id": "BT-704",
+          "name": "Dove Intense Repair Shampoo 650ml",
+          "quantity": 2,
+          "unit_price": 549,
+          "line_total": 1098,
+          "category": "beauty",
+          "subcategory": "haircare"
+        }
+      ],
+      "subtotal": 20093,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 20093,
+      "currency": "INR",
+      "shipping_address": "748 Salt Lake Sector V, Hyderabad, Telangana 500001",
+      "payment_id": "PAY_10103",
+      "shipment_id": "SHIP_10103"
+    },
+    {
+      "order_id": "SE10104",
+      "customer_id": "CUST_1004",
+      "status": "shipped",
+      "placed_on": "2025-12-21",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "BK-801",
+          "name": "Ikigai by Hector Garcia",
+          "quantity": 1,
+          "unit_price": 299,
+          "line_total": 299,
+          "category": "books",
+          "subcategory": "self-help"
+        },
+        {
+          "item_id": "ITEM_002",
+          "product_id": "FA-505",
+          "name": "Puma Smash V2 Sneakers",
+          "quantity": 2,
+          "unit_price": 2999,
+          "line_total": 5998,
+          "category": "fashion",
+          "subcategory": "shoes"
+        }
+      ],
+      "subtotal": 6297,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 6297,
+      "currency": "INR",
+      "shipping_address": "390 Linking Road, Flat 1029, Chennai, Tamil Nadu 600001",
+      "payment_id": "PAY_10104",
+      "shipment_id": "SHIP_10104",
+      "expected_delivery": "2025-12-27"
+    },
+    {
+      "order_id": "SE10105",
+      "customer_id": "CUST_1005",
+      "status": "delivered",
+      "placed_on": "2026-04-04",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "TV-1100",
+          "name": "Sony Bravia 55 inch 4K Google TV",
+          "quantity": 1,
+          "unit_price": 67990,
+          "line_total": 67990,
+          "category": "electronics",
+          "subcategory": "tv"
+        }
+      ],
+      "subtotal": 67990,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 67990,
+      "currency": "INR",
+      "shipping_address": "389 Linking Road, Pune, Maharashtra 411001",
+      "payment_id": "PAY_10105",
+      "shipment_id": "SHIP_10105",
+      "expected_delivery": "2026-04-08",
+      "delivered_on": "2026-04-09"
+    },
+    {
+      "order_id": "SE10106",
+      "customer_id": "CUST_1006",
+      "status": "delivered",
+      "placed_on": "2026-04-01",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "SP-902",
+          "name": "Decathlon Domyos 10kg Dumbbell Set",
+          "quantity": 2,
+          "unit_price": 1899,
+          "line_total": 3798,
+          "category": "sports",
+          "subcategory": "fitness"
+        }
+      ],
+      "subtotal": 3798,
+      "discount": 1000,
+      "coupon_code": "SAVE10",
+      "total_amount": 2798,
+      "currency": "INR",
+      "shipping_address": "406 Salt Lake Sector V, Flat 393, Kolkata, West Bengal 700001",
+      "payment_id": "PAY_10106",
+      "shipment_id": "SHIP_10106",
+      "expected_delivery": "2026-04-08",
+      "delivered_on": "2026-04-04"
+    },
+    {
+      "order_id": "SE10107",
+      "customer_id": "CUST_1007",
+      "status": "shipped",
+      "placed_on": "2026-05-03",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "TB-351",
+          "name": "Samsung Galaxy Tab S9",
+          "quantity": 2,
+          "unit_price": 72999,
+          "line_total": 145998,
+          "category": "electronics",
+          "subcategory": "tablets"
+        }
+      ],
+      "subtotal": 145998,
+      "discount": 2000,
+      "coupon_code": "SAVE10",
+      "total_amount": 143998,
+      "currency": "INR",
+      "shipping_address": "882 Park Street, Ahmedabad, Gujarat 380001",
+      "payment_id": "PAY_10107",
+      "shipment_id": "SHIP_10107",
+      "expected_delivery": "2026-05-09"
+    },
+    {
+      "order_id": "SE10108",
+      "customer_id": "CUST_1008",
+      "status": "processing",
+      "placed_on": "2026-04-18",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "BK-801",
+          "name": "Ikigai by Hector Garcia",
+          "quantity": 1,
+          "unit_price": 299,
+          "line_total": 299,
+          "category": "books",
+          "subcategory": "self-help"
+        }
+      ],
+      "subtotal": 299,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 299,
+      "currency": "INR",
+      "shipping_address": "769 Linking Road, Flat 1413, Jaipur, Rajasthan 302001",
+      "payment_id": "PAY_10108",
+      "shipment_id": "SHIP_10108"
+    },
+    {
+      "order_id": "SE10109",
+      "customer_id": "CUST_1009",
+      "status": "delivered",
+      "placed_on": "2026-02-09",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "FA-508",
+          "name": "Wildcraft 35L Laptop Backpack",
+          "quantity": 1,
+          "unit_price": 1899,
+          "line_total": 1899,
+          "category": "fashion",
+          "subcategory": "bags"
+        }
+      ],
+      "subtotal": 1899,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 1899,
+      "currency": "INR",
+      "shipping_address": "624 FC Road, Flat 414, Lucknow, Uttar Pradesh 226001",
+      "payment_id": "PAY_10109",
+      "shipment_id": "SHIP_10109",
+      "expected_delivery": "2026-02-15",
+      "delivered_on": "2026-02-15"
+    },
+    {
+      "order_id": "SE10110",
+      "customer_id": "CUST_1010",
+      "status": "delivered",
+      "placed_on": "2026-02-25",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "TB-352",
+          "name": "Xiaomi Pad 6",
+          "quantity": 2,
+          "unit_price": 26999,
+          "line_total": 53998,
+          "category": "electronics",
+          "subcategory": "tablets"
+        }
+      ],
+      "subtotal": 53998,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 53998,
+      "currency": "INR",
+      "shipping_address": "970 Park Street, Flat 276, Kochi, Kerala 682001",
+      "payment_id": "PAY_10110",
+      "shipment_id": "SHIP_10110",
+      "expected_delivery": "2026-03-01",
+      "delivered_on": "2026-03-03"
+    },
+    {
+      "order_id": "SE10112",
+      "customer_id": "CUST_1011",
+      "status": "delivered",
+      "placed_on": "2025-12-13",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "PH-304",
+          "name": "Redmi Note 13 Pro",
+          "quantity": 2,
+          "unit_price": 25999,
+          "line_total": 51998,
+          "category": "electronics",
+          "subcategory": "phones"
+        },
+        {
+          "item_id": "ITEM_002",
+          "product_id": "WH-102",
+          "name": "JBL Tune 770NC",
+          "quantity": 1,
+          "unit_price": 7999,
+          "line_total": 7999,
+          "category": "electronics",
+          "subcategory": "headphones"
+        }
+      ],
+      "subtotal": 59997,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 59997,
+      "currency": "INR",
+      "shipping_address": "952 FC Road, Flat 739, Chandigarh, Chandigarh 160001",
+      "payment_id": "PAY_10112",
+      "shipment_id": "SHIP_10112",
+      "expected_delivery": "2025-12-17",
+      "delivered_on": "2025-12-19"
+    },
+    {
+      "order_id": "SE10113",
+      "customer_id": "CUST_1012",
+      "status": "delivered",
+      "placed_on": "2026-02-24",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "TV-1100",
+          "name": "Sony Bravia 55 inch 4K Google TV",
+          "quantity": 2,
+          "unit_price": 67990,
+          "line_total": 135980,
+          "category": "electronics",
+          "subcategory": "tv"
+        }
+      ],
+      "subtotal": 135980,
+      "discount": 1000,
+      "coupon_code": "SAVE10",
+      "total_amount": 134980,
+      "currency": "INR",
+      "shipping_address": "226 MG Road, Indore, Madhya Pradesh 452001",
+      "payment_id": "PAY_10113",
+      "shipment_id": "SHIP_10113",
+      "expected_delivery": "2026-03-03",
+      "delivered_on": "2026-03-01"
+    },
+    {
+      "order_id": "SE10114",
+      "customer_id": "CUST_1013",
+      "status": "delivered",
+      "placed_on": "2026-03-16",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "AC-403",
+          "name": "TP-Link Archer AX55 Wi-Fi 6 Router",
+          "quantity": 2,
+          "unit_price": 7999,
+          "line_total": 15998,
+          "category": "electronics",
+          "subcategory": "accessories"
+        }
+      ],
+      "subtotal": 15998,
+      "discount": 2000,
+      "coupon_code": "NEWUSER",
+      "total_amount": 13998,
+      "currency": "INR",
+      "shipping_address": "591 Salt Lake Sector V, Flat 598, Bhopal, Madhya Pradesh 462001",
+      "payment_id": "PAY_10114",
+      "shipment_id": "SHIP_10114",
+      "expected_delivery": "2026-03-21",
+      "delivered_on": "2026-03-22"
+    },
+    {
+      "order_id": "SE10115",
+      "customer_id": "CUST_1014",
+      "status": "confirmed",
+      "placed_on": "2026-01-01",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "ST-1601",
+          "name": "Pilot V5 Hi-Tecpoint Pen (Pack of 5)",
+          "quantity": 1,
+          "unit_price": 425,
+          "line_total": 425,
+          "category": "stationery",
+          "subcategory": "pens"
+        }
+      ],
+      "subtotal": 425,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 425,
+      "currency": "INR",
+      "shipping_address": "413 Anna Salai, Nagpur, Maharashtra 440001",
+      "payment_id": "PAY_10115",
+      "shipment_id": "SHIP_10115"
+    },
+    {
+      "order_id": "SE10116",
+      "customer_id": "CUST_1015",
+      "status": "delivered",
+      "placed_on": "2026-03-18",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "TY-1003",
+          "name": "Mattel UNO Card Game",
+          "quantity": 1,
+          "unit_price": 299,
+          "line_total": 299,
+          "category": "toys",
+          "subcategory": "card-games"
+        }
+      ],
+      "subtotal": 299,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 299,
+      "currency": "INR",
+      "shipping_address": "52 MG Road, Surat, Gujarat 395001",
+      "payment_id": "PAY_10116",
+      "shipment_id": "SHIP_10116",
+      "expected_delivery": "2026-03-22",
+      "delivered_on": "2026-03-24"
+    },
+    {
+      "order_id": "SE10117",
+      "customer_id": "CUST_1016",
+      "status": "delivered",
+      "placed_on": "2026-03-24",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "WH-101",
+          "name": "Bose QuietComfort 45",
+          "quantity": 1,
+          "unit_price": 26900,
+          "line_total": 26900,
+          "category": "electronics",
+          "subcategory": "headphones"
+        },
+        {
+          "item_id": "ITEM_002",
+          "product_id": "MN-1400",
+          "name": "Dell UltraSharp U2723QE 27 inch 4K Monitor",
+          "quantity": 1,
+          "unit_price": 64990,
+          "line_total": 64990,
+          "category": "electronics",
+          "subcategory": "monitors"
+        }
+      ],
+      "subtotal": 91890,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 91890,
+      "currency": "INR",
+      "shipping_address": "293 Hitech City Road, Flat 1239, Visakhapatnam, Andhra Pradesh 530001",
+      "payment_id": "PAY_10117",
+      "shipment_id": "SHIP_10117",
+      "expected_delivery": "2026-03-31",
+      "delivered_on": "2026-03-29"
+    },
+    {
+      "order_id": "SE10118",
+      "customer_id": "CUST_1017",
+      "status": "refund_initiated",
+      "placed_on": "2025-12-14",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "WH-104",
+          "name": "boAt Rockerz 450",
+          "quantity": 2,
+          "unit_price": 1499,
+          "line_total": 2998,
+          "category": "electronics",
+          "subcategory": "headphones"
+        }
+      ],
+      "subtotal": 2998,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 2998,
+      "currency": "INR",
+      "shipping_address": "515 Brigade Road, Coimbatore, Tamil Nadu 641001",
+      "payment_id": "PAY_10118",
+      "shipment_id": "SHIP_10118",
+      "expected_delivery": "2025-12-20"
+    },
+    {
+      "order_id": "SE10119",
+      "customer_id": "CUST_1018",
+      "status": "refund_initiated",
+      "placed_on": "2026-04-17",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "HM-608",
+          "name": "Boltt 3-Layer Memory Foam Queen Mattress",
+          "quantity": 2,
+          "unit_price": 17999,
+          "line_total": 35998,
+          "category": "home",
+          "subcategory": "bedding"
+        },
+        {
+          "item_id": "ITEM_002",
+          "product_id": "FA-500",
+          "name": "Levi's 511 Slim Jeans",
+          "quantity": 1,
+          "unit_price": 2799,
+          "line_total": 2799,
+          "category": "fashion",
+          "subcategory": "clothing"
+        }
+      ],
+      "subtotal": 38797,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 38797,
+      "currency": "INR",
+      "shipping_address": "430 Anna Salai, Thiruvananthapuram, Kerala 695001",
+      "payment_id": "PAY_10119",
+      "shipment_id": "SHIP_10119",
+      "expected_delivery": "2026-04-21"
+    },
+    {
+      "order_id": "SE10120",
+      "customer_id": "CUST_1019",
+      "status": "refund_initiated",
+      "placed_on": "2026-05-20",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "AC-404",
+          "name": "Keychron K2 V2 Mechanical Keyboard",
+          "quantity": 2,
+          "unit_price": 8999,
+          "line_total": 17998,
+          "category": "electronics",
+          "subcategory": "accessories"
+        },
+        {
+          "item_id": "ITEM_002",
+          "product_id": "BT-706",
+          "name": "Wild Stone Code Platinum Perfume 100ml",
+          "quantity": 2,
+          "unit_price": 999,
+          "line_total": 1998,
+          "category": "beauty",
+          "subcategory": "fragrance"
+        }
+      ],
+      "subtotal": 19996,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 19996,
+      "currency": "INR",
+      "shipping_address": "103 Park Street, Gurgaon, Haryana 122001",
+      "payment_id": "PAY_10120",
+      "shipment_id": "SHIP_10120",
+      "expected_delivery": "2026-05-24"
+    },
+    {
+      "order_id": "SE10121",
+      "customer_id": "CUST_1020",
+      "status": "delivered",
+      "placed_on": "2026-01-10",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "FA-508",
+          "name": "Wildcraft 35L Laptop Backpack",
+          "quantity": 1,
+          "unit_price": 1899,
+          "line_total": 1899,
+          "category": "fashion",
+          "subcategory": "bags"
+        }
+      ],
+      "subtotal": 1899,
+      "discount": 500,
+      "coupon_code": null,
+      "total_amount": 1399,
+      "currency": "INR",
+      "shipping_address": "827 MG Road, Flat 1468, Mumbai, Maharashtra 400001",
+      "payment_id": "PAY_10121",
+      "shipment_id": "SHIP_10121",
+      "expected_delivery": "2026-01-14",
+      "delivered_on": "2026-01-13"
+    },
+    {
+      "order_id": "SE10122",
+      "customer_id": "CUST_1021",
+      "status": "confirmed",
+      "placed_on": "2026-04-12",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "TY-1002",
+          "name": "Hot Wheels 20-Car Gift Pack",
+          "quantity": 2,
+          "unit_price": 1499,
+          "line_total": 2998,
+          "category": "toys",
+          "subcategory": "diecast"
+        }
+      ],
+      "subtotal": 2998,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 2998,
+      "currency": "INR",
+      "shipping_address": "704 Linking Road, Flat 1136, Delhi, Delhi 110001",
+      "payment_id": "PAY_10122",
+      "shipment_id": "SHIP_10122"
+    },
+    {
+      "order_id": "SE10123",
+      "customer_id": "CUST_1022",
+      "status": "delivered",
+      "placed_on": "2026-02-10",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "PH-301",
+          "name": "Samsung Galaxy S24",
+          "quantity": 2,
+          "unit_price": 74999,
+          "line_total": 149998,
+          "category": "electronics",
+          "subcategory": "phones"
+        },
+        {
+          "item_id": "ITEM_002",
+          "product_id": "CM-1200",
+          "name": "Canon EOS R50 Mirrorless Camera",
+          "quantity": 1,
+          "unit_price": 71990,
+          "line_total": 71990,
+          "category": "electronics",
+          "subcategory": "cameras"
+        }
+      ],
+      "subtotal": 221988,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 221988,
+      "currency": "INR",
+      "shipping_address": "760 Salt Lake Sector V, Flat 1230, Bangalore, Karnataka 560001",
+      "payment_id": "PAY_10123",
+      "shipment_id": "SHIP_10123",
+      "expected_delivery": "2026-02-14",
+      "delivered_on": "2026-02-15"
+    },
+    {
+      "order_id": "SE10124",
+      "customer_id": "CUST_1023",
+      "status": "delivered",
+      "placed_on": "2026-05-15",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "MN-1400",
+          "name": "Dell UltraSharp U2723QE 27 inch 4K Monitor",
+          "quantity": 2,
+          "unit_price": 64990,
+          "line_total": 129980,
+          "category": "electronics",
+          "subcategory": "monitors"
+        }
+      ],
+      "subtotal": 129980,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 129980,
+      "currency": "INR",
+      "shipping_address": "316 Anna Salai, Flat 182, Hyderabad, Telangana 500001",
+      "payment_id": "PAY_10124",
+      "shipment_id": "SHIP_10124",
+      "expected_delivery": "2026-05-18",
+      "delivered_on": "2026-05-17"
+    },
+    {
+      "order_id": "SE10125",
+      "customer_id": "CUST_1024",
+      "status": "shipped",
+      "placed_on": "2026-01-17",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "GR-1700",
+          "name": "Tata Sampann Unpolished Toor Dal 1kg",
+          "quantity": 1,
+          "unit_price": 189,
+          "line_total": 189,
+          "category": "grocery",
+          "subcategory": "staples"
+        }
+      ],
+      "subtotal": 189,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 189,
+      "currency": "INR",
+      "shipping_address": "26 Brigade Road, Flat 781, Chennai, Tamil Nadu 600001",
+      "payment_id": "PAY_10125",
+      "shipment_id": "SHIP_10125",
+      "expected_delivery": "2026-01-21"
+    },
+    {
+      "order_id": "SE10126",
+      "customer_id": "CUST_1025",
+      "status": "delivered",
+      "placed_on": "2025-11-24",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "HM-605",
+          "name": "LG 1.5 Ton 5 Star Inverter Split AC",
+          "quantity": 1,
+          "unit_price": 42990,
+          "line_total": 42990,
+          "category": "home",
+          "subcategory": "appliances"
+        }
+      ],
+      "subtotal": 42990,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 42990,
+      "currency": "INR",
+      "shipping_address": "229 MG Road, Pune, Maharashtra 411001",
+      "payment_id": "PAY_10126",
+      "shipment_id": "SHIP_10126",
+      "expected_delivery": "2025-11-27",
+      "delivered_on": "2025-11-26"
+    },
+    {
+      "order_id": "SE10127",
+      "customer_id": "CUST_1026",
+      "status": "delivered",
+      "placed_on": "2026-02-17",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "BT-701",
+          "name": "The Ordinary Niacinamide 10% + Zinc 1%",
+          "quantity": 1,
+          "unit_price": 750,
+          "line_total": 750,
+          "category": "beauty",
+          "subcategory": "skincare"
+        }
+      ],
+      "subtotal": 750,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 750,
+      "currency": "INR",
+      "shipping_address": "183 Linking Road, Kolkata, West Bengal 700001",
+      "payment_id": "PAY_10127",
+      "shipment_id": "SHIP_10127",
+      "expected_delivery": "2026-02-21",
+      "delivered_on": "2026-02-22"
+    },
+    {
+      "order_id": "SE10128",
+      "customer_id": "CUST_1027",
+      "status": "delivered",
+      "placed_on": "2026-04-06",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "TB-351",
+          "name": "Samsung Galaxy Tab S9",
+          "quantity": 1,
+          "unit_price": 72999,
+          "line_total": 72999,
+          "category": "electronics",
+          "subcategory": "tablets"
+        }
+      ],
+      "subtotal": 72999,
+      "discount": 1000,
+      "coupon_code": null,
+      "total_amount": 71999,
+      "currency": "INR",
+      "shipping_address": "2 FC Road, Flat 846, Ahmedabad, Gujarat 380001",
+      "payment_id": "PAY_10128",
+      "shipment_id": "SHIP_10128",
+      "expected_delivery": "2026-04-10",
+      "delivered_on": "2026-04-11"
+    },
+    {
+      "order_id": "SE10129",
+      "customer_id": "CUST_1028",
+      "status": "delivered",
+      "placed_on": "2026-02-18",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "PH-305",
+          "name": "Nothing Phone 2a",
+          "quantity": 2,
+          "unit_price": 23999,
+          "line_total": 47998,
+          "category": "electronics",
+          "subcategory": "phones"
+        }
+      ],
+      "subtotal": 47998,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 47998,
+      "currency": "INR",
+      "shipping_address": "568 Brigade Road, Flat 493, Jaipur, Rajasthan 302001",
+      "payment_id": "PAY_10129",
+      "shipment_id": "SHIP_10129",
+      "expected_delivery": "2026-02-23",
+      "delivered_on": "2026-02-21"
+    },
+    {
+      "order_id": "SE10130",
+      "customer_id": "CUST_1029",
+      "status": "confirmed",
+      "placed_on": "2025-11-14",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "AC-404",
+          "name": "Keychron K2 V2 Mechanical Keyboard",
+          "quantity": 1,
+          "unit_price": 8999,
+          "line_total": 8999,
+          "category": "electronics",
+          "subcategory": "accessories"
+        },
+        {
+          "item_id": "ITEM_002",
+          "product_id": "FA-509",
+          "name": "Ray-Ban Aviator Classic RB3025",
+          "quantity": 2,
+          "unit_price": 8990,
+          "line_total": 17980,
+          "category": "fashion",
+          "subcategory": "eyewear"
+        }
+      ],
+      "subtotal": 26979,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 26979,
+      "currency": "INR",
+      "shipping_address": "671 Anna Salai, Flat 1053, Lucknow, Uttar Pradesh 226001",
+      "payment_id": "PAY_10130",
+      "shipment_id": "SHIP_10130"
+    },
+    {
+      "order_id": "SE10131",
+      "customer_id": "CUST_1030",
+      "status": "delivered",
+      "placed_on": "2026-05-17",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "HM-606",
+          "name": "Samsung 253L Frost-Free Double Door Refrigerator",
+          "quantity": 2,
+          "unit_price": 27490,
+          "line_total": 54980,
+          "category": "home",
+          "subcategory": "appliances"
+        },
+        {
+          "item_id": "ITEM_002",
+          "product_id": "TB-350",
+          "name": "Apple iPad Air M2",
+          "quantity": 2,
+          "unit_price": 59900,
+          "line_total": 119800,
+          "category": "electronics",
+          "subcategory": "tablets"
+        },
+        {
+          "item_id": "ITEM_003",
+          "product_id": "SP-901",
+          "name": "Nivia Storm Football Size 5",
+          "quantity": 1,
+          "unit_price": 599,
+          "line_total": 599,
+          "category": "sports",
+          "subcategory": "team-sports"
+        }
+      ],
+      "subtotal": 175379,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 175379,
+      "currency": "INR",
+      "shipping_address": "689 Linking Road, Kochi, Kerala 682001",
+      "payment_id": "PAY_10131",
+      "shipment_id": "SHIP_10131",
+      "expected_delivery": "2026-05-20",
+      "delivered_on": "2026-05-19"
+    },
+    {
+      "order_id": "SE10132",
+      "customer_id": "CUST_1031",
+      "status": "shipped",
+      "placed_on": "2026-02-11",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "GR-1703",
+          "name": "Tata Tea Premium 1kg",
+          "quantity": 2,
+          "unit_price": 545,
+          "line_total": 1090,
+          "category": "grocery",
+          "subcategory": "beverages"
+        }
+      ],
+      "subtotal": 1090,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 1090,
+      "currency": "INR",
+      "shipping_address": "410 FC Road, Chandigarh, Chandigarh 160001",
+      "payment_id": "PAY_10132",
+      "shipment_id": "SHIP_10132",
+      "expected_delivery": "2026-02-14"
+    },
+    {
+      "order_id": "SE10133",
+      "customer_id": "CUST_1032",
+      "status": "delivered",
+      "placed_on": "2026-02-20",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "SP-902",
+          "name": "Decathlon Domyos 10kg Dumbbell Set",
+          "quantity": 1,
+          "unit_price": 1899,
+          "line_total": 1899,
+          "category": "sports",
+          "subcategory": "fitness"
+        }
+      ],
+      "subtotal": 1899,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 1899,
+      "currency": "INR",
+      "shipping_address": "821 Salt Lake Sector V, Flat 1468, Indore, Madhya Pradesh 452001",
+      "payment_id": "PAY_10133",
+      "shipment_id": "SHIP_10133",
+      "expected_delivery": "2026-02-24",
+      "delivered_on": "2026-02-22"
+    },
+    {
+      "order_id": "SE10134",
+      "customer_id": "CUST_1033",
+      "status": "delivered",
+      "placed_on": "2026-03-14",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "TB-351",
+          "name": "Samsung Galaxy Tab S9",
+          "quantity": 1,
+          "unit_price": 72999,
+          "line_total": 72999,
+          "category": "electronics",
+          "subcategory": "tablets"
+        }
+      ],
+      "subtotal": 72999,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 72999,
+      "currency": "INR",
+      "shipping_address": "282 Salt Lake Sector V, Flat 259, Bhopal, Madhya Pradesh 462001",
+      "payment_id": "PAY_10134",
+      "shipment_id": "SHIP_10134",
+      "expected_delivery": "2026-03-21",
+      "delivered_on": "2026-03-18"
+    },
+    {
+      "order_id": "SE10135",
+      "customer_id": "CUST_1034",
+      "status": "delivered",
+      "placed_on": "2026-03-28",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "HM-600",
+          "name": "Philips Air Fryer HD9252",
+          "quantity": 1,
+          "unit_price": 8999,
+          "line_total": 8999,
+          "category": "home",
+          "subcategory": "kitchen"
+        },
+        {
+          "item_id": "ITEM_002",
+          "product_id": "FA-510",
+          "name": "Biba Women Cotton Anarkali Kurta",
+          "quantity": 2,
+          "unit_price": 1699,
+          "line_total": 3398,
+          "category": "fashion",
+          "subcategory": "clothing"
+        }
+      ],
+      "subtotal": 12397,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 12397,
+      "currency": "INR",
+      "shipping_address": "425 Hitech City Road, Flat 778, Nagpur, Maharashtra 440001",
+      "payment_id": "PAY_10135",
+      "shipment_id": "SHIP_10135",
+      "expected_delivery": "2026-03-31",
+      "delivered_on": "2026-04-02"
+    },
+    {
+      "order_id": "SE10136",
+      "customer_id": "CUST_1035",
+      "status": "refund_initiated",
+      "placed_on": "2025-11-12",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "BT-704",
+          "name": "Dove Intense Repair Shampoo 650ml",
+          "quantity": 1,
+          "unit_price": 549,
+          "line_total": 549,
+          "category": "beauty",
+          "subcategory": "haircare"
+        }
+      ],
+      "subtotal": 549,
+      "discount": 1000,
+      "coupon_code": null,
+      "total_amount": -451,
+      "currency": "INR",
+      "shipping_address": "772 Hitech City Road, Surat, Gujarat 395001",
+      "payment_id": "PAY_10136",
+      "shipment_id": "SHIP_10136",
+      "expected_delivery": "2025-11-15"
+    },
+    {
+      "order_id": "SE10137",
+      "customer_id": "CUST_1036",
+      "status": "processing",
+      "placed_on": "2026-02-15",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "GR-1703",
+          "name": "Tata Tea Premium 1kg",
+          "quantity": 2,
+          "unit_price": 545,
+          "line_total": 1090,
+          "category": "grocery",
+          "subcategory": "beverages"
+        },
+        {
+          "item_id": "ITEM_002",
+          "product_id": "PT-1501",
+          "name": "Whiskas Adult Cat Dry Food Ocean Fish 1.1kg",
+          "quantity": 1,
+          "unit_price": 415,
+          "line_total": 415,
+          "category": "pets",
+          "subcategory": "cat-food"
+        }
+      ],
+      "subtotal": 1505,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 1505,
+      "currency": "INR",
+      "shipping_address": "547 MG Road, Visakhapatnam, Andhra Pradesh 530001",
+      "payment_id": "PAY_10137",
+      "shipment_id": "SHIP_10137"
+    },
+    {
+      "order_id": "SE10138",
+      "customer_id": "CUST_1037",
+      "status": "processing",
+      "placed_on": "2026-02-03",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "TY-1000",
+          "name": "LEGO Classic Creative Bricks 484 pcs",
+          "quantity": 2,
+          "unit_price": 2999,
+          "line_total": 5998,
+          "category": "toys",
+          "subcategory": "building-blocks"
+        },
+        {
+          "item_id": "ITEM_002",
+          "product_id": "LP-203",
+          "name": "Lenovo IdeaPad Slim 3",
+          "quantity": 2,
+          "unit_price": 42990,
+          "line_total": 85980,
+          "category": "electronics",
+          "subcategory": "laptops"
+        },
+        {
+          "item_id": "ITEM_003",
+          "product_id": "CM-1201",
+          "name": "GoPro HERO12 Black",
+          "quantity": 2,
+          "unit_price": 41990,
+          "line_total": 83980,
+          "category": "electronics",
+          "subcategory": "cameras"
+        }
+      ],
+      "subtotal": 175958,
+      "discount": 500,
+      "coupon_code": null,
+      "total_amount": 175458,
+      "currency": "INR",
+      "shipping_address": "346 Hitech City Road, Flat 670, Coimbatore, Tamil Nadu 641001",
+      "payment_id": "PAY_10138",
+      "shipment_id": "SHIP_10138"
+    },
+    {
+      "order_id": "SE10139",
+      "customer_id": "CUST_1038",
+      "status": "refund_initiated",
+      "placed_on": "2025-12-30",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "HM-608",
+          "name": "Boltt 3-Layer Memory Foam Queen Mattress",
+          "quantity": 1,
+          "unit_price": 17999,
+          "line_total": 17999,
+          "category": "home",
+          "subcategory": "bedding"
+        }
+      ],
+      "subtotal": 17999,
+      "discount": 500,
+      "coupon_code": null,
+      "total_amount": 17499,
+      "currency": "INR",
+      "shipping_address": "205 MG Road, Thiruvananthapuram, Kerala 695001",
+      "payment_id": "PAY_10139",
+      "shipment_id": "SHIP_10139",
+      "expected_delivery": "2026-01-06"
+    },
+    {
+      "order_id": "SE10140",
+      "customer_id": "CUST_1039",
+      "status": "delivered",
+      "placed_on": "2025-11-16",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "FA-503",
+          "name": "Tommy Hilfiger Polo T-Shirt",
+          "quantity": 2,
+          "unit_price": 1999,
+          "line_total": 3998,
+          "category": "fashion",
+          "subcategory": "clothing"
+        }
+      ],
+      "subtotal": 3998,
+      "discount": 0,
+      "coupon_code": null,
+      "total_amount": 3998,
+      "currency": "INR",
+      "shipping_address": "797 Brigade Road, Gurgaon, Haryana 122001",
+      "payment_id": "PAY_10140",
+      "shipment_id": "SHIP_10140",
+      "expected_delivery": "2025-11-20",
+      "delivered_on": "2025-11-20"
+    },
+    {
+      "order_id": "SE10141",
+      "customer_id": "CUST_1040",
+      "status": "processing",
+      "placed_on": "2026-02-20",
+      "items": [
+        {
+          "item_id": "ITEM_001",
+          "product_id": "TB-351",
+          "name": "Samsung Galaxy Tab S9",
+          "quantity": 2,
+          "unit_price": 72999,
+          "line_total": 145998,
+          "category": "electronics",
+          "subcategory": "tablets"
+        }
+      ],
+      "subtotal": 145998,
+      "discount": 1000,
+      "coupon_code": null,
+      "total_amount": 144998,
+      "currency": "INR",
+      "shipping_address": "816 MG Road, Flat 812, Mumbai, Maharashtra 400001",
+      "payment_id": "PAY_10141",
+      "shipment_id": "SHIP_10141"
+    }
+  ]
+}
