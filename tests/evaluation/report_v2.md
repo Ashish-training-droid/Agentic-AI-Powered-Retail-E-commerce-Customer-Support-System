@@ -15,8 +15,8 @@
 | Escalation recall | 100% |
 | False escalation rate | 0% |
 | Avg quality score | 0.95 |
-| Avg response confidence | 0.81 |
-| Avg latency (ms) | 2.42 |
+| Avg response confidence | 0.79 |
+| Avg latency (ms) | 12.66 |
 
 ## Pass rate by category
 
@@ -31,8 +31,8 @@
 
 | Band | Count |
 |------|------:|
-| auto | 22 |
-| approval_required | 0 |
+| auto | 18 |
+| approval_required | 4 |
 | escalate | 1 |
 
 ## Intent distribution (actual classifications)
@@ -52,7 +52,7 @@
 **Message:** I want to return my Nike shoes from order SE10567
 
 **Expected:** `{"intent": "return_request", "escalation": false, "min_confidence": 0.6, "should_have_policy_refs": true}`
-**Actual intent:** `order_tracking`  /  **band:** `auto`  /  **team:** `-`
+**Actual intent:** `order_tracking`  /  **band:** `approval_required`  /  **team:** `escalation_queue`
 
 - intent expected=return_request actual=order_tracking
 - expected policy refs, none returned
@@ -62,7 +62,7 @@
 **Message:** When will my refund be credited? Order SE10567 returned 3 days ago.
 
 **Expected:** `{"intent": "refund_status", "escalation": false, "should_have_policy_refs": true}`
-**Actual intent:** `order_tracking`  /  **band:** `auto`  /  **team:** `-`
+**Actual intent:** `order_tracking`  /  **band:** `approval_required`  /  **team:** `escalation_queue`
 
 - intent expected=refund_status actual=order_tracking
 - expected policy refs, none returned
@@ -109,10 +109,9 @@
 **Message:** I am very angry, this is the third time I am calling about my MacBook return. Order SE10567.
 
 **Expected:** `{"escalation_or_approval": true, "sentiment_should_be_any": ["angry", "negative"]}`
-**Actual intent:** `order_tracking`  /  **band:** `auto`  /  **team:** `-`
+**Actual intent:** `order_tracking`  /  **band:** `approval_required`  /  **team:** `escalation_queue`
 
 - sentiment expected_one_of=['angry', 'negative'] actual=neutral
-- expected escalation OR approval_required, got auto
 
 ### TC_018 (edge_case)
 

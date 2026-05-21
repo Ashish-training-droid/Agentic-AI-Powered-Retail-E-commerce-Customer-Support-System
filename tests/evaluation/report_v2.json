@@ -7,9 +7,9 @@
     "failed": 8,
     "pass_rate": 0.68,
     "errors": 0,
-    "avg_latency_ms": 2.42,
+    "avg_latency_ms": 12.66,
     "avg_quality_score": 0.948,
-    "avg_response_confidence": 0.8144,
+    "avg_response_confidence": 0.7872,
     "intent_accuracy": 0.5455,
     "escalation_precision": 1.0,
     "escalation_recall": 1.0,
@@ -33,8 +33,8 @@
       }
     },
     "band_distribution": {
-      "auto": 22,
-      "approval_required": 0,
+      "auto": 18,
+      "approval_required": 4,
       "escalate": 1
     },
     "intent_distribution": {
@@ -64,7 +64,7 @@
         "intent_confidence": 0.92,
         "sentiment": "neutral",
         "urgency": "medium",
-        "risk_score": 0.09,
+        "risk_score": 0.305,
         "risk_band": "auto",
         "escalation_required": false,
         "requires_human_approval": false,
@@ -83,7 +83,7 @@
         ],
         "quality_score": 1.0,
         "quality_issues": [],
-        "response_text": "Your order SE10234 is currently in_transit. It's being shipped via BlueDart (tracking: BD98712). Expected delivery: 2026-05-22."
+        "response_text": "Your order SE10234 is currently in_transit. It's being shipped via BlueDart (tracking: BD987120234). Expected delivery: 2026-05-22."
       },
       "evaluation": {
         "passed": true,
@@ -96,7 +96,7 @@
         ],
         "issues": []
       },
-      "latency_ms": 7.39,
+      "latency_ms": 43.51,
       "error": null
     },
     {
@@ -114,14 +114,14 @@
         "intent_confidence": 0.92,
         "sentiment": "neutral",
         "urgency": "medium",
-        "risk_score": 0.14,
-        "risk_band": "auto",
+        "risk_score": 0.38,
+        "risk_band": "approval_required",
         "escalation_required": false,
-        "requires_human_approval": false,
-        "target_team": "",
-        "priority": "P4",
-        "sla_target": "",
-        "response_confidence": 0.92,
+        "requires_human_approval": true,
+        "target_team": "escalation_queue",
+        "priority": "P3",
+        "sla_target": "2026-05-21T20:14:05.375384+00:00",
+        "response_confidence": 0.75,
         "references_cited": [],
         "agents_called": [
           "intent_classifier",
@@ -129,11 +129,11 @@
           "evaluator",
           "escalation_risk",
           "response_generator",
-          "finalizer"
+          "approval_handler"
         ],
         "quality_score": 1.0,
         "quality_issues": [],
-        "response_text": "Your order SE10567 is currently delivered. It's being shipped via Delhivery (tracking: DL45678). Expected delivery: within 5-7 days."
+        "response_text": "Thanks for your patience \u2014 your request needs a quick human review. A specialist will confirm the next steps shortly (review SLA: 2026-05-21T20:14:05.375384+00:00)."
       },
       "evaluation": {
         "passed": false,
@@ -146,7 +146,7 @@
           "expected policy refs, none returned"
         ]
       },
-      "latency_ms": 2.54,
+      "latency_ms": 12.85,
       "error": null
     },
     {
@@ -163,14 +163,14 @@
         "intent_confidence": 0.92,
         "sentiment": "neutral",
         "urgency": "medium",
-        "risk_score": 0.14,
-        "risk_band": "auto",
+        "risk_score": 0.38,
+        "risk_band": "approval_required",
         "escalation_required": false,
-        "requires_human_approval": false,
-        "target_team": "",
-        "priority": "P4",
-        "sla_target": "",
-        "response_confidence": 0.92,
+        "requires_human_approval": true,
+        "target_team": "escalation_queue",
+        "priority": "P3",
+        "sla_target": "2026-05-21T20:14:05.391673+00:00",
+        "response_confidence": 0.75,
         "references_cited": [],
         "agents_called": [
           "intent_classifier",
@@ -178,11 +178,11 @@
           "evaluator",
           "escalation_risk",
           "response_generator",
-          "finalizer"
+          "approval_handler"
         ],
         "quality_score": 1.0,
         "quality_issues": [],
-        "response_text": "Your order SE10567 is currently delivered. It's being shipped via Delhivery (tracking: DL45678). Expected delivery: within 5-7 days."
+        "response_text": "Thanks for your patience \u2014 your request needs a quick human review. A specialist will confirm the next steps shortly (review SLA: 2026-05-21T20:14:05.391673+00:00)."
       },
       "evaluation": {
         "passed": false,
@@ -194,7 +194,7 @@
           "expected policy refs, none returned"
         ]
       },
-      "latency_ms": 2.15,
+      "latency_ms": 12.22,
       "error": null
     },
     {
@@ -211,7 +211,7 @@
         "intent_confidence": 0.87,
         "sentiment": "neutral",
         "urgency": "medium",
-        "risk_score": 0.135,
+        "risk_score": 0.35,
         "risk_band": "auto",
         "escalation_required": false,
         "requires_human_approval": false,
@@ -244,7 +244,7 @@
         ],
         "issues": []
       },
-      "latency_ms": 4.12,
+      "latency_ms": 16.69,
       "error": null
     },
     {
@@ -297,7 +297,7 @@
         ],
         "issues": []
       },
-      "latency_ms": 2.79,
+      "latency_ms": 9.75,
       "error": null
     },
     {
@@ -344,7 +344,7 @@
           "intent expected=product_inquiry actual=general_faq"
         ]
       },
-      "latency_ms": 1.78,
+      "latency_ms": 8.37,
       "error": null
     },
     {
@@ -359,7 +359,7 @@
         "intent_confidence": 0.92,
         "sentiment": "neutral",
         "urgency": "medium",
-        "risk_score": 0.2,
+        "risk_score": 0.305,
         "risk_band": "auto",
         "escalation_required": false,
         "requires_human_approval": false,
@@ -378,7 +378,7 @@
         ],
         "quality_score": 1.0,
         "quality_issues": [],
-        "response_text": "Your order SE10111 is currently not_shipped. It's being shipped via DTDC (tracking: None). Expected delivery: 2026-05-24."
+        "response_text": "Your order SE10111 is currently pending_dispatch. It's being shipped via Ecom Express (tracking: EC10111728492). Expected delivery: None."
       },
       "evaluation": {
         "passed": true,
@@ -387,7 +387,7 @@
         ],
         "issues": []
       },
-      "latency_ms": 2.58,
+      "latency_ms": 9.36,
       "error": null
     },
     {
@@ -433,7 +433,7 @@
         ],
         "issues": []
       },
-      "latency_ms": 2.06,
+      "latency_ms": 8.54,
       "error": null
     },
     {
@@ -448,14 +448,14 @@
         "intent_confidence": 0.92,
         "sentiment": "neutral",
         "urgency": "medium",
-        "risk_score": 0.14,
-        "risk_band": "auto",
+        "risk_score": 0.38,
+        "risk_band": "approval_required",
         "escalation_required": false,
-        "requires_human_approval": false,
-        "target_team": "",
-        "priority": "P4",
-        "sla_target": "",
-        "response_confidence": 0.92,
+        "requires_human_approval": true,
+        "target_team": "escalation_queue",
+        "priority": "P3",
+        "sla_target": "2026-05-21T20:14:05.458767+00:00",
+        "response_confidence": 0.75,
         "references_cited": [],
         "agents_called": [
           "intent_classifier",
@@ -463,11 +463,11 @@
           "evaluator",
           "escalation_risk",
           "response_generator",
-          "finalizer"
+          "approval_handler"
         ],
         "quality_score": 1.0,
         "quality_issues": [],
-        "response_text": "Your order SE10567 is currently delivered. It's being shipped via Delhivery (tracking: DL45678). Expected delivery: within 5-7 days."
+        "response_text": "Thanks for your patience \u2014 your request needs a quick human review. A specialist will confirm the next steps shortly (review SLA: 2026-05-21T20:14:05.458767+00:00)."
       },
       "evaluation": {
         "passed": true,
@@ -476,7 +476,7 @@
         ],
         "issues": []
       },
-      "latency_ms": 2.03,
+      "latency_ms": 12.68,
       "error": null
     },
     {
@@ -491,7 +491,7 @@
         "intent_confidence": 0.92,
         "sentiment": "neutral",
         "urgency": "medium",
-        "risk_score": 0.2,
+        "risk_score": 0.305,
         "risk_band": "auto",
         "escalation_required": false,
         "requires_human_approval": false,
@@ -510,7 +510,7 @@
         ],
         "quality_score": 1.0,
         "quality_issues": [],
-        "response_text": "Your order SE10111 is currently not_shipped. It's being shipped via DTDC (tracking: None). Expected delivery: 2026-05-24."
+        "response_text": "Your order SE10111 is currently pending_dispatch. It's being shipped via Ecom Express (tracking: EC10111728492). Expected delivery: None."
       },
       "evaluation": {
         "passed": true,
@@ -519,7 +519,7 @@
         ],
         "issues": []
       },
-      "latency_ms": 1.98,
+      "latency_ms": 11.37,
       "error": null
     },
     {
@@ -541,13 +541,13 @@
         "intent_confidence": 0.93,
         "sentiment": "angry",
         "urgency": "critical",
-        "risk_score": 0.57,
+        "risk_score": 0.645,
         "risk_band": "escalate",
         "escalation_required": true,
         "requires_human_approval": false,
         "target_team": "senior_agent",
         "priority": "P1",
-        "sla_target": "2026-05-21T12:10:40.688196+00:00",
+        "sla_target": "2026-05-21T14:14:05.492112+00:00",
         "response_confidence": 0.95,
         "references_cited": [],
         "agents_called": [
@@ -574,7 +574,7 @@
         ],
         "issues": []
       },
-      "latency_ms": 2.65,
+      "latency_ms": 19.11,
       "error": null
     },
     {
@@ -594,7 +594,7 @@
         "intent_confidence": 0.92,
         "sentiment": "neutral",
         "urgency": "medium",
-        "risk_score": 0.2,
+        "risk_score": 0.305,
         "risk_band": "auto",
         "escalation_required": false,
         "requires_human_approval": false,
@@ -613,7 +613,7 @@
         ],
         "quality_score": 1.0,
         "quality_issues": [],
-        "response_text": "Your order SE10111 is currently not_shipped. It's being shipped via DTDC (tracking: None). Expected delivery: 2026-05-24."
+        "response_text": "Your order SE10111 is currently pending_dispatch. It's being shipped via Ecom Express (tracking: EC10111728492). Expected delivery: None."
       },
       "evaluation": {
         "passed": false,
@@ -623,7 +623,7 @@
           "expected escalation OR approval_required, got auto"
         ]
       },
-      "latency_ms": 2.71,
+      "latency_ms": 9.49,
       "error": null
     },
     {
@@ -665,7 +665,7 @@
           "expected escalation/approval/clarify, got auto"
         ]
       },
-      "latency_ms": 1.98,
+      "latency_ms": 9.66,
       "error": null
     },
     {
@@ -685,7 +685,7 @@
         "intent_confidence": 0.92,
         "sentiment": "neutral",
         "urgency": "medium",
-        "risk_score": 0.26,
+        "risk_score": 0.335,
         "risk_band": "auto",
         "escalation_required": false,
         "requires_human_approval": false,
@@ -704,7 +704,7 @@
         ],
         "quality_score": 1.0,
         "quality_issues": [],
-        "response_text": "Your order SE10890 is currently delivered. It's being shipped via BlueDart (tracking: BD11223). Expected delivery: within 5-7 days."
+        "response_text": "Your order SE10890 is currently delivered. It's being shipped via FedEx India (tracking: FE10890975271). Expected delivery: 2026-05-13."
       },
       "evaluation": {
         "passed": false,
@@ -713,7 +713,7 @@
           "intent expected=refund_status actual=order_tracking"
         ]
       },
-      "latency_ms": 2.53,
+      "latency_ms": 11.24,
       "error": null
     },
     {
@@ -732,14 +732,14 @@
         "intent_confidence": 0.92,
         "sentiment": "neutral",
         "urgency": "medium",
-        "risk_score": 0.14,
-        "risk_band": "auto",
+        "risk_score": 0.38,
+        "risk_band": "approval_required",
         "escalation_required": false,
-        "requires_human_approval": false,
-        "target_team": "",
-        "priority": "P4",
-        "sla_target": "",
-        "response_confidence": 0.92,
+        "requires_human_approval": true,
+        "target_team": "escalation_queue",
+        "priority": "P3",
+        "sla_target": "2026-05-21T20:14:05.536120+00:00",
+        "response_confidence": 0.75,
         "references_cited": [],
         "agents_called": [
           "intent_classifier",
@@ -747,21 +747,22 @@
           "evaluator",
           "escalation_risk",
           "response_generator",
-          "finalizer"
+          "approval_handler"
         ],
         "quality_score": 1.0,
         "quality_issues": [],
-        "response_text": "Your order SE10567 is currently delivered. It's being shipped via Delhivery (tracking: DL45678). Expected delivery: within 5-7 days."
+        "response_text": "Thanks for your patience \u2014 your request needs a quick human review. A specialist will confirm the next steps shortly (review SLA: 2026-05-21T20:14:05.536120+00:00)."
       },
       "evaluation": {
         "passed": false,
-        "matches": [],
+        "matches": [
+          "escalation_or_approval=True"
+        ],
         "issues": [
-          "sentiment expected_one_of=['angry', 'negative'] actual=neutral",
-          "expected escalation OR approval_required, got auto"
+          "sentiment expected_one_of=['angry', 'negative'] actual=neutral"
         ]
       },
-      "latency_ms": 2.45,
+      "latency_ms": 12.29,
       "error": null
     },
     {
@@ -802,7 +803,7 @@
         ],
         "issues": []
       },
-      "latency_ms": 0.74,
+      "latency_ms": 4.4,
       "error": null
     },
     {
@@ -843,7 +844,7 @@
         ],
         "issues": []
       },
-      "latency_ms": 0.67,
+      "latency_ms": 3.25,
       "error": null
     },
     {
@@ -858,7 +859,7 @@
         "intent_confidence": 0.92,
         "sentiment": "neutral",
         "urgency": "medium",
-        "risk_score": 0.09,
+        "risk_score": 0.305,
         "risk_band": "auto",
         "escalation_required": false,
         "requires_human_approval": false,
@@ -877,7 +878,7 @@
         ],
         "quality_score": 1.0,
         "quality_issues": [],
-        "response_text": "Your order SE10234 is currently in_transit. It's being shipped via BlueDart (tracking: BD98712). Expected delivery: 2026-05-22."
+        "response_text": "Your order SE10234 is currently in_transit. It's being shipped via BlueDart (tracking: BD987120234). Expected delivery: 2026-05-22."
       },
       "evaluation": {
         "passed": false,
@@ -886,7 +887,7 @@
           "expected escalation/approval/clarify, got auto"
         ]
       },
-      "latency_ms": 2.01,
+      "latency_ms": 11.89,
       "error": null
     },
     {
@@ -902,7 +903,7 @@
         "intent_confidence": 0.92,
         "sentiment": "neutral",
         "urgency": "medium",
-        "risk_score": 0.09,
+        "risk_score": 0.305,
         "risk_band": "auto",
         "escalation_required": false,
         "requires_human_approval": false,
@@ -921,7 +922,7 @@
         ],
         "quality_score": 1.0,
         "quality_issues": [],
-        "response_text": "Your order SE10234 is currently in_transit. It's being shipped via BlueDart (tracking: BD98712). Expected delivery: 2026-05-22."
+        "response_text": "Your order SE10234 is currently in_transit. It's being shipped via BlueDart (tracking: BD987120234). Expected delivery: 2026-05-22."
       },
       "evaluation": {
         "passed": true,
@@ -931,7 +932,7 @@
         ],
         "issues": []
       },
-      "latency_ms": 2.07,
+      "latency_ms": 9.78,
       "error": null
     },
     {
@@ -973,7 +974,7 @@
         ],
         "issues": []
       },
-      "latency_ms": 2.69,
+      "latency_ms": 9.86,
       "error": null
     },
     {
@@ -993,7 +994,7 @@
         "intent_confidence": 0.92,
         "sentiment": "neutral",
         "urgency": "medium",
-        "risk_score": 0.09,
+        "risk_score": 0.305,
         "risk_band": "auto",
         "escalation_required": false,
         "requires_human_approval": false,
@@ -1012,7 +1013,7 @@
         ],
         "quality_score": 1.0,
         "quality_issues": [],
-        "response_text": "Your order SE10234 is currently in_transit. It's being shipped via BlueDart (tracking: BD98712). Expected delivery: 2026-05-22."
+        "response_text": "Your order SE10234 is currently in_transit. It's being shipped via BlueDart (tracking: BD987120234). Expected delivery: 2026-05-22."
       },
       "evaluation": {
         "passed": true,
@@ -1022,7 +1023,7 @@
         ],
         "issues": []
       },
-      "latency_ms": 2.31,
+      "latency_ms": 10.37,
       "error": null
     },
     {
@@ -1069,7 +1070,7 @@
         ],
         "issues": []
       },
-      "latency_ms": 1.86,
+      "latency_ms": 30.63,
       "error": null
     },
     {
@@ -1116,7 +1117,7 @@
         ],
         "issues": []
       },
-      "latency_ms": 2.54,
+      "latency_ms": 10.2,
       "error": null
     },
     {
@@ -1158,7 +1159,7 @@
         ],
         "issues": []
       },
-      "latency_ms": 2.06,
+      "latency_ms": 9.49,
       "error": null
     },
     {
@@ -1203,7 +1204,7 @@
         ],
         "issues": []
       },
-      "latency_ms": 1.8,
+      "latency_ms": 9.58,
       "error": null
     }
   ]
