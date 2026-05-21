@@ -1,5 +1,5 @@
 """
-Escalation & Risk Agent (Person 5)
+Escalation & Risk Agent (Rohan (Person 5))
 
 Detects high-risk, low-confidence, angry, fraud, or compliance-sensitive
 cases and routes them to the correct human team. Replaces the original
@@ -9,7 +9,7 @@ and SLA-aware routing.
 
 Responsibilities
 ----------------
-- Read schema-typed state produced by upstream agents (Person 1, 2, 3).
+- Read schema-typed state produced by upstream agents (Ashish (Person 1), 2, 3).
 - Score risk on six independent factors with documented weights.
 - Decide one of three outcomes:
     * ``auto``               : safe for the AI to answer end-to-end.

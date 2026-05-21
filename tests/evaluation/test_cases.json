@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "description": "End-to-end evaluation cases for the ShopEase agentic pipeline. Person 5 owns this file.",
+  "description": "End-to-end evaluation cases for the ShopEase agentic pipeline. Rohan (Person 5) owns this file.",
   "categories": ["routine", "escalation", "edge_case", "negative"],
   "cases": [
     {

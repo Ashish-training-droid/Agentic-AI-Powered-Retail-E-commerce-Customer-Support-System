@@ -1,4 +1,4 @@
-# Person 2: Knowledge Base + Policy Retrieval Engineer
+# Gunjan (Person 2): Knowledge Base + Policy Retrieval Engineer
 
 ## Your Role
 
@@ -181,8 +181,8 @@ sentence-transformers>=3.0.0
 
 ## Handoff Partners
 
-- **Person 1 (you report to):** Your policy snippets feed into the Response Generator
-- **Person 5 (uses your output):** Risk agent checks if policy is ambiguous for escalation
+- **Ashish (Person 1) (you report to):** Your policy snippets feed into the Response Generator
+- **Rohan (Person 5) (uses your output):** Risk agent checks if policy is ambiguous for escalation
 
 ## Quality Checklist
 

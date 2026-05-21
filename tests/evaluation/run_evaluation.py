@@ -1,5 +1,5 @@
 """
-End-to-end evaluation runner (Person 5).
+End-to-end evaluation runner (Rohan (Person 5)).
 
 Loads every case from ``test_cases.json``, runs each through the compiled
 LangGraph pipeline, and writes a structured result file. Designed to run
@@ -368,7 +368,7 @@ def _print_summary(snapshot: dict) -> None:
 
 
 def _build_cli() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description="Run the Person 5 evaluation harness.")
+    parser = argparse.ArgumentParser(description="Run the Rohan (Person 5) evaluation harness.")
     parser.add_argument("--cases", type=Path, default=CASES_PATH, help="Path to test_cases.json")
     parser.add_argument("--output", type=Path, default=DEFAULT_RESULTS_PATH, help="Where to write the snapshot")
     parser.add_argument("--only", type=str, default=None, help="Run only the case with this id")

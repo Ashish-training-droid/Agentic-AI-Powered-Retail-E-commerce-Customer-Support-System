@@ -1,5 +1,5 @@
 """
-Policy Retrieval Agent (Person 2)
+Policy Retrieval Agent (Gunjan (Person 2))
 
 Searches approved return, refund, warranty, delivery, seller, coupon, and
 general policies. Loads policies from JSON files in src/knowledge/policies/

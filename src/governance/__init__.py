@@ -1,4 +1,4 @@
-"""Governance layer owned by Person 5.
+"""Governance layer owned by Rohan (Person 5).
 
 Modules:
     audit            : append-only audit log + report generation

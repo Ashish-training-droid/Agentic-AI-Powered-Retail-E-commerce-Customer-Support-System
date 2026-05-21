@@ -1,5 +1,5 @@
 """
-Response Generation Agent (Person 1 + Person 4)
+Response Generation Agent (Ashish (Person 1) + Aditi (Person 4))
 
 Creates clear, brand-aligned, policy-grounded customer responses. Cites
 policy references, adapts tone to channel, includes confidence score,

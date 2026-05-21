@@ -100,7 +100,7 @@ def test_escalation_angry_high_value():
     )
     assert result.get("intent") == "damaged_product"
     assert result.get("escalation_required") == True
-    # Person 5's risk agent picks the highest-severity matched route.
+    # Rohan (Person 5)'s risk agent picks the highest-severity matched route.
     # An angry customer on a high-value damaged item matches BOTH
     # angry_high_value (P1, senior_agent, severity 90) and
     # damaged_high_value (P2, replacement_team, severity 80) — the P1

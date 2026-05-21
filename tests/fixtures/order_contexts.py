@@ -1,14 +1,14 @@
 """
-Named order_context fixtures for Person 5 tests.
+Named order_context fixtures for Rohan (Person 5) tests.
 
 Each factory returns a dictionary that matches the ``order_context`` schema
-defined in ``src.orchestrator.state.AgentState`` and produced by Person 3's
+defined in ``src.orchestrator.state.AgentState`` and produced by Pallavi (Person 3)'s
 ``src.agents.order_context.fetch_order_context``.
 
 Using factories (not fixed dicts) keeps tests hermetic: callers can override
 any field via keyword arguments without leaking state between tests.
 
-Schema contract (Person 3 ↔ Person 5)
+Schema contract (Pallavi (Person 3) ↔ Rohan (Person 5))
 -------------------------------------
 order_context = {
     "order_id":         str,
@@ -35,7 +35,7 @@ class OrderContextFactory:
     """Builder for an order_context dict.
 
     Use ``OrderContextFactory(...).build()`` for ad-hoc combinations, or the
-    pre-named helpers below for the common scenarios Person 5 tests against.
+    pre-named helpers below for the common scenarios Rohan (Person 5) tests against.
     """
 
     order_id: str = "SE99999"

@@ -1,4 +1,4 @@
-# Person 5: Escalation, QA, Evaluation + Presentation Lead
+# Rohan (Person 5): Escalation, QA, Evaluation + Presentation Lead
 
 ## Your Role
 
@@ -188,16 +188,16 @@ def run_evaluation():
 
 | Slide | Content | Speaker |
 |-------|---------|---------|
-| 1 | Title + team | Person 1 |
-| 2-3 | Business problem + impact | Person 1 |
-| 4-5 | Architecture + agent collaboration | Person 1 |
-| 6-7 | Knowledge grounding + policy retrieval | Person 2 |
-| 8-9 | Mock integrations + workflow demos | Person 3 |
-| 10-12 | Customer chat + agent console UI | Person 4 |
-| 13-14 | Escalation rules + safety | Person 5 |
-| 15-16 | Evaluation metrics + test results | Person 5 |
-| 17-18 | Business benefits + ROI | Person 5 |
-| 19-20 | Limitations + future roadmap | Person 5 |
+| 1 | Title + team | Ashish (Person 1) |
+| 2-3 | Business problem + impact | Ashish (Person 1) |
+| 4-5 | Architecture + agent collaboration | Ashish (Person 1) |
+| 6-7 | Knowledge grounding + policy retrieval | Gunjan (Person 2) |
+| 8-9 | Mock integrations + workflow demos | Pallavi (Person 3) |
+| 10-12 | Customer chat + agent console UI | Aditi (Person 4) |
+| 13-14 | Escalation rules + safety | Rohan (Person 5) |
+| 15-16 | Evaluation metrics + test results | Rohan (Person 5) |
+| 17-18 | Business benefits + ROI | Rohan (Person 5) |
+| 19-20 | Limitations + future roadmap | Rohan (Person 5) |
 
 **Demo script (prepare for 5-minute live demo):**
 1. Show order tracking (happy path) — 1 min
@@ -221,9 +221,9 @@ python -c "from src.governance.audit import generate_audit_report; ..."
 
 ## Handoff Partners
 
-- **Person 1 (you report to):** Evaluation results validate the whole system
-- **Person 2 (provides data):** Risk agent checks policy ambiguity from Person 2
-- **Person 3 (provides data):** Risk agent checks order value and payment status
+- **Ashish (Person 1) (you report to):** Evaluation results validate the whole system
+- **Gunjan (Person 2) (provides data):** Risk agent checks policy ambiguity from Gunjan (Person 2)
+- **Pallavi (Person 3) (provides data):** Risk agent checks order value and payment status
 
 ## Quality Checklist
 

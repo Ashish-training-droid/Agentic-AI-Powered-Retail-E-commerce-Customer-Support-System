@@ -1,10 +1,10 @@
 """
-Order Context Agent (Person 3)
+Order Context Agent (Pallavi (Person 3))
 
 Retrieves unified order, shipment, payment, invoice, return, and CRM history
 for a given customer/order. Returns a structured summary that other agents use.
 
-TODO(Person 3): Replace mock data with actual retrieval logic using mock APIs.
+TODO(Pallavi (Person 3)): Replace mock data with actual retrieval logic using mock APIs.
 Currently returns hardcoded sample data for demo purposes.
 """
 
@@ -14,7 +14,7 @@ from datetime import datetime, timezone
 from src.orchestrator.state import AgentState
 
 
-# Mock order database — Person 3 will replace with mock_apis integration
+# Mock order database — Pallavi (Person 3) will replace with mock_apis integration
 MOCK_ORDERS = {
     "SE10234": {
         "order_id": "SE10234",
@@ -97,7 +97,7 @@ def fetch_order_context(state: AgentState) -> AgentState:
     - If order not found in DB, returns empty context with clear signal
     - Never crashes — always returns valid state update
 
-    TODO(Person 3): Replace mock lookup with calls to:
+    TODO(Pallavi (Person 3)): Replace mock lookup with calls to:
       - get_order_status(order_id)
       - get_payment_status(order_id)
       - get_shipment_tracking(order_id)

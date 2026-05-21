@@ -1,9 +1,9 @@
-# ShopEase Agentic AI — Person 4 Module
+# ShopEase Agentic AI — Aditi (Person 4) Module
 
 Customer chat UI, agent-assist console, and Product Advisory Agent for the
 ShopEase Retail & E-commerce Customer Support Capstone Project.
 
-This module is built and owned by **Person 4** (UI / UX + Product Advisory).
+This module is built and owned by **Aditi (Person 4)** (UI / UX + Product Advisory).
 The other agents (intent, policy, order, workflow, risk, evaluator) are
 **mocked locally** so the UI can run end-to-end during development, and will
 be swapped out for real implementations from Persons 1, 2, 3 and 5.
@@ -40,7 +40,7 @@ shopease_capstone/
 ├── modules/
 │   ├── __init__.py
 │   ├── mock_agents.py              # All 7 simulated agents + orchestrator wrapper
-│   ├── product_advisory.py         # Person 4's signature Product Advisory Agent
+│   ├── product_advisory.py         # Aditi (Person 4)'s signature Product Advisory Agent
 │   └── ui_components.py            # Reusable panels for the agent console
 └── README.md
 ```
@@ -55,15 +55,15 @@ real implementation later.
 
 | Function | Lives in | Real owner |
 |---|---|---|
-| `classify_intent(query)` | `mock_agents.py` | Person 1 |
-| `get_order_context(order_id, query)` | `mock_agents.py` | Person 3 |
-| `retrieve_policy(intent, query)` | `mock_agents.py` | Person 2 |
-| `automate_workflow(intent, order_ctx)` | `mock_agents.py` | Person 3 |
-| `assess_risk(query, intent_out, order_ctx)` | `mock_agents.py` | Person 5 |
-| `generate_response(query, agent_outputs)` | `mock_agents.py` | Person 1 + 4 |
-| `evaluate_response(agent_outputs)` | `mock_agents.py` | Person 5 |
-| `run_full_pipeline(query, ...)` | `mock_agents.py` | Person 1 |
-| `advise_products(query, a, b, use_case)` | `product_advisory.py` | **Person 4 (real)** |
+| `classify_intent(query)` | `mock_agents.py` | Ashish (Person 1) |
+| `get_order_context(order_id, query)` | `mock_agents.py` | Pallavi (Person 3) |
+| `retrieve_policy(intent, query)` | `mock_agents.py` | Gunjan (Person 2) |
+| `automate_workflow(intent, order_ctx)` | `mock_agents.py` | Pallavi (Person 3) |
+| `assess_risk(query, intent_out, order_ctx)` | `mock_agents.py` | Rohan (Person 5) |
+| `generate_response(query, agent_outputs)` | `mock_agents.py` | Ashish (Person 1) + 4 |
+| `evaluate_response(agent_outputs)` | `mock_agents.py` | Rohan (Person 5) |
+| `run_full_pipeline(query, ...)` | `mock_agents.py` | Ashish (Person 1) |
+| `advise_products(query, a, b, use_case)` | `product_advisory.py` | **Aditi (Person 4) (real)** |
 
 ---
 
@@ -86,7 +86,7 @@ real implementation later.
 
 ### Tab 2 — Product Comparison
 
-Person 4's signature feature:
+Aditi (Person 4)'s signature feature:
 - Pick a category, then two products.
 - Optionally type a use case (e.g. "College", "Gaming", "Photography").
 - See a spec-by-spec table including **Processor**, **RAM**, **Storage**,
@@ -121,9 +121,9 @@ and watch the right pane fill in.
 
 | Today (mock) | Replace with |
 |---|---|
-| `data/orders.json` | Person 3's mock Order Management API output (or live CRM JSON). |
-| `data/policies.json` | Person 2's curated policy KB (markdown chunks + embeddings). |
-| `data/products.csv` | Person 2's catalog file or a real product API. |
+| `data/orders.json` | Pallavi (Person 3)'s mock Order Management API output (or live CRM JSON). |
+| `data/policies.json` | Gunjan (Person 2)'s curated policy KB (markdown chunks + embeddings). |
+| `data/products.csv` | Gunjan (Person 2)'s catalog file or a real product API. |
 
 The loader functions at the top of `mock_agents.py` (`load_orders`,
 `load_policies`, `load_products`) are the only places that touch the
@@ -143,7 +143,7 @@ emphasize on each screen.
 
 ---
 
-## 8. Checklist mapping (from the Person 4 guide)
+## 8. Checklist mapping (from the Aditi (Person 4) guide)
 
 - [x] UI clearly shows customer input and AI response
 - [x] Agent console shows each important agent output
@@ -257,13 +257,13 @@ flowchart TD
 
 | Agent | Responsibility | Owner |
 |-------|---------------|-------|
-| **Intent Classification** | Identify customer goal, urgency, sentiment, and issue category | Person 1 |
-| **Order Context** | Retrieve order, shipment, payment, invoice, return, and CRM history | Person 3 |
-| **Policy Retrieval** | Search approved return, refund, warranty, delivery, and coupon policies | Person 2 |
-| **Product Advisory** | Compare products, check compatibility, suggest alternatives | Person 4 |
-| **Workflow Automation** | Initiate self-service actions (return, refund, invoice, ticket) | Person 3 |
-| **Escalation & Risk** | Detect high-risk, low-confidence, or sensitive cases and route to humans | Person 5 |
-| **Response Generation** | Create grounded, brand-aligned customer responses | Person 1 + Person 4 |
+| **Intent Classification** | Identify customer goal, urgency, sentiment, and issue category | Ashish (Person 1) |
+| **Order Context** | Retrieve order, shipment, payment, invoice, return, and CRM history | Pallavi (Person 3) |
+| **Policy Retrieval** | Search approved return, refund, warranty, delivery, and coupon policies | Gunjan (Person 2) |
+| **Product Advisory** | Compare products, check compatibility, suggest alternatives | Aditi (Person 4) |
+| **Workflow Automation** | Initiate self-service actions (return, refund, invoice, ticket) | Pallavi (Person 3) |
+| **Escalation & Risk** | Detect high-risk, low-confidence, or sensitive cases and route to humans | Rohan (Person 5) |
+| **Response Generation** | Create grounded, brand-aligned customer responses | Ashish (Person 1) + Aditi (Person 4) |
 
 ## Orchestration Flow
 
@@ -335,30 +335,30 @@ sequenceDiagram
 
 | File / Folder | What It Does | Owner |
 |---------------|-------------|-------|
-| **`src/orchestrator/graph.py`** | The main LangGraph workflow — connects all agents into a pipeline | Person 1 |
-| **`src/orchestrator/state.py`** | Shared state schema (TypedDict) that flows between all agents | Person 1 |
-| **`src/orchestrator/router.py`** | Routing logic — decides which agents to call based on intent | Person 1 |
-| **`src/orchestrator/evaluator.py`** | Quality gate — checks confidence and completeness before responding | Person 1 |
-| **`src/agents/intent_classifier.py`** | Classifies customer intent, sentiment, urgency using OpenAI | Person 1 |
-| **`src/agents/response_generator.py`** | Generates grounded, policy-cited customer responses | Person 1 + 4 |
-| **`src/agents/order_context.py`** | Retrieves order/payment/shipment data for the customer | Person 3 |
-| **`src/agents/policy_retrieval.py`** | Searches policy KB and returns relevant rules with citations | Person 2 |
-| **`src/agents/product_advisory.py`** | Compares products, suggests alternatives, checks stock | Person 4 |
-| **`src/agents/workflow_automation.py`** | Executes actions: return, refund check, ticket creation | Person 3 |
-| **`src/agents/escalation_risk.py`** | Risk scoring and escalation routing to human teams | Person 5 |
+| **`src/orchestrator/graph.py`** | The main LangGraph workflow — connects all agents into a pipeline | Ashish (Person 1) |
+| **`src/orchestrator/state.py`** | Shared state schema (TypedDict) that flows between all agents | Ashish (Person 1) |
+| **`src/orchestrator/router.py`** | Routing logic — decides which agents to call based on intent | Ashish (Person 1) |
+| **`src/orchestrator/evaluator.py`** | Quality gate — checks confidence and completeness before responding | Ashish (Person 1) |
+| **`src/agents/intent_classifier.py`** | Classifies customer intent, sentiment, urgency using OpenAI | Ashish (Person 1) |
+| **`src/agents/response_generator.py`** | Generates grounded, policy-cited customer responses | Ashish (Person 1) + 4 |
+| **`src/agents/order_context.py`** | Retrieves order/payment/shipment data for the customer | Pallavi (Person 3) |
+| **`src/agents/policy_retrieval.py`** | Searches policy KB and returns relevant rules with citations | Gunjan (Person 2) |
+| **`src/agents/product_advisory.py`** | Compares products, suggests alternatives, checks stock | Aditi (Person 4) |
+| **`src/agents/workflow_automation.py`** | Executes actions: return, refund check, ticket creation | Pallavi (Person 3) |
+| **`src/agents/escalation_risk.py`** | Risk scoring and escalation routing to human teams | Rohan (Person 5) |
 | **`src/utils/`** | Helper functions: logging, validation, formatting, retry, metrics | Shared |
-| **`src/config.py`** | API keys, model config, confidence thresholds | Person 1 |
-| **`src/main.py`** | Demo runner — runs sample conversations through the full pipeline | Person 1 |
-| **`src/knowledge/`** | Policy documents, product catalog, FAQs (knowledge base) | Person 2 |
-| **`src/integrations/mock_apis/`** | Mock backend APIs (orders, payments, logistics, CRM) | Person 3 |
-| **`src/ui/customer_chat/`** | Customer-facing chat interface (Streamlit) | Person 4 |
-| **`src/ui/agent_console/`** | Internal agent-assist dashboard | Person 4 |
-| **`src/governance/`** | Audit logs, access control, human approval gates | Person 5 |
-| **`data/mock/`** | Sample orders, customers, and demo conversations | Person 3 |
-| **`tests/`** | Evaluation suite, test cases, metrics | Person 5 |
-| **`docs/architecture.md`** | Full system architecture with agent contracts and state schema | Person 1 |
-| **`docs/team_guides/`** | Detailed step-by-step guides for each team member | Person 1 |
-| **`CONTRIBUTING.md`** | How to clone, setup, and start contributing | Person 1 |
+| **`src/config.py`** | API keys, model config, confidence thresholds | Ashish (Person 1) |
+| **`src/main.py`** | Demo runner — runs sample conversations through the full pipeline | Ashish (Person 1) |
+| **`src/knowledge/`** | Policy documents, product catalog, FAQs (knowledge base) | Gunjan (Person 2) |
+| **`src/integrations/mock_apis/`** | Mock backend APIs (orders, payments, logistics, CRM) | Pallavi (Person 3) |
+| **`src/ui/customer_chat/`** | Customer-facing chat interface (Streamlit) | Aditi (Person 4) |
+| **`src/ui/agent_console/`** | Internal agent-assist dashboard | Aditi (Person 4) |
+| **`src/governance/`** | Audit logs, access control, human approval gates | Rohan (Person 5) |
+| **`data/mock/`** | Sample orders, customers, and demo conversations | Pallavi (Person 3) |
+| **`tests/`** | Evaluation suite, test cases, metrics | Rohan (Person 5) |
+| **`docs/architecture.md`** | Full system architecture with agent contracts and state schema | Ashish (Person 1) |
+| **`docs/team_guides/`** | Detailed step-by-step guides for each team member | Ashish (Person 1) |
+| **`CONTRIBUTING.md`** | How to clone, setup, and start contributing | Ashish (Person 1) |
 
 ## How It All Connects
 
@@ -395,22 +395,22 @@ Customer gets answer or specialist takes over
 
 | Person | Role | Primary Ownership |
 |--------|------|-------------------|
-| Person 1 | Project Help + Orchestration Architect | Architecture, agent router, state schema, integration |
-| Person 2 | Knowledge Base + Policy Retrieval Engineer | Policy KB, FAQ, product catalog, RAG retrieval |
-| Person 3 | Mock API + Workflow Automation Engineer | Mock APIs, order context agent, workflow automation |
-| Person 4 | Product Advisory + UI/UX Engineer | Customer chat UI, agent console, product advisory agent |
-| Person 5 | Escalation, QA, Evaluation + Presentation Lead | Risk agent, audit logs, testing, metrics, final deck |
+| Ashish (Person 1) | Project Help + Orchestration Architect | Architecture, agent router, state schema, integration |
+| Gunjan (Person 2) | Knowledge Base + Policy Retrieval Engineer | Policy KB, FAQ, product catalog, RAG retrieval |
+| Pallavi (Person 3) | Mock API + Workflow Automation Engineer | Mock APIs, order context agent, workflow automation |
+| Aditi (Person 4) | Product Advisory + UI/UX Engineer | Customer chat UI, agent console, product advisory agent |
+| Rohan (Person 5) | Escalation, QA, Evaluation + Presentation Lead | Risk agent, audit logs, testing, metrics, final deck |
 
 ## 6-Day Execution Timeline
 
 | Day | Theme | Key Output | Who Drives |
 |-----|-------|-----------|-----------|
-| Day 1 | Scope + Design | Use cases, architecture, mock data schema, repo setup | Person 1 |
-| Day 2 | Data + Agent Skeletons | KB, mock APIs, intent/order/policy agents running | Person 2 + 3 |
+| Day 1 | Scope + Design | Use cases, architecture, mock data schema, repo setup | Ashish (Person 1) |
+| Day 2 | Data + Agent Skeletons | KB, mock APIs, intent/order/policy agents running | Gunjan (Person 2) + 3 |
 | Day 3 | Core Agents | All 7 agents with real logic, integrated flows | All |
-| Day 4 | UI + Integration | Customer chat + agent console + audit logs | Person 4 + 5 |
-| Day 5 | Evaluation + Fixes | Test report, metrics, refined flows, bug fixes | Person 5 + All |
-| Day 6 | Final Packaging | Presentation, demo script, final report | Person 5 leads |
+| Day 4 | UI + Integration | Customer chat + agent console + audit logs | Aditi (Person 4) + 5 |
+| Day 5 | Evaluation + Fixes | Test report, metrics, refined flows, bug fixes | Rohan (Person 5) + All |
+| Day 6 | Final Packaging | Presentation, demo script, final report | Rohan (Person 5) leads |
 
 ## Getting Started
 
@@ -516,7 +516,7 @@ All agent function signatures stay the same — just swap the implementation beh
 |-----------|--------|---------|
 | Git repo + GitHub remote | Done | All code on `main`, teammates have branch access |
 | README + Architecture docs | Done | Full system design, agent contracts, state schema, mermaid diagrams |
-| Team guides (Person 2-5) | Done | Step-by-step instructions in `docs/team_guides/` |
+| Team guides (Gunjan (Person 2)-5) | Done | Step-by-step instructions in `docs/team_guides/` |
 | LangGraph orchestration graph | Done | `src/orchestrator/graph.py` — full pipeline with conditional routing |
 | Shared state schema | Done | `src/orchestrator/state.py` — TypedDict flowing between all agents |
 | Intent Classifier (OpenAI) | Done | `src/agents/intent_classifier.py` — GPT-4o + mock fallback |
@@ -535,18 +535,18 @@ All agent function signatures stay the same — just swap the implementation beh
 
 | Who | What They Need to Deliver | Their Branch |
 |-----|--------------------------|-------------|
-| Person 2 | Policy KB (15+ rules), FAQ, Product catalog, RAG retrieval agent | Not started yet |
-| Person 3 | Mock data JSONs, Order Context Agent, Workflow Agent, API functions | Not started yet |
-| Person 4 | Streamlit UI (customer chat + agent console), Product Advisory Agent | `ui-agent-aditi` (ready, not merged yet) |
-| Person 5 | Risk matrix, Escalation Agent, Audit logs, Evaluation suite, Final deck | Not started yet |
+| Gunjan (Person 2) | Policy KB (15+ rules), FAQ, Product catalog, RAG retrieval agent | Not started yet |
+| Pallavi (Person 3) | Mock data JSONs, Order Context Agent, Workflow Agent, API functions | Not started yet |
+| Aditi (Person 4) | Streamlit UI (customer chat + agent console), Product Advisory Agent | `ui-agent-aditi` (ready, not merged yet) |
+| Rohan (Person 5) | Risk matrix, Escalation Agent, Audit logs, Evaluation suite, Final deck | Not started yet |
 
 ### How to Continue (for Next Cursor Session)
 
 1. **Check for new branches:** `git fetch --all` then `git branch -r` to see teammate submissions
 2. **Run the system:** `python -m src.main` (works in mock mode, no API key needed)
 3. **Run with OpenAI:** Set `USE_MOCK=false` in `.env` and provide `OPENAI_API_KEY`
-4. **When Person 2/3 deliver:** Merge their branches, their code replaces the stubs in `src/agents/`
-5. **When ready to integrate Person 4:** Merge `ui-agent-aditi`, move files into `src/ui/`, wire to real orchestrator
+4. **When Gunjan (Person 2)/3 deliver:** Merge their branches, their code replaces the stubs in `src/agents/`
+5. **When ready to integrate Aditi (Person 4):** Merge `ui-agent-aditi`, move files into `src/ui/`, wire to real orchestrator
 6. **Final integration:** All agents use real data → run full evaluation → prepare presentation
 
 ### Key Design Decisions Made
@@ -557,21 +557,21 @@ All agent function signatures stay the same — just swap the implementation beh
 - **Error-safe wrappers** — any agent can fail without crashing the pipeline
 - **Mock-first development** — system runs end-to-end without any external service
 - **Confidence-based routing** — low confidence asks for clarification instead of guessing wrong
-- **Person 4's UI is separate for now** — will integrate after Person 2/3 deliver real data
+- **Aditi (Person 4)'s UI is separate for now** — will integrate after Gunjan (Person 2)/3 deliver real data
 
 ### Git History Summary
 
 ```
-Day 1 commits (Person 1):
+Day 1 commits (Ashish (Person 1)):
 - Initial repo setup + README + architecture docs
 - Full LangGraph orchestration with 7 agents
 - Helper utilities (logger, validators, formatters, retry, metrics)
-- Team guides for Person 2-5
+- Team guides for Gunjan (Person 2)-5
 - Resilient routing + error handling + fallback responses
 - Test suites
 - Scalability documentation
 
-Person 4 (Aditi):
+Aditi (Person 4) (Aditi):
 - Branch: ui-agent-aditi (Streamlit UI, product advisory, demo script)
 - Status: Ready but not merged into main yet (waiting for P2/P3 data)
 ```

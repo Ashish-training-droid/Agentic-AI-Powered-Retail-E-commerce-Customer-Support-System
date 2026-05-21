@@ -32,10 +32,10 @@ You should see all 7 demo conversations execute successfully.
 ### 4. Find Your Guide
 
 Read your detailed task guide:
-- Person 2: `docs/team_guides/PERSON_2_GUIDE.md`
-- Person 3: `docs/team_guides/PERSON_3_GUIDE.md`
-- Person 4: `docs/team_guides/PERSON_4_GUIDE.md`
-- Person 5: `docs/team_guides/PERSON_5_GUIDE.md`
+- Gunjan (Person 2): `docs/team_guides/PERSON_2_GUIDE.md`
+- Pallavi (Person 3): `docs/team_guides/PERSON_3_GUIDE.md`
+- Aditi (Person 4): `docs/team_guides/PERSON_4_GUIDE.md`
+- Rohan (Person 5): `docs/team_guides/PERSON_5_GUIDE.md`
 
 ### 5. Your Code Files
 
@@ -43,10 +43,10 @@ Each person has specific files to work on. Look for `TODO(Person X)` markers:
 
 | Person | Primary Files |
 |--------|--------------|
-| Person 2 | `src/agents/policy_retrieval.py`, `src/knowledge/policies/`, `src/knowledge/products/`, `src/knowledge/faqs/` |
-| Person 3 | `src/agents/order_context.py`, `src/agents/workflow_automation.py`, `src/integrations/mock_apis/`, `data/mock/` |
-| Person 4 | `src/agents/product_advisory.py`, `src/ui/customer_chat/`, `src/ui/agent_console/` |
-| Person 5 | `src/agents/escalation_risk.py`, `src/governance/audit.py`, `tests/` |
+| Gunjan (Person 2) | `src/agents/policy_retrieval.py`, `src/knowledge/policies/`, `src/knowledge/products/`, `src/knowledge/faqs/` |
+| Pallavi (Person 3) | `src/agents/order_context.py`, `src/agents/workflow_automation.py`, `src/integrations/mock_apis/`, `data/mock/` |
+| Aditi (Person 4) | `src/agents/product_advisory.py`, `src/ui/customer_chat/`, `src/ui/agent_console/` |
+| Rohan (Person 5) | `src/agents/escalation_risk.py`, `src/governance/audit.py`, `tests/` |
 
 ## Git Workflow
 
@@ -62,7 +62,7 @@ feature/person5-evaluation
 ### Commit Convention
 
 ```
-feat: add return policy rules (Person 2)
+feat: add return policy rules (Gunjan (Person 2))
 fix: order context handles missing data
 docs: update evaluation metrics
 ```
@@ -73,7 +73,7 @@ docs: update evaluation metrics
 2. Make your changes
 3. Test with `python -m src.main`
 4. Push and create a PR
-5. Person 1 reviews and merges
+5. Ashish (Person 1) reviews and merges
 
 ## Important Rules
 
@@ -93,15 +93,15 @@ docs: update evaluation metrics
 ├── src/
 │   ├── agents/           # All 7 AI agents
 │   ├── orchestrator/     # LangGraph workflow, router, state, evaluator
-│   ├── integrations/     # Mock APIs (Person 3)
-│   ├── knowledge/        # Policy KB, products, FAQs (Person 2)
-│   ├── ui/               # Customer chat + agent console (Person 4)
-│   ├── governance/       # Audit logs (Person 5)
+│   ├── integrations/     # Mock APIs (Pallavi (Person 3))
+│   ├── knowledge/        # Policy KB, products, FAQs (Gunjan (Person 2))
+│   ├── ui/               # Customer chat + agent console (Aditi (Person 4))
+│   ├── governance/       # Audit logs (Rohan (Person 5))
 │   ├── utils/            # Shared helpers (logger, validators, formatters, etc.)
 │   ├── config.py         # Configuration and thresholds
 │   └── main.py           # Demo runner
-├── data/mock/            # Mock data files (Person 3)
-├── tests/                # Test suite (Person 5)
+├── data/mock/            # Mock data files (Pallavi (Person 3))
+├── tests/                # Test suite (Rohan (Person 5))
 ├── docs/                 # Architecture + team guides
 ├── logs/                 # Runtime logs (auto-created)
 ├── requirements.txt
@@ -153,8 +153,8 @@ Generator  to Human
 
 ## Need Help?
 
-- Architecture questions → Person 1
-- Policy/data questions → Person 2
-- API/workflow issues → Person 3
-- UI/display issues → Person 4
-- Testing/metrics → Person 5
+- Architecture questions → Ashish (Person 1)
+- Policy/data questions → Gunjan (Person 2)
+- API/workflow issues → Pallavi (Person 3)
+- UI/display issues → Aditi (Person 4)
+- Testing/metrics → Rohan (Person 5)

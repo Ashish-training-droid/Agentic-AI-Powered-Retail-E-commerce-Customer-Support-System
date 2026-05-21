@@ -1,12 +1,12 @@
 <#
 .SYNOPSIS
-    One-shot Person 3 handoff for the Person 5 module.
+    One-shot Pallavi (Person 3) handoff for the Rohan (Person 5) module.
 
 .DESCRIPTION
-    Run this AS SOON AS Person 3's PR lands on origin/main:
+    Run this AS SOON AS Pallavi (Person 3)'s PR lands on origin/main:
 
       1. Fetch + rebase the current branch onto origin/main.
-      2. Re-run the Person 5 unit tests (must stay green — schema is the contract).
+      2. Re-run the Rohan (Person 5) unit tests (must stay green — schema is the contract).
       3. Re-run the full evaluation harness against the new real data.
       4. Snapshot the new metrics into tests/evaluation/report_v2.json/.md.
       5. Diff v1 vs v2 into tests/evaluation/report_v1_vs_v2.md (slide 16).
@@ -47,7 +47,7 @@ if ($LASTEXITCODE -ne 0) {
     exit 1
 }
 
-Step "3/5  Run Person 5 unit + integration tests"
+Step "3/5  Run Rohan (Person 5) unit + integration tests"
 python -m pytest tests/test_escalation.py tests/test_grounding.py tests/test_router.py -q
 if ($LASTEXITCODE -ne 0) {
     Write-Host "Tests failed after rebase. Investigate before regenerating reports." -ForegroundColor Red

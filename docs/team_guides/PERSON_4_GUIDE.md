@@ -1,4 +1,4 @@
-# Person 4: Product Advisory + UI/UX Engineer
+# Aditi (Person 4): Product Advisory + UI/UX Engineer
 
 ## Your Role
 
@@ -17,9 +17,9 @@ Replace the mock implementation with real product comparison logic.
 ```python
 def advise_product(state: AgentState) -> AgentState:
     # 1. Parse product names, categories, or needs from message
-    # 2. Search product catalog (from Person 2's catalog.json)
+    # 2. Search product catalog (from Gunjan (Person 2)'s catalog.json)
     # 3. Compare specs side-by-side
-    # 4. Check inventory availability (from Person 3's APIs)
+    # 4. Check inventory availability (from Pallavi (Person 3)'s APIs)
     # 5. Suggest alternatives for out-of-stock items
     # 6. Generate recommendation based on stated needs
 ```
@@ -143,9 +143,9 @@ src/ui/agent_console/
 +---------------------------------------------------------+
 ```
 
-### 4. Response Generation (Shared with Person 1) (Week 3-4)
+### 4. Response Generation (Shared with Ashish (Person 1)) (Week 3-4)
 
-You share ownership of `src/agents/response_generator.py` with Person 1. Your focus:
+You share ownership of `src/agents/response_generator.py` with Ashish (Person 1). Your focus:
 
 - **Tone adaptation:** Different tone for web chat vs email vs social
 - **Formatting:** Bullet points for comparisons, short sentences for chat
@@ -180,9 +180,9 @@ streamlit>=1.35.0
 
 ## Handoff Partners
 
-- **Person 1 (you report to):** Your UI displays the pipeline output; shared Response Generator
-- **Person 2 (provides data):** Product catalog and FAQ for your advisory agent
-- **Person 3 (provides APIs):** Inventory check for stock availability in product recommendations
+- **Ashish (Person 1) (you report to):** Your UI displays the pipeline output; shared Response Generator
+- **Gunjan (Person 2) (provides data):** Product catalog and FAQ for your advisory agent
+- **Pallavi (Person 3) (provides APIs):** Inventory check for stock availability in product recommendations
 
 ## Quality Checklist
 

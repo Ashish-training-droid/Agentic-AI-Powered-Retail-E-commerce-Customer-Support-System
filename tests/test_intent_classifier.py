@@ -2,7 +2,7 @@
 Unit Tests for Intent Classifier
 
 Tests the classification accuracy for all 9 supported intents using
-mock mode (keyword-based). These serve as baseline tests that Person 5
+mock mode (keyword-based). These serve as baseline tests that Rohan (Person 5)
 will expand with the full evaluation suite.
 
 Run: python -m pytest tests/test_intent_classifier.py -v

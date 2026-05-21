@@ -1,10 +1,10 @@
 """
-Product Advisory Agent (Person 4)
+Product Advisory Agent (Aditi (Person 4))
 
 Compares products, checks compatibility, suggests alternatives, and provides
 availability information from the product catalog.
 
-TODO(Person 4): Replace mock data with actual product catalog search.
+TODO(Aditi (Person 4)): Replace mock data with actual product catalog search.
 Build comparison logic using product specs, price bands, ratings, and
 customer needs analysis.
 """
@@ -15,7 +15,7 @@ from datetime import datetime, timezone
 from src.orchestrator.state import AgentState
 
 
-# Mock product catalog — Person 4 will replace with full catalog + search
+# Mock product catalog — Aditi (Person 4) will replace with full catalog + search
 MOCK_PRODUCTS = {
     "laptop": {
         "comparison": [
@@ -78,7 +78,7 @@ def advise_product(state: AgentState) -> AgentState:
     Reads: message, intent
     Writes: product_context, agents_called, audit_trail
 
-    TODO(Person 4): Replace with:
+    TODO(Aditi (Person 4)): Replace with:
       1. Parse product names/categories from message
       2. Search product catalog with filters
       3. Compare specs side-by-side

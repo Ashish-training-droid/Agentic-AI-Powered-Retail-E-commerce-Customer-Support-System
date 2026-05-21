@@ -1,5 +1,5 @@
 """
-LangGraph Workflow Definition (Person 1)
+LangGraph Workflow Definition (Ashish (Person 1))
 
 This is the main orchestration graph that connects all agents into a
 coherent pipeline. Includes:
@@ -111,7 +111,7 @@ def _clarify(state: AgentState) -> AgentState:
 def _escalate(state: AgentState) -> AgentState:
     """Terminal node for escalated cases — generates an escalation response.
 
-    Person 5 wires the audit log here so every escalation is durably recorded
+    Rohan (Person 5) wires the audit log here so every escalation is durably recorded
     even when the response generator is skipped.
     """
     update: dict = {

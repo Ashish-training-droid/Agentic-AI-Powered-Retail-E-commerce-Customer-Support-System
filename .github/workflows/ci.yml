@@ -33,7 +33,7 @@ jobs:
       - name: Run Intent Classifier Tests
         run: python tests/test_intent_classifier.py
 
-      - name: Run Grounding Tests (Person 2)
+      - name: Run Grounding Tests (Gunjan (Person 2))
         run: python -m pytest tests/test_grounding.py -v
 
       - name: Run Resilience Tests

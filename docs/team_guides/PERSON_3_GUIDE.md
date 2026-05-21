@@ -1,4 +1,4 @@
-# Person 3: Mock API + Workflow Automation Engineer
+# Pallavi (Person 3): Mock API + Workflow Automation Engineer
 
 ## Your Role
 
@@ -193,9 +193,9 @@ python -m src.main --demo 6   # Refund status (uses order_context)
 
 ## Handoff Partners
 
-- **Person 1 (you report to):** Your order_context feeds into Response Generator and Evaluator
-- **Person 4 (uses your APIs):** Product Advisory may check inventory via your API
-- **Person 5 (uses your output):** Risk agent checks order value and payment disputes
+- **Ashish (Person 1) (you report to):** Your order_context feeds into Response Generator and Evaluator
+- **Aditi (Person 4) (uses your APIs):** Product Advisory may check inventory via your API
+- **Rohan (Person 5) (uses your output):** Risk agent checks order value and payment disputes
 
 ## Quality Checklist
 

@@ -1,5 +1,5 @@
 """
-Perturbation generator for evaluation cases (Person 5).
+Perturbation generator for evaluation cases (Rohan (Person 5)).
 
 Takes the routine cases from ``test_cases.json`` and mutates each one into
 a "near miss" — typo, missing order ID, whitespace pollution, case change

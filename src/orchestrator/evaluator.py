@@ -1,5 +1,5 @@
 """
-Quality Evaluator / Gate (Person 1)
+Quality Evaluator / Gate (Ashish (Person 1))
 
 Runs after context agents and before response generation. Checks:
 - Are all required context fields populated?

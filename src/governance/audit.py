@@ -1,5 +1,5 @@
 """
-Audit Log (Person 5)
+Audit Log (Rohan (Person 5))
 
 Append-only audit trail for every conversation that flows through the
 orchestration graph. Stored as JSONL so it's easy to grep, easy to load
@@ -9,7 +9,7 @@ Used by:
     * The graph's terminal nodes (write one entry per resolved session).
     * ``tests/evaluation/run_evaluation.py`` (read entries to compute
       escalation precision / recall, false-escalation rate, latency).
-    * The agent console (Person 4) for the "raw audit log" panel.
+    * The agent console (Aditi (Person 4)) for the "raw audit log" panel.
 """
 
 from __future__ import annotations

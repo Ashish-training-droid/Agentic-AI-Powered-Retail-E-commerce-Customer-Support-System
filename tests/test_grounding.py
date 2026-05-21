@@ -1,5 +1,5 @@
 """
-Grounding tests for the Policy Retrieval Agent (Person 2).
+Grounding tests for the Policy Retrieval Agent (Gunjan (Person 2)).
 
 Verifies that:
 - The correct policy is returned for common customer intents

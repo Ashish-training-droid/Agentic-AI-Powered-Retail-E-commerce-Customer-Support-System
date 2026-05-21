@@ -143,7 +143,7 @@ class OrchestrationState:
 
 | Field | Value |
 |-------|-------|
-| **Owner** | Person 1 |
+| **Owner** | Ashish (Person 1) |
 | **Input** | `message`, `channel`, `conversation_history` |
 | **Output** | `intent`, `sub_intent`, `sentiment`, `urgency`, `intent_confidence` |
 | **Tools** | Intent label set, sentiment rules |
@@ -164,7 +164,7 @@ class OrchestrationState:
 
 | Field | Value |
 |-------|-------|
-| **Owner** | Person 3 |
+| **Owner** | Pallavi (Person 3) |
 | **Input** | `customer_id`, `order_id`, `intent` |
 | **Output** | `order_context` (unified summary) |
 | **Tools** | `get_order_status`, `get_payment_status`, `get_shipment_tracking`, `get_crm_history`, `get_return_status` |
@@ -188,7 +188,7 @@ class OrchestrationState:
 
 | Field | Value |
 |-------|-------|
-| **Owner** | Person 2 |
+| **Owner** | Gunjan (Person 2) |
 | **Input** | `intent`, `order_context`, `message` |
 | **Output** | `policy_snippets`, `policy_applies` |
 | **Tools** | Policy KB (vector search / keyword match), FAQ repository |
@@ -213,7 +213,7 @@ class OrchestrationState:
 
 | Field | Value |
 |-------|-------|
-| **Owner** | Person 4 |
+| **Owner** | Aditi (Person 4) |
 | **Input** | `message`, product names/filters, `intent` |
 | **Output** | `product_context` (comparison, recommendation, alternatives) |
 | **Tools** | Product catalog, inventory mock API |
@@ -223,7 +223,7 @@ class OrchestrationState:
 
 | Field | Value |
 |-------|-------|
-| **Owner** | Person 3 |
+| **Owner** | Pallavi (Person 3) |
 | **Input** | `intent`, `order_context`, `policy_snippets` |
 | **Output** | `action_taken`, `action_result`, `requires_human_approval` |
 | **Tools** | `create_return_request`, `get_refund_status`, `download_invoice`, `create_ticket`, `update_address` |
@@ -242,7 +242,7 @@ class OrchestrationState:
 
 | Field | Value |
 |-------|-------|
-| **Owner** | Person 5 |
+| **Owner** | Rohan (Person 5) |
 | **Input** | `message`, `order_context`, `risk_score`, `intent_confidence`, `sentiment` |
 | **Output** | `escalation_required`, `escalation_reason`, `target_team`, `priority` |
 | **Tools** | Risk matrix, priority rules, routing map |
@@ -263,7 +263,7 @@ class OrchestrationState:
 
 | Field | Value |
 |-------|-------|
-| **Owner** | Person 1 + Person 4 |
+| **Owner** | Ashish (Person 1) + Aditi (Person 4) |
 | **Input** | All agent outputs from state |
 | **Output** | `response_text`, `response_confidence`, `references_cited`, `suggested_next_action` |
 | **Tools** | Tone guidelines, response templates |

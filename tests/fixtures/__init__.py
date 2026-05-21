@@ -1,7 +1,7 @@
-"""Test fixtures owned by Person 5 (escalation, QA, evaluation).
+"""Test fixtures owned by Rohan (Person 5) (escalation, QA, evaluation).
 
-Centralizing fixtures here means Person 3 changing the order_context
-implementation cannot break Person 5's unit tests or evaluation harness;
+Centralizing fixtures here means Pallavi (Person 3) changing the order_context
+implementation cannot break Rohan (Person 5)'s unit tests or evaluation harness;
 both consume the same schema-compliant dictionaries from this module.
 """
 

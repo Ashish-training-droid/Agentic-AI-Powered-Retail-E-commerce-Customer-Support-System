@@ -1,10 +1,10 @@
 """
-Tests for the Escalation & Risk Agent (Person 5).
+Tests for the Escalation & Risk Agent (Rohan (Person 5)).
 
 Strategy
 --------
 Every test builds its own minimal ``AgentState`` from
-``tests.fixtures.order_contexts`` so we never depend on Person 3's runtime
+``tests.fixtures.order_contexts`` so we never depend on Pallavi (Person 3)'s runtime
 implementation. The risk agent's contract is the schema, not the source.
 """
 

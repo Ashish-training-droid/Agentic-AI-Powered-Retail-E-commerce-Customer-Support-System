@@ -1,5 +1,5 @@
 """
-Standalone report generator for the evaluation harness (Person 5).
+Standalone report generator for the evaluation harness (Rohan (Person 5)).
 
 Reads a snapshot produced by ``run_evaluation.py`` and prints / writes a
 markdown report suitable for dropping into slides 15-16 of the deck.

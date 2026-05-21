@@ -1,4 +1,4 @@
-"""End-to-end evaluation harness owned by Person 5.
+"""End-to-end evaluation harness owned by Rohan (Person 5).
 
 Run from the repo root:
 

@@ -1,10 +1,10 @@
 """
-Workflow Automation Agent (Person 3)
+Workflow Automation Agent (Pallavi (Person 3))
 
 Initiates guided self-service workflows: return requests, refund lookups,
 invoice downloads, ticket creation, and address corrections.
 
-TODO(Person 3): Replace mock actions with actual tool function calls.
+TODO(Pallavi (Person 3)): Replace mock actions with actual tool function calls.
 Implement the full workflow logic with eligibility checks, validation,
 and proper error handling.
 """
@@ -15,7 +15,7 @@ from datetime import datetime, timezone
 from src.orchestrator.state import AgentState
 
 
-# Workflow definitions — Person 3 will implement actual logic
+# Workflow definitions — Pallavi (Person 3) will implement actual logic
 WORKFLOW_MAP = {
     "return_request": "initiate_return",
     "refund_status": "check_refund",
@@ -93,7 +93,7 @@ def execute_workflow(state: AgentState) -> AgentState:
     Reads: intent, order_context, policy_snippets
     Writes: action_taken, action_result, requires_human_approval, agents_called, audit_trail
 
-    TODO(Person 3): Replace with:
+    TODO(Pallavi (Person 3)): Replace with:
       1. Determine correct workflow from intent + context
       2. Validate eligibility (using policy_snippets)
       3. Call actual tool functions (create_return_request, get_refund_status, etc.)
