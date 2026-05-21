@@ -16,7 +16,7 @@
 | False escalation rate | 0% |
 | Avg quality score | 0.95 |
 | Avg response confidence | 0.79 |
-| Avg latency (ms) | 12.66 |
+| Avg latency (ms) | 12.41 |
 
 ## Pass rate by category
 
