@@ -20,6 +20,9 @@ env/
 .env.local
 .env.production
 
+# Streamlit secrets (contains API keys)
+.streamlit/secrets.toml
+
 # IDE
 .vscode/
 .idea/

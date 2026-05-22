@@ -3,8 +3,21 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
-OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-4o")
+
+def _get_secret(key: str, default: str = "") -> str:
+    """Get a secret from environment, .env file, or Streamlit secrets (for cloud)."""
+    value = os.getenv(key, "")
+    if value:
+        return value
+    try:
+        import streamlit as st
+        return st.secrets.get(key, default)
+    except Exception:
+        return default
+
+
+OPENAI_API_KEY = _get_secret("OPENAI_API_KEY")
+OPENAI_MODEL = _get_secret("OPENAI_MODEL", "gpt-4o")
 USE_MOCK = os.getenv("USE_MOCK", "false").lower() == "true"
 
 CONFIDENCE_THRESHOLD_PROCEED = 0.7
