@@ -1,35 +1,24 @@
 """
 Order Context Agent (Pallavi (Person 3))
 
-Retrieves unified order, shipment, payment, invoice, return, and CRM history
-for a given customer/order from data/mock/ JSON files.
+Retrieves unified order, shipment, payment, return, and CRM history
+via src/integrations/mock_apis/ and assembles order_context for downstream agents.
 """
 
 from __future__ import annotations
 
-import json
 import re
 from datetime import datetime, timezone
-from pathlib import Path
 from typing import Any
 
+from src.integrations.mock_apis import find_all_by_id, find_by_id, load_json_file
+from src.integrations.mock_apis.crm_api import get_crm_history, get_customer_profile
+from src.integrations.mock_apis.inventory_api import check_inventory
+from src.integrations.mock_apis.logistics_api import get_shipment_tracking
+from src.integrations.mock_apis.order_api import get_order_details, get_order_status
+from src.integrations.mock_apis.payment_api import get_payment_status
+from src.integrations.mock_apis.return_api import get_return_status
 from src.orchestrator.state import AgentState
-
-_REPO_ROOT = Path(__file__).resolve().parents[2]
-_MOCK_DATA_DIR = _REPO_ROOT / "data" / "mock"
-
-_FILE_RECORD_KEYS: dict[str, str] = {
-    "customers.json": "customers",
-    "orders.json": "orders",
-    "payments.json": "payments",
-    "shipments.json": "shipments",
-    "refunds.json": "refunds",
-    "returns.json": "returns",
-    "crm_history.json": "crm_history",
-    "inventory.json": "inventory",
-}
-
-_json_cache: dict[str, list[dict[str, Any]]] = {}
 
 _HIGH_VALUE_THRESHOLD = 100_000
 _LOST_SHIPMENT_STATUSES = frozenset({"lost", "lost_in_transit"})
@@ -42,56 +31,11 @@ _INVOICE_ELIGIBLE_ORDER_STATUSES = frozenset(
 )
 
 
-def load_json_file(filename: str) -> list[dict[str, Any]]:
-    """Load records from a mock data JSON file. Returns [] if missing or invalid."""
-    if filename in _json_cache:
-        return _json_cache[filename]
-
-    path = _MOCK_DATA_DIR / filename
-    if not path.is_file():
-        _json_cache[filename] = []
-        return []
-
-    try:
-        with open(path, encoding="utf-8") as f:
-            payload = json.load(f)
-    except (OSError, json.JSONDecodeError):
-        _json_cache[filename] = []
-        return []
-
-    record_key = _FILE_RECORD_KEYS.get(filename)
-    if not record_key:
-        _json_cache[filename] = []
-        return []
-
-    records = payload.get(record_key, [])
-    if not isinstance(records, list):
-        records = []
-
-    normalized = [r for r in records if isinstance(r, dict)]
-    _json_cache[filename] = normalized
-    return normalized
-
-
-def find_by_id(
-    records: list[dict[str, Any]], key: str, value: Any
-) -> dict[str, Any] | None:
-    """Return the first record whose key matches value, or None."""
-    if value is None or value == "":
-        return None
-    for record in records:
-        if record.get(key) == value:
-            return record
-    return None
-
-
-def find_all_by_id(
-    records: list[dict[str, Any]], key: str, value: Any
-) -> list[dict[str, Any]]:
-    """Return all records whose key matches value."""
-    if value is None or value == "":
-        return []
-    return [r for r in records if r.get(key) == value]
+def _api_data(response: dict[str, Any] | None) -> dict[str, Any]:
+    if not response or not response.get("success"):
+        return {}
+    data = response.get("data")
+    return data if isinstance(data, dict) else {}
 
 
 def _parse_date(value: str | None) -> datetime | None:
@@ -104,7 +48,6 @@ def _parse_date(value: str | None) -> datetime | None:
 
 
 def _normalize_tier(tier: str | None) -> str:
-    """Map customer tier to values expected by downstream agents."""
     if not tier:
         return "regular"
     tier_lower = tier.lower()
@@ -114,7 +57,6 @@ def _normalize_tier(tier: str | None) -> str:
 
 
 def _normalize_items(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
-    """Shape order line items for legacy consumers (sku/qty/price) and new fields."""
     normalized: list[dict[str, Any]] = []
     for item in items:
         if not isinstance(item, dict):
@@ -138,7 +80,7 @@ def _normalize_items(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
     return normalized
 
 
-def _normalize_payment(payment: dict[str, Any] | None, order: dict[str, Any]) -> dict[str, Any]:
+def _normalize_payment(payment: dict[str, Any], order: dict[str, Any]) -> dict[str, Any]:
     if not payment:
         return {
             "method": None,
@@ -159,7 +101,7 @@ def _normalize_payment(payment: dict[str, Any] | None, order: dict[str, Any]) ->
     }
 
 
-def _normalize_shipment(shipment: dict[str, Any] | None) -> dict[str, Any]:
+def _normalize_shipment(shipment: dict[str, Any]) -> dict[str, Any]:
     if not shipment:
         return {
             "carrier": None,
@@ -184,7 +126,9 @@ def _normalize_shipment(shipment: dict[str, Any] | None) -> dict[str, Any]:
     }
 
 
-def _crm_notes_for_context(crm_records: list[dict[str, Any]]) -> list[str]:
+def _crm_notes_for_context(crm_records: list[dict[str, Any]], fallback_notes: list[str]) -> list[str]:
+    if fallback_notes:
+        return list(fallback_notes)
     notes: list[str] = []
     for ticket in crm_records:
         summary = ticket.get("message_summary") or ticket.get("subject") or ""
@@ -200,17 +144,16 @@ def _crm_notes_for_context(crm_records: list[dict[str, Any]]) -> list[str]:
 
 def _infer_crm_sentiment(crm_records: list[dict[str, Any]]) -> str:
     for ticket in crm_records:
-        for field in ("sentiment",):
-            sentiment = str(ticket.get(field) or "").lower()
-            if sentiment in ("angry", "frustrated", "negative"):
-                return sentiment
+        sentiment = str(ticket.get("sentiment") or "").lower()
+        if sentiment in ("angry", "frustrated", "negative"):
+            return sentiment
         text = " ".join(
             str(ticket.get(k) or "")
             for k in ("message_summary", "subject", "intent")
         ).lower()
         if any(word in text for word in _ANGRY_KEYWORDS):
             return "frustrated"
-        if "damaged_product" in text or ticket.get("intent") == "damaged_product":
+        if ticket.get("intent") == "damaged_product":
             return "frustrated"
     return "neutral"
 
@@ -296,21 +239,21 @@ def _compute_risk_signals(
 
 
 def _inventory_for_items(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
-    inventory_records = load_json_file("inventory.json")
     stock: list[dict[str, Any]] = []
     for item in items:
         product_id = item.get("product_id") or item.get("sku")
         if not product_id:
             continue
-        record = find_by_id(inventory_records, "product_id", product_id)
-        if record:
+        inv_resp = check_inventory(str(product_id))
+        inv = _api_data(inv_resp)
+        if inv:
             stock.append({
                 "product_id": product_id,
-                "name": record.get("name"),
-                "warehouse": record.get("warehouse"),
-                "quantity_available": record.get("quantity_available"),
-                "quantity_reserved": record.get("quantity_reserved"),
-                "unit_price_inr": record.get("unit_price_inr"),
+                "name": inv.get("name") or item.get("name"),
+                "warehouse": inv.get("warehouse"),
+                "quantity_available": inv.get("quantity_available"),
+                "quantity_reserved": inv.get("quantity_reserved"),
+                "unit_price_inr": inv.get("unit_price_inr"),
             })
         else:
             stock.append({
@@ -322,79 +265,113 @@ def _inventory_for_items(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
     return stock
 
 
-def _resolve_order(order_id: str, customer_id: str) -> tuple[dict[str, Any] | None, str]:
-    orders = load_json_file("orders.json")
-    if not orders:
-        return None, "none"
+def _resolve_order_id(order_id: str, customer_id: str) -> tuple[str, str]:
+    """
+    Resolve an order_id and lookup_method using APIs and mock data helpers.
+
+    Returns:
+        (resolved_order_id, lookup_method)
+    """
+    order_id = (order_id or "").strip().upper()
+    customer_id = (customer_id or "").strip().upper()
 
     if order_id:
-        order = find_by_id(orders, "order_id", order_id)
-        if order:
-            return order, "order_id"
+        details = get_order_details(order_id)
+        if details.get("success"):
+            return order_id, "order_id"
+        status_resp = get_order_status(order_id)
+        if status_resp.get("success"):
+            return order_id, "order_id"
 
     if customer_id:
-        customer_orders = find_all_by_id(orders, "customer_id", customer_id)
-        if customer_orders:
-            customer_orders.sort(
+        orders = find_all_by_id(load_json_file("orders.json"), "customer_id", customer_id)
+        if orders:
+            orders.sort(
                 key=lambda o: _parse_date(o.get("placed_on")) or datetime.min,
                 reverse=True,
             )
-            return customer_orders[0], "customer_id"
+            return str(orders[0].get("order_id", "")), "customer_id"
 
-    return None, "none"
+        crm_resp = get_crm_history(customer_id)
+        if crm_resp.get("success"):
+            tickets = crm_resp.get("data", {}).get("tickets") or []
+            for ticket in tickets:
+                tid = ticket.get("order_id")
+                if tid:
+                    details = get_order_details(str(tid))
+                    if details.get("success"):
+                        return str(tid).upper(), "customer_id"
+
+    return "", "none"
 
 
 def build_order_context(order_id: str, customer_id: str = "") -> dict[str, Any]:
     """
-    Build a unified order context dict from mock JSON sources.
+    Build a unified order context dict using mock API integrations.
 
     Returns an empty dict when the order cannot be resolved.
     """
-    order, lookup_method = _resolve_order(order_id, customer_id)
+    resolved_id, lookup_method = _resolve_order_id(order_id, customer_id)
+    if not resolved_id:
+        return {}
+
+    details_resp = get_order_details(resolved_id)
+    order = _api_data(details_resp)
     if not order:
         return {}
 
-    resolved_order_id = order.get("order_id", "")
-    resolved_customer_id = order.get("customer_id") or customer_id
+    resolved_customer_id = str(order.get("customer_id") or customer_id or "").upper()
 
-    payments = load_json_file("payments.json")
-    shipments = load_json_file("shipments.json")
-    returns_data = load_json_file("returns.json")
-    refunds_data = load_json_file("refunds.json")
-    customers = load_json_file("customers.json")
-    crm_all = load_json_file("crm_history.json")
+    payment_resp = get_payment_status(order_id=resolved_id)
+    payment_raw = _api_data(payment_resp)
 
-    payment = (
-        find_by_id(payments, "payment_id", order.get("payment_id"))
-        or find_by_id(payments, "order_id", resolved_order_id)
-    )
-    shipment = (
-        find_by_id(shipments, "shipment_id", order.get("shipment_id"))
-        or find_by_id(shipments, "order_id", resolved_order_id)
-    )
-    customer = find_by_id(customers, "customer_id", resolved_customer_id)
-    order_returns = find_all_by_id(returns_data, "order_id", resolved_order_id)
-    order_refunds = find_all_by_id(refunds_data, "order_id", resolved_order_id)
+    shipment_resp = get_shipment_tracking(order_id=resolved_id)
+    shipment_raw = _api_data(shipment_resp)
 
-    crm_for_order = find_all_by_id(crm_all, "order_id", resolved_order_id)
-    if not crm_for_order and resolved_customer_id:
-        crm_for_customer = find_all_by_id(crm_all, "customer_id", resolved_customer_id)
-        crm_for_order = crm_for_customer[:5]
+    return_resp = get_return_status(order_id=resolved_id)
+    return_raw = _api_data(return_resp)
+    order_returns = find_all_by_id(load_json_file("returns.json"), "order_id", resolved_id)
+    if return_raw and not any(r.get("return_id") == return_raw.get("return_id") for r in order_returns):
+        order_returns = order_returns + [return_raw]
+
+    order_refunds = find_all_by_id(load_json_file("refunds.json"), "order_id", resolved_id)
+
+    crm_records: list[dict[str, Any]] = []
+    crm_notes: list[str] = []
+    crm_resp: dict[str, Any] | None = None
+    if resolved_customer_id:
+        crm_resp = get_crm_history(resolved_customer_id)
+        if crm_resp.get("success"):
+            crm_data = crm_resp.get("data") or {}
+            crm_notes = list(crm_data.get("crm_notes") or [])
+            all_tickets = list(crm_data.get("tickets") or [])
+            crm_records = [
+                t for t in all_tickets
+                if t.get("order_id") in (resolved_id, None) or not t.get("order_id")
+            ]
+            if not crm_records:
+                crm_records = all_tickets[:5]
+
+    customer: dict[str, Any] = {}
+    if resolved_customer_id:
+        profile_resp = get_customer_profile(resolved_customer_id)
+        if profile_resp.get("success"):
+            customer = _api_data(profile_resp)
 
     items = _normalize_items(order.get("items", []))
-    payment_summary = _normalize_payment(payment, order)
-    shipment_summary = _normalize_shipment(shipment)
-    crm_notes = _crm_notes_for_context(crm_for_order)
+    payment_summary = _normalize_payment(payment_raw, order)
+    shipment_summary = _normalize_shipment(shipment_raw)
+    notes = _crm_notes_for_context(crm_records, crm_notes)
 
     return_eligible = _compute_return_eligible(order, order_returns)
     invoice_available = _compute_invoice_available(order, payment_summary)
     refund_status = _compute_refund_status(order_refunds)
     risk_signals = _compute_risk_signals(
-        order, payment_summary, shipment_summary, order_returns, crm_for_order
+        order, payment_summary, shipment_summary, order_returns, crm_records
     )
 
-    context: dict[str, Any] = {
-        "order_id": resolved_order_id,
+    return {
+        "order_id": resolved_id,
         "customer_id": resolved_customer_id,
         "status": order.get("status"),
         "placed_on": order.get("placed_on"),
@@ -410,28 +387,38 @@ def build_order_context(order_id: str, customer_id: str = "") -> dict[str, Any]:
         "items": items,
         "payment": payment_summary,
         "shipment": shipment_summary,
-        "customer": customer or {},
+        "customer": customer,
         "customer_tier": _normalize_tier(
-            (customer or {}).get("tier") or order.get("customer_tier")
+            customer.get("customer_tier") or customer.get("tier")
         ),
         "return_history": order_returns,
         "returns": order_returns,
         "refunds": order_refunds,
-        "crm_history": crm_for_order,
-        "crm_notes": crm_notes,
-        "crm_sentiment": _infer_crm_sentiment(crm_for_order),
+        "crm_history": crm_records,
+        "crm_notes": notes,
+        "crm_sentiment": _infer_crm_sentiment(crm_records),
         "inventory": _inventory_for_items(items),
         "return_eligible": return_eligible,
         "invoice_available": invoice_available,
         "refund_status": refund_status,
         "risk_signals": risk_signals,
+        "api_errors": _collect_api_errors(
+            details_resp, payment_resp, shipment_resp, return_resp, crm_resp
+        ),
     }
 
-    return context
+
+def _collect_api_errors(*responses: dict[str, Any] | None) -> list[str]:
+    errors: list[str] = []
+    for resp in responses:
+        if resp and not resp.get("success"):
+            err = resp.get("error")
+            if err:
+                errors.append(str(err))
+    return errors
 
 
 def _try_extract_order_id(state: AgentState) -> str:
-    """Try to get order ID from state or extract from message."""
     order_id = state.get("order_id", "")
     if order_id:
         return order_id
@@ -458,7 +445,11 @@ def fetch_order_context(state: AgentState) -> AgentState:
     customer_id = state.get("customer_id", "")
     order_id = _try_extract_order_id(state)
 
-    order_data = build_order_context(order_id, customer_id)
+    try:
+        order_data = build_order_context(order_id, customer_id)
+    except Exception:
+        order_data = {}
+
     lookup_method = order_data.get("lookup_method", "none") if order_data else "none"
 
     if not order_data:
@@ -475,6 +466,14 @@ def fetch_order_context(state: AgentState) -> AgentState:
             }],
         }
 
+    audit_details = (
+        f"found via {lookup_method}: order_id={order_data.get('order_id')}, "
+        f"status={order_data.get('status')}"
+    )
+    api_errors = order_data.get("api_errors") or []
+    if api_errors:
+        audit_details += f"; api_warnings={len(api_errors)}"
+
     return {
         "order_context": order_data,
         "order_id": order_data.get("order_id", ""),
@@ -484,9 +483,6 @@ def fetch_order_context(state: AgentState) -> AgentState:
             "agent": "order_context",
             "action": "fetch_order",
             "timestamp": datetime.now(timezone.utc).isoformat(),
-            "details": (
-                f"found via {lookup_method}: order_id={order_data.get('order_id')}, "
-                f"status={order_data.get('status')}"
-            ),
+            "details": audit_details,
         }],
     }
