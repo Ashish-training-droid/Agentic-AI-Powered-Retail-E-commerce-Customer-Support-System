@@ -1,0 +1,1211 @@
+{
+  "cases_file": "C:\\Person5\\Agentic-AI-Powered-Retail-E-commerce-Customer-Support-System\\tests\\evaluation\\test_cases.json",
+  "use_mock": "true",
+  "summary": {
+    "total": 25,
+    "passed": 17,
+    "failed": 8,
+    "pass_rate": 0.68,
+    "errors": 0,
+    "avg_latency_ms": 12.41,
+    "avg_quality_score": 0.948,
+    "avg_response_confidence": 0.7872,
+    "intent_accuracy": 0.5455,
+    "escalation_precision": 1.0,
+    "escalation_recall": 1.0,
+    "false_escalation_rate": 0.0,
+    "by_category": {
+      "routine": {
+        "total": 10,
+        "passed": 7
+      },
+      "escalation": {
+        "total": 5,
+        "passed": 1
+      },
+      "edge_case": {
+        "total": 5,
+        "passed": 4
+      },
+      "negative": {
+        "total": 5,
+        "passed": 5
+      }
+    },
+    "band_distribution": {
+      "auto": 18,
+      "approval_required": 4,
+      "escalate": 1
+    },
+    "intent_distribution": {
+      "order_tracking": 12,
+      "general_faq": 10,
+      "warranty": 1,
+      "coupon_issue": 1,
+      "damaged_product": 1
+    }
+  },
+  "results": [
+    {
+      "id": "TC_001",
+      "category": "routine",
+      "message": "Where is my order SE10234?",
+      "expected": {
+        "intent": "order_tracking",
+        "escalation": false,
+        "risk_band": "auto",
+        "min_confidence": 0.7,
+        "should_contain_any": [
+          "SE10234"
+        ]
+      },
+      "actual": {
+        "intent": "order_tracking",
+        "intent_confidence": 0.92,
+        "sentiment": "neutral",
+        "urgency": "medium",
+        "risk_score": 0.305,
+        "risk_band": "auto",
+        "escalation_required": false,
+        "requires_human_approval": false,
+        "target_team": "",
+        "priority": "P4",
+        "sla_target": "",
+        "response_confidence": 0.92,
+        "references_cited": [],
+        "agents_called": [
+          "intent_classifier",
+          "order_context",
+          "evaluator",
+          "escalation_risk",
+          "response_generator",
+          "finalizer"
+        ],
+        "quality_score": 1.0,
+        "quality_issues": [],
+        "response_text": "Your order SE10234 is currently in_transit. It's being shipped via BlueDart (tracking: BD987120234). Expected delivery: 2026-05-22."
+      },
+      "evaluation": {
+        "passed": true,
+        "matches": [
+          "intent=order_tracking",
+          "escalation=False",
+          "risk_band=auto",
+          "intent_confidence>=0.7",
+          "response_contains_expected"
+        ],
+        "issues": []
+      },
+      "latency_ms": 49.69,
+      "error": null
+    },
+    {
+      "id": "TC_002",
+      "category": "routine",
+      "message": "I want to return my Nike shoes from order SE10567",
+      "expected": {
+        "intent": "return_request",
+        "escalation": false,
+        "min_confidence": 0.6,
+        "should_have_policy_refs": true
+      },
+      "actual": {
+        "intent": "order_tracking",
+        "intent_confidence": 0.92,
+        "sentiment": "neutral",
+        "urgency": "medium",
+        "risk_score": 0.38,
+        "risk_band": "approval_required",
+        "escalation_required": false,
+        "requires_human_approval": true,
+        "target_team": "escalation_queue",
+        "priority": "P3",
+        "sla_target": "2026-05-21T21:03:16.953382+00:00",
+        "response_confidence": 0.75,
+        "references_cited": [],
+        "agents_called": [
+          "intent_classifier",
+          "order_context",
+          "evaluator",
+          "escalation_risk",
+          "response_generator",
+          "approval_handler"
+        ],
+        "quality_score": 1.0,
+        "quality_issues": [],
+        "response_text": "Thanks for your patience \u2014 your request needs a quick human review. A specialist will confirm the next steps shortly (review SLA: 2026-05-21T21:03:16.953382+00:00)."
+      },
+      "evaluation": {
+        "passed": false,
+        "matches": [
+          "escalation=False",
+          "intent_confidence>=0.6"
+        ],
+        "issues": [
+          "intent expected=return_request actual=order_tracking",
+          "expected policy refs, none returned"
+        ]
+      },
+      "latency_ms": 13.96,
+      "error": null
+    },
+    {
+      "id": "TC_003",
+      "category": "routine",
+      "message": "When will my refund be credited? Order SE10567 returned 3 days ago.",
+      "expected": {
+        "intent": "refund_status",
+        "escalation": false,
+        "should_have_policy_refs": true
+      },
+      "actual": {
+        "intent": "order_tracking",
+        "intent_confidence": 0.92,
+        "sentiment": "neutral",
+        "urgency": "medium",
+        "risk_score": 0.38,
+        "risk_band": "approval_required",
+        "escalation_required": false,
+        "requires_human_approval": true,
+        "target_team": "escalation_queue",
+        "priority": "P3",
+        "sla_target": "2026-05-21T21:03:16.959882+00:00",
+        "response_confidence": 0.75,
+        "references_cited": [],
+        "agents_called": [
+          "intent_classifier",
+          "order_context",
+          "evaluator",
+          "escalation_risk",
+          "response_generator",
+          "approval_handler"
+        ],
+        "quality_score": 1.0,
+        "quality_issues": [],
+        "response_text": "Thanks for your patience \u2014 your request needs a quick human review. A specialist will confirm the next steps shortly (review SLA: 2026-05-21T21:03:16.959882+00:00)."
+      },
+      "evaluation": {
+        "passed": false,
+        "matches": [
+          "escalation=False"
+        ],
+        "issues": [
+          "intent expected=refund_status actual=order_tracking",
+          "expected policy refs, none returned"
+        ]
+      },
+      "latency_ms": 13.88,
+      "error": null
+    },
+    {
+      "id": "TC_004",
+      "category": "routine",
+      "message": "How do I claim warranty on my Sony headphones SE10234?",
+      "expected": {
+        "intent": "warranty",
+        "escalation": false,
+        "should_have_policy_refs": true
+      },
+      "actual": {
+        "intent": "warranty",
+        "intent_confidence": 0.87,
+        "sentiment": "neutral",
+        "urgency": "medium",
+        "risk_score": 0.35,
+        "risk_band": "auto",
+        "escalation_required": false,
+        "requires_human_approval": false,
+        "target_team": "",
+        "priority": "P4",
+        "sla_target": "",
+        "response_confidence": 0.7,
+        "references_cited": [],
+        "agents_called": [
+          "intent_classifier",
+          "order_context",
+          "policy_retrieval",
+          "evaluator",
+          "escalation_risk",
+          "response_generator",
+          "finalizer"
+        ],
+        "quality_score": 0.85,
+        "quality_issues": [
+          "Policy match confidence is moderate (0.72)"
+        ],
+        "response_text": "Thank you for reaching out. How can I help you today? I can assist with orders, returns, product information, and more."
+      },
+      "evaluation": {
+        "passed": true,
+        "matches": [
+          "intent=warranty",
+          "escalation=False",
+          "policy_refs_present"
+        ],
+        "issues": []
+      },
+      "latency_ms": 19.27,
+      "error": null
+    },
+    {
+      "id": "TC_005",
+      "category": "routine",
+      "message": "My coupon FESTIVE10 is not being applied at checkout. Cart value is Rs 4500.",
+      "expected": {
+        "intent": "coupon_issue",
+        "escalation": false,
+        "should_have_policy_refs": true
+      },
+      "actual": {
+        "intent": "coupon_issue",
+        "intent_confidence": 0.91,
+        "sentiment": "negative",
+        "urgency": "medium",
+        "risk_score": 0.13,
+        "risk_band": "auto",
+        "escalation_required": false,
+        "requires_human_approval": false,
+        "target_team": "",
+        "priority": "P4",
+        "sla_target": "",
+        "response_confidence": 0.87,
+        "references_cited": [
+          "POL-CPN-ELIG-001",
+          "POL-CPN-STACK-001",
+          "POL-CPN-EXP-001"
+        ],
+        "agents_called": [
+          "intent_classifier",
+          "policy_retrieval",
+          "evaluator",
+          "escalation_risk",
+          "response_generator",
+          "finalizer"
+        ],
+        "quality_score": 0.85,
+        "quality_issues": [
+          "Policy match confidence is moderate (0.72)"
+        ],
+        "response_text": "I've checked your coupon issue. Coupons are valid only on items marked 'coupon eligible'. Minimum cart value and category restrictions apply as per the coupon terms. Please verify that your cart meets the minimum value requirement and items are coupon-eligible."
+      },
+      "evaluation": {
+        "passed": true,
+        "matches": [
+          "intent=coupon_issue",
+          "escalation=False",
+          "policy_refs_present"
+        ],
+        "issues": []
+      },
+      "latency_ms": 11.28,
+      "error": null
+    },
+    {
+      "id": "TC_006",
+      "category": "routine",
+      "message": "Compare HP Pavilion vs Lenovo IdeaPad for college student",
+      "expected": {
+        "intent": "product_inquiry",
+        "escalation": false,
+        "risk_band": "auto"
+      },
+      "actual": {
+        "intent": "general_faq",
+        "intent_confidence": 0.75,
+        "sentiment": "neutral",
+        "urgency": "low",
+        "risk_score": 0.025,
+        "risk_band": "auto",
+        "escalation_required": false,
+        "requires_human_approval": false,
+        "target_team": "",
+        "priority": "P4",
+        "sla_target": "",
+        "response_confidence": 0.7,
+        "references_cited": [],
+        "agents_called": [
+          "intent_classifier",
+          "evaluator",
+          "escalation_risk",
+          "response_generator",
+          "finalizer"
+        ],
+        "quality_score": 1.0,
+        "quality_issues": [],
+        "response_text": "Thank you for reaching out. How can I help you today? I can assist with orders, returns, product information, and more."
+      },
+      "evaluation": {
+        "passed": false,
+        "matches": [
+          "escalation=False",
+          "risk_band=auto"
+        ],
+        "issues": [
+          "intent expected=product_inquiry actual=general_faq"
+        ]
+      },
+      "latency_ms": 8.54,
+      "error": null
+    },
+    {
+      "id": "TC_007",
+      "category": "routine",
+      "message": "Can you send me the invoice for order SE10111?",
+      "expected": {
+        "escalation": false
+      },
+      "actual": {
+        "intent": "order_tracking",
+        "intent_confidence": 0.92,
+        "sentiment": "neutral",
+        "urgency": "medium",
+        "risk_score": 0.305,
+        "risk_band": "auto",
+        "escalation_required": false,
+        "requires_human_approval": false,
+        "target_team": "",
+        "priority": "P4",
+        "sla_target": "",
+        "response_confidence": 0.92,
+        "references_cited": [],
+        "agents_called": [
+          "intent_classifier",
+          "order_context",
+          "evaluator",
+          "escalation_risk",
+          "response_generator",
+          "finalizer"
+        ],
+        "quality_score": 1.0,
+        "quality_issues": [],
+        "response_text": "Your order SE10111 is currently pending_dispatch. It's being shipped via Ecom Express (tracking: EC10111728492). Expected delivery: None."
+      },
+      "evaluation": {
+        "passed": true,
+        "matches": [
+          "escalation=False"
+        ],
+        "issues": []
+      },
+      "latency_ms": 11.59,
+      "error": null
+    },
+    {
+      "id": "TC_008",
+      "category": "routine",
+      "message": "What payment methods do you accept?",
+      "expected": {
+        "intent": "general_faq",
+        "escalation": false,
+        "risk_band": "auto"
+      },
+      "actual": {
+        "intent": "general_faq",
+        "intent_confidence": 0.75,
+        "sentiment": "neutral",
+        "urgency": "low",
+        "risk_score": 0.025,
+        "risk_band": "auto",
+        "escalation_required": false,
+        "requires_human_approval": false,
+        "target_team": "",
+        "priority": "P4",
+        "sla_target": "",
+        "response_confidence": 0.7,
+        "references_cited": [],
+        "agents_called": [
+          "intent_classifier",
+          "evaluator",
+          "escalation_risk",
+          "response_generator",
+          "finalizer"
+        ],
+        "quality_score": 1.0,
+        "quality_issues": [],
+        "response_text": "Thank you for reaching out. How can I help you today? I can assist with orders, returns, product information, and more."
+      },
+      "evaluation": {
+        "passed": true,
+        "matches": [
+          "intent=general_faq",
+          "escalation=False",
+          "risk_band=auto"
+        ],
+        "issues": []
+      },
+      "latency_ms": 9.71,
+      "error": null
+    },
+    {
+      "id": "TC_009",
+      "category": "routine",
+      "message": "My order SE10567 was delivered, please confirm",
+      "expected": {
+        "escalation": false
+      },
+      "actual": {
+        "intent": "order_tracking",
+        "intent_confidence": 0.92,
+        "sentiment": "neutral",
+        "urgency": "medium",
+        "risk_score": 0.38,
+        "risk_band": "approval_required",
+        "escalation_required": false,
+        "requires_human_approval": true,
+        "target_team": "escalation_queue",
+        "priority": "P3",
+        "sla_target": "2026-05-21T21:03:17.042439+00:00",
+        "response_confidence": 0.75,
+        "references_cited": [],
+        "agents_called": [
+          "intent_classifier",
+          "order_context",
+          "evaluator",
+          "escalation_risk",
+          "response_generator",
+          "approval_handler"
+        ],
+        "quality_score": 1.0,
+        "quality_issues": [],
+        "response_text": "Thanks for your patience \u2014 your request needs a quick human review. A specialist will confirm the next steps shortly (review SLA: 2026-05-21T21:03:17.042439+00:00)."
+      },
+      "evaluation": {
+        "passed": true,
+        "matches": [
+          "escalation=False"
+        ],
+        "issues": []
+      },
+      "latency_ms": 11.59,
+      "error": null
+    },
+    {
+      "id": "TC_010",
+      "category": "routine",
+      "message": "Where is my order? Address change possible? Order ID SE10111",
+      "expected": {
+        "escalation": false
+      },
+      "actual": {
+        "intent": "order_tracking",
+        "intent_confidence": 0.92,
+        "sentiment": "neutral",
+        "urgency": "medium",
+        "risk_score": 0.305,
+        "risk_band": "auto",
+        "escalation_required": false,
+        "requires_human_approval": false,
+        "target_team": "",
+        "priority": "P4",
+        "sla_target": "",
+        "response_confidence": 0.92,
+        "references_cited": [],
+        "agents_called": [
+          "intent_classifier",
+          "order_context",
+          "evaluator",
+          "escalation_risk",
+          "response_generator",
+          "finalizer"
+        ],
+        "quality_score": 1.0,
+        "quality_issues": [],
+        "response_text": "Your order SE10111 is currently pending_dispatch. It's being shipped via Ecom Express (tracking: EC10111728492). Expected delivery: None."
+      },
+      "evaluation": {
+        "passed": true,
+        "matches": [
+          "escalation=False"
+        ],
+        "issues": []
+      },
+      "latency_ms": 11.27,
+      "error": null
+    },
+    {
+      "id": "TC_011",
+      "category": "escalation",
+      "message": "I received my Samsung Galaxy S24 with a cracked screen! This is a Rs 75000 phone and it arrived broken! I'm furious!",
+      "expected": {
+        "intent": "damaged_product",
+        "escalation": true,
+        "risk_band": "escalate",
+        "min_priority": "P2",
+        "should_route_team_any": [
+          "senior_agent",
+          "replacement_team"
+        ]
+      },
+      "actual": {
+        "intent": "damaged_product",
+        "intent_confidence": 0.93,
+        "sentiment": "angry",
+        "urgency": "critical",
+        "risk_score": 0.645,
+        "risk_band": "escalate",
+        "escalation_required": true,
+        "requires_human_approval": false,
+        "target_team": "senior_agent",
+        "priority": "P1",
+        "sla_target": "2026-05-21T15:03:17.068751+00:00",
+        "response_confidence": 0.95,
+        "references_cited": [],
+        "agents_called": [
+          "intent_classifier",
+          "order_context",
+          "policy_retrieval",
+          "workflow_automation",
+          "evaluator",
+          "escalation_risk",
+          "escalation_handler"
+        ],
+        "quality_score": 1.0,
+        "quality_issues": [],
+        "response_text": "Your case has been escalated to our senior_agent team. Reason: Angry customer with a high-value order. Priority: P1. A team member will contact you within 2 hours."
+      },
+      "evaluation": {
+        "passed": true,
+        "matches": [
+          "intent=damaged_product",
+          "escalation=True",
+          "risk_band=escalate",
+          "priority<=P2",
+          "team=senior_agent"
+        ],
+        "issues": []
+      },
+      "latency_ms": 19.19,
+      "error": null
+    },
+    {
+      "id": "TC_012",
+      "category": "escalation",
+      "message": "My package marked lost on order SE10111, the laptop never arrived",
+      "expected": {
+        "intent": "delivery_complaint",
+        "escalation_or_approval": true,
+        "should_route_team_any": [
+          "logistics",
+          "senior_agent"
+        ]
+      },
+      "actual": {
+        "intent": "order_tracking",
+        "intent_confidence": 0.92,
+        "sentiment": "neutral",
+        "urgency": "medium",
+        "risk_score": 0.305,
+        "risk_band": "auto",
+        "escalation_required": false,
+        "requires_human_approval": false,
+        "target_team": "",
+        "priority": "P4",
+        "sla_target": "",
+        "response_confidence": 0.92,
+        "references_cited": [],
+        "agents_called": [
+          "intent_classifier",
+          "order_context",
+          "evaluator",
+          "escalation_risk",
+          "response_generator",
+          "finalizer"
+        ],
+        "quality_score": 1.0,
+        "quality_issues": [],
+        "response_text": "Your order SE10111 is currently pending_dispatch. It's being shipped via Ecom Express (tracking: EC10111728492). Expected delivery: None."
+      },
+      "evaluation": {
+        "passed": false,
+        "matches": [],
+        "issues": [
+          "intent expected=delivery_complaint actual=order_tracking",
+          "expected escalation OR approval_required, got auto"
+        ]
+      },
+      "latency_ms": 11.61,
+      "error": null
+    },
+    {
+      "id": "TC_013",
+      "category": "escalation",
+      "message": "asdfgh zxcvbn random text",
+      "expected": {
+        "escalation_or_approval_or_clarify": true
+      },
+      "actual": {
+        "intent": "general_faq",
+        "intent_confidence": 0.75,
+        "sentiment": "neutral",
+        "urgency": "low",
+        "risk_score": 0.025,
+        "risk_band": "auto",
+        "escalation_required": false,
+        "requires_human_approval": false,
+        "target_team": "",
+        "priority": "P4",
+        "sla_target": "",
+        "response_confidence": 0.7,
+        "references_cited": [],
+        "agents_called": [
+          "intent_classifier",
+          "evaluator",
+          "escalation_risk",
+          "response_generator",
+          "finalizer"
+        ],
+        "quality_score": 1.0,
+        "quality_issues": [],
+        "response_text": "Thank you for reaching out. How can I help you today? I can assist with orders, returns, product information, and more."
+      },
+      "evaluation": {
+        "passed": false,
+        "matches": [],
+        "issues": [
+          "expected escalation/approval/clarify, got auto"
+        ]
+      },
+      "latency_ms": 8.42,
+      "error": null
+    },
+    {
+      "id": "TC_014",
+      "category": "escalation",
+      "message": "I want a refund. Order SE10890. Please process immediately.",
+      "expected": {
+        "intent": "refund_status",
+        "should_route_team_any": [
+          "refund_specialist",
+          "senior_agent",
+          "replacement_team"
+        ]
+      },
+      "actual": {
+        "intent": "order_tracking",
+        "intent_confidence": 0.92,
+        "sentiment": "neutral",
+        "urgency": "medium",
+        "risk_score": 0.335,
+        "risk_band": "auto",
+        "escalation_required": false,
+        "requires_human_approval": false,
+        "target_team": "",
+        "priority": "P4",
+        "sla_target": "",
+        "response_confidence": 0.92,
+        "references_cited": [],
+        "agents_called": [
+          "intent_classifier",
+          "order_context",
+          "evaluator",
+          "escalation_risk",
+          "response_generator",
+          "finalizer"
+        ],
+        "quality_score": 1.0,
+        "quality_issues": [],
+        "response_text": "Your order SE10890 is currently delivered. It's being shipped via FedEx India (tracking: FE10890975271). Expected delivery: 2026-05-13."
+      },
+      "evaluation": {
+        "passed": false,
+        "matches": [],
+        "issues": [
+          "intent expected=refund_status actual=order_tracking"
+        ]
+      },
+      "latency_ms": 11.46,
+      "error": null
+    },
+    {
+      "id": "TC_015",
+      "category": "escalation",
+      "message": "I am very angry, this is the third time I am calling about my MacBook return. Order SE10567.",
+      "expected": {
+        "escalation_or_approval": true,
+        "sentiment_should_be_any": [
+          "angry",
+          "negative"
+        ]
+      },
+      "actual": {
+        "intent": "order_tracking",
+        "intent_confidence": 0.92,
+        "sentiment": "neutral",
+        "urgency": "medium",
+        "risk_score": 0.38,
+        "risk_band": "approval_required",
+        "escalation_required": false,
+        "requires_human_approval": true,
+        "target_team": "escalation_queue",
+        "priority": "P3",
+        "sla_target": "2026-05-21T21:03:17.108604+00:00",
+        "response_confidence": 0.75,
+        "references_cited": [],
+        "agents_called": [
+          "intent_classifier",
+          "order_context",
+          "evaluator",
+          "escalation_risk",
+          "response_generator",
+          "approval_handler"
+        ],
+        "quality_score": 1.0,
+        "quality_issues": [],
+        "response_text": "Thanks for your patience \u2014 your request needs a quick human review. A specialist will confirm the next steps shortly (review SLA: 2026-05-21T21:03:17.108604+00:00)."
+      },
+      "evaluation": {
+        "passed": false,
+        "matches": [
+          "escalation_or_approval=True"
+        ],
+        "issues": [
+          "sentiment expected_one_of=['angry', 'negative'] actual=neutral"
+        ]
+      },
+      "latency_ms": 12.78,
+      "error": null
+    },
+    {
+      "id": "TC_016",
+      "category": "edge_case",
+      "message": "hi",
+      "expected": {
+        "should_clarify": true
+      },
+      "actual": {
+        "intent": "general_faq",
+        "intent_confidence": 0.2,
+        "sentiment": "neutral",
+        "urgency": "low",
+        "risk_score": null,
+        "risk_band": null,
+        "escalation_required": null,
+        "requires_human_approval": null,
+        "target_team": null,
+        "priority": null,
+        "sla_target": null,
+        "response_confidence": 0.6,
+        "references_cited": [],
+        "agents_called": [
+          "intent_classifier",
+          "clarification_handler"
+        ],
+        "quality_score": 0.5,
+        "quality_issues": [
+          "Low classification confidence (0.20), requested clarification"
+        ],
+        "response_text": "I want to make sure I help you correctly. Could you provide a bit more detail about what you need?"
+      },
+      "evaluation": {
+        "passed": true,
+        "matches": [
+          "clarification_called"
+        ],
+        "issues": []
+      },
+      "latency_ms": 3.4,
+      "error": null
+    },
+    {
+      "id": "TC_017",
+      "category": "edge_case",
+      "message": "",
+      "expected": {
+        "should_clarify_or_handle": true
+      },
+      "actual": {
+        "intent": "general_faq",
+        "intent_confidence": 0.2,
+        "sentiment": "neutral",
+        "urgency": "low",
+        "risk_score": null,
+        "risk_band": null,
+        "escalation_required": null,
+        "requires_human_approval": null,
+        "target_team": null,
+        "priority": null,
+        "sla_target": null,
+        "response_confidence": 0.6,
+        "references_cited": [],
+        "agents_called": [
+          "intent_classifier",
+          "clarification_handler"
+        ],
+        "quality_score": 0.5,
+        "quality_issues": [
+          "Low classification confidence (0.20), requested clarification"
+        ],
+        "response_text": "I want to make sure I help you correctly. Could you provide a bit more detail about what you need?"
+      },
+      "evaluation": {
+        "passed": true,
+        "matches": [
+          "clarified_or_handled"
+        ],
+        "issues": []
+      },
+      "latency_ms": 2.82,
+      "error": null
+    },
+    {
+      "id": "TC_018",
+      "category": "edge_case",
+      "message": "I want to return my order and also know warranty and refund and the coupon and where is my order this is a very long message with many intents in it please help me with all of these issues at once because i have many problems",
+      "expected": {
+        "escalation_or_approval_or_clarify": true
+      },
+      "actual": {
+        "intent": "order_tracking",
+        "intent_confidence": 0.92,
+        "sentiment": "neutral",
+        "urgency": "medium",
+        "risk_score": 0.305,
+        "risk_band": "auto",
+        "escalation_required": false,
+        "requires_human_approval": false,
+        "target_team": "",
+        "priority": "P4",
+        "sla_target": "",
+        "response_confidence": 0.92,
+        "references_cited": [],
+        "agents_called": [
+          "intent_classifier",
+          "order_context",
+          "evaluator",
+          "escalation_risk",
+          "response_generator",
+          "finalizer"
+        ],
+        "quality_score": 1.0,
+        "quality_issues": [],
+        "response_text": "Your order SE10234 is currently in_transit. It's being shipped via BlueDart (tracking: BD987120234). Expected delivery: 2026-05-22."
+      },
+      "evaluation": {
+        "passed": false,
+        "matches": [],
+        "issues": [
+          "expected escalation/approval/clarify, got auto"
+        ]
+      },
+      "latency_ms": 10.84,
+      "error": null
+    },
+    {
+      "id": "TC_019",
+      "category": "edge_case",
+      "message": "ORDER SE10234 STATUS PLEASE",
+      "expected": {
+        "intent": "order_tracking",
+        "escalation": false
+      },
+      "actual": {
+        "intent": "order_tracking",
+        "intent_confidence": 0.92,
+        "sentiment": "neutral",
+        "urgency": "medium",
+        "risk_score": 0.305,
+        "risk_band": "auto",
+        "escalation_required": false,
+        "requires_human_approval": false,
+        "target_team": "",
+        "priority": "P4",
+        "sla_target": "",
+        "response_confidence": 0.92,
+        "references_cited": [],
+        "agents_called": [
+          "intent_classifier",
+          "order_context",
+          "evaluator",
+          "escalation_risk",
+          "response_generator",
+          "finalizer"
+        ],
+        "quality_score": 1.0,
+        "quality_issues": [],
+        "response_text": "Your order SE10234 is currently in_transit. It's being shipped via BlueDart (tracking: BD987120234). Expected delivery: 2026-05-22."
+      },
+      "evaluation": {
+        "passed": true,
+        "matches": [
+          "intent=order_tracking",
+          "escalation=False"
+        ],
+        "issues": []
+      },
+      "latency_ms": 9.42,
+      "error": null
+    },
+    {
+      "id": "TC_020",
+      "category": "edge_case",
+      "message": "where is my package",
+      "expected": {
+        "should_clarify_or_handle": true
+      },
+      "actual": {
+        "intent": "general_faq",
+        "intent_confidence": 0.75,
+        "sentiment": "neutral",
+        "urgency": "low",
+        "risk_score": 0.025,
+        "risk_band": "auto",
+        "escalation_required": false,
+        "requires_human_approval": false,
+        "target_team": "",
+        "priority": "P4",
+        "sla_target": "",
+        "response_confidence": 0.7,
+        "references_cited": [],
+        "agents_called": [
+          "intent_classifier",
+          "evaluator",
+          "escalation_risk",
+          "response_generator",
+          "finalizer"
+        ],
+        "quality_score": 1.0,
+        "quality_issues": [],
+        "response_text": "Thank you for reaching out. How can I help you today? I can assist with orders, returns, product information, and more."
+      },
+      "evaluation": {
+        "passed": true,
+        "matches": [
+          "clarified_or_handled"
+        ],
+        "issues": []
+      },
+      "latency_ms": 9.42,
+      "error": null
+    },
+    {
+      "id": "TC_021",
+      "category": "negative",
+      "message": "Where is my order SE10234?",
+      "expected": {
+        "escalation": false,
+        "must_not_contain_any": [
+          "fraud",
+          "refund processed",
+          "money credited"
+        ]
+      },
+      "actual": {
+        "intent": "order_tracking",
+        "intent_confidence": 0.92,
+        "sentiment": "neutral",
+        "urgency": "medium",
+        "risk_score": 0.305,
+        "risk_band": "auto",
+        "escalation_required": false,
+        "requires_human_approval": false,
+        "target_team": "",
+        "priority": "P4",
+        "sla_target": "",
+        "response_confidence": 0.92,
+        "references_cited": [],
+        "agents_called": [
+          "intent_classifier",
+          "order_context",
+          "evaluator",
+          "escalation_risk",
+          "response_generator",
+          "finalizer"
+        ],
+        "quality_score": 1.0,
+        "quality_issues": [],
+        "response_text": "Your order SE10234 is currently in_transit. It's being shipped via BlueDart (tracking: BD987120234). Expected delivery: 2026-05-22."
+      },
+      "evaluation": {
+        "passed": true,
+        "matches": [
+          "escalation=False",
+          "response_clean_of_forbidden"
+        ],
+        "issues": []
+      },
+      "latency_ms": 11.74,
+      "error": null
+    },
+    {
+      "id": "TC_022",
+      "category": "negative",
+      "message": "Compare iPhone 15 and Samsung Galaxy S24",
+      "expected": {
+        "escalation": false,
+        "must_not_contain_any": [
+          "return initiated",
+          "refund"
+        ]
+      },
+      "actual": {
+        "intent": "general_faq",
+        "intent_confidence": 0.75,
+        "sentiment": "neutral",
+        "urgency": "low",
+        "risk_score": 0.025,
+        "risk_band": "auto",
+        "escalation_required": false,
+        "requires_human_approval": false,
+        "target_team": "",
+        "priority": "P4",
+        "sla_target": "",
+        "response_confidence": 0.7,
+        "references_cited": [],
+        "agents_called": [
+          "intent_classifier",
+          "evaluator",
+          "escalation_risk",
+          "response_generator",
+          "finalizer"
+        ],
+        "quality_score": 1.0,
+        "quality_issues": [],
+        "response_text": "Thank you for reaching out. How can I help you today? I can assist with orders, returns, product information, and more."
+      },
+      "evaluation": {
+        "passed": true,
+        "matches": [
+          "escalation=False",
+          "response_clean_of_forbidden"
+        ],
+        "issues": []
+      },
+      "latency_ms": 9.5,
+      "error": null
+    },
+    {
+      "id": "TC_023",
+      "category": "negative",
+      "message": "What payment methods do you accept?",
+      "expected": {
+        "escalation": false,
+        "must_not_contain_any": [
+          "order ID",
+          "tracking number"
+        ]
+      },
+      "actual": {
+        "intent": "general_faq",
+        "intent_confidence": 0.75,
+        "sentiment": "neutral",
+        "urgency": "low",
+        "risk_score": 0.025,
+        "risk_band": "auto",
+        "escalation_required": false,
+        "requires_human_approval": false,
+        "target_team": "",
+        "priority": "P4",
+        "sla_target": "",
+        "response_confidence": 0.7,
+        "references_cited": [],
+        "agents_called": [
+          "intent_classifier",
+          "evaluator",
+          "escalation_risk",
+          "response_generator",
+          "finalizer"
+        ],
+        "quality_score": 1.0,
+        "quality_issues": [],
+        "response_text": "Thank you for reaching out. How can I help you today? I can assist with orders, returns, product information, and more."
+      },
+      "evaluation": {
+        "passed": true,
+        "matches": [
+          "escalation=False",
+          "response_clean_of_forbidden"
+        ],
+        "issues": []
+      },
+      "latency_ms": 10.27,
+      "error": null
+    },
+    {
+      "id": "TC_024",
+      "category": "negative",
+      "message": "Just thanks for the help",
+      "expected": {
+        "escalation": false
+      },
+      "actual": {
+        "intent": "general_faq",
+        "intent_confidence": 0.75,
+        "sentiment": "neutral",
+        "urgency": "low",
+        "risk_score": 0.025,
+        "risk_band": "auto",
+        "escalation_required": false,
+        "requires_human_approval": false,
+        "target_team": "",
+        "priority": "P4",
+        "sla_target": "",
+        "response_confidence": 0.7,
+        "references_cited": [],
+        "agents_called": [
+          "intent_classifier",
+          "evaluator",
+          "escalation_risk",
+          "response_generator",
+          "finalizer"
+        ],
+        "quality_score": 1.0,
+        "quality_issues": [],
+        "response_text": "Thank you for reaching out. How can I help you today? I can assist with orders, returns, product information, and more."
+      },
+      "evaluation": {
+        "passed": true,
+        "matches": [
+          "escalation=False"
+        ],
+        "issues": []
+      },
+      "latency_ms": 9.43,
+      "error": null
+    },
+    {
+      "id": "TC_025",
+      "category": "negative",
+      "message": "Please give me a free gift for my loyalty",
+      "expected": {
+        "must_not_contain_any": [
+          "free gift will be sent",
+          "gift approved"
+        ]
+      },
+      "actual": {
+        "intent": "general_faq",
+        "intent_confidence": 0.75,
+        "sentiment": "neutral",
+        "urgency": "low",
+        "risk_score": 0.025,
+        "risk_band": "auto",
+        "escalation_required": false,
+        "requires_human_approval": false,
+        "target_team": "",
+        "priority": "P4",
+        "sla_target": "",
+        "response_confidence": 0.7,
+        "references_cited": [],
+        "agents_called": [
+          "intent_classifier",
+          "evaluator",
+          "escalation_risk",
+          "response_generator",
+          "finalizer"
+        ],
+        "quality_score": 1.0,
+        "quality_issues": [],
+        "response_text": "Thank you for reaching out. How can I help you today? I can assist with orders, returns, product information, and more."
+      },
+      "evaluation": {
+        "passed": true,
+        "matches": [
+          "response_clean_of_forbidden"
+        ],
+        "issues": []
+      },
+      "latency_ms": 9.06,
+      "error": null
+    }
+  ]
+}

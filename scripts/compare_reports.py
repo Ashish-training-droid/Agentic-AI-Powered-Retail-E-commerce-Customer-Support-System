@@ -62,8 +62,8 @@ def _delta(v1: Any, v2: Any) -> str:
         return ""
     if abs(diff) < 1e-9:
         return "no change"
-    arrow = "↑" if diff > 0 else "↓"
-    return f"{arrow} {abs(diff):.2f}"
+    arrow = "up" if diff > 0 else "down"
+    return f"{arrow} {abs(diff):.4g}"
 
 
 def render(v1: dict[str, Any], v2: dict[str, Any]) -> str:
@@ -122,7 +122,11 @@ def main(argv: list[str] | None = None) -> int:
     v2 = json.loads(args.v2.read_text(encoding="utf-8"))
     md = render(v1, v2)
     args.output.write_text(md, encoding="utf-8")
-    print(md)
+    # Print may fail on Windows consoles with cp1252; never crash on print.
+    try:
+        print(md)
+    except UnicodeEncodeError:
+        print(md.encode("ascii", "replace").decode("ascii"))
     print(f"\nWrote comparison to {args.output}")
     return 0
 
