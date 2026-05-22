@@ -269,15 +269,20 @@ with st.sidebar:
     scenario = DEMO_SCENARIOS[scenario_choice]
 
     st.markdown("### 🆔 Optional Inputs")
+    # IMPORTANT: include scenario_choice in the widget key so Streamlit remounts
+    # the input whenever the scenario changes. This forces value=scenario["order_id"]
+    # to take effect on scenario switch, avoiding the "sticky value" bug where
+    # the field keeps the previous scenario's ID.
     order_id_input = st.text_input(
         "Order ID (optional)",
         value=scenario["order_id"],
+        key=f"order_id_input_{scenario_choice}",
         help="Used by Order Context Agent to fetch order details.",
     )
     customer_id_input = st.text_input(
         "Customer ID (optional)",
         value="",
-        # TODO: Person 3 — wire this to the CRM mock once available.
+        key=f"customer_id_input_{scenario_choice}",
         help="Wire-ready for when Person 3's CRM mock is connected.",
     )
 

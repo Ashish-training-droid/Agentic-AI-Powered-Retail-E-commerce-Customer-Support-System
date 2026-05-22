@@ -883,6 +883,15 @@ def run_real_pipeline(
     import time as _time
     start = _time.time()
 
+    # If caller didn't pass an explicit order_id, try to extract one from the
+    # message text. Their backend trusts whatever order_id we pass and won't
+    # parse the message itself — so we extract here to keep parity with the
+    # mock pipeline behavior.
+    if not order_id:
+        m = ORDER_ID_REGEX.search(query)
+        if m:
+            order_id = m.group(1).upper()
+
     initial_state = {
         "session_id":           f"ui-{int(start)}",
         "customer_id":          customer_id or "CUST_1001",
