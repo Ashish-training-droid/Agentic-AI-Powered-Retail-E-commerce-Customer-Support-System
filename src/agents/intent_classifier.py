@@ -34,7 +34,7 @@ Supported intents:
 - warranty: customer asking about warranty coverage, claims, or service center
 - coupon_issue: coupon not applied, discount code not working, promo code rejected
 - delivery_complaint: late delivery, wrong address, delivery failed, missed delivery
-- damaged_product: received broken, defective, cracked, or wrong item
+- damaged_product: received broken, defective, cracked, damaged, or wrong item. Customer says product arrived in bad condition, screen cracked, item not working. Examples: "my order is defective", "received broken phone", "product came damaged"
 - general_faq: general questions about store, account, payment methods, how to use the app
 
 Sentiment options: positive, neutral, negative, angry

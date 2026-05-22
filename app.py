@@ -75,21 +75,11 @@ if user_input:
             response_text = result.get("response_text", "I'm sorry, I couldn't process that request.")
             st.write(response_text)
 
-            col1, col2, col3 = st.columns(3)
-            with col1:
-                confidence = result.get("response_confidence", 0)
-                color = "green" if confidence >= 0.8 else "orange" if confidence >= 0.6 else "red"
-                st.metric("Confidence", f"{confidence:.0%}")
-            with col2:
-                st.metric("Intent", result.get("intent", "unknown"))
-            with col3:
-                st.metric("Risk", f"{result.get('risk_score', 0):.2f}")
-
             if result.get("suggested_next_action"):
-                st.info(f"Suggested next step: {result['suggested_next_action']}")
+                st.info(f"{result['suggested_next_action']}")
 
             if result.get("references_cited"):
-                st.caption(f"Policy references: {', '.join(result['references_cited'])}")
+                st.caption(f"References: {', '.join(result['references_cited'])}")
 
             metadata = {
                 "intent": result.get("intent"),
@@ -104,11 +94,20 @@ if user_input:
                 "agents_called": result.get("agents_called"),
             }
 
-            with st.expander("Agent Pipeline Details"):
+            with st.expander("View Agent Details (internal)"):
+                col1, col2, col3 = st.columns(3)
+                with col1:
+                    confidence = result.get("response_confidence", 0)
+                    st.metric("Confidence", f"{confidence:.0%}")
+                with col2:
+                    st.metric("Intent", result.get("intent", "unknown"))
+                with col3:
+                    st.metric("Risk", f"{result.get('risk_score', 0):.2f}")
+
                 st.json(metadata)
 
-            if result.get("order_context"):
-                with st.expander("Order Context"):
+                if result.get("order_context"):
+                    st.subheader("Order Context")
                     order = result["order_context"]
                     st.write(f"**Order:** {order.get('order_id')} | **Status:** {order.get('status')}")
                     if order.get("shipment"):
