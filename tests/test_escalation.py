@@ -114,7 +114,8 @@ def test_factor_customer_tier_vip():
     assert factors["customer_tier"].raw == 0.6
 
 
-def test_factor_repeated_contact_three_notes():
+def test_factor_repeated_contact_above_threshold():
+    # angry_repeated_contact() has 4 CRM notes which meets REPEATED_CONTACT_HIGH (4).
     factors = {f.name: f for f in calculate_risk_factors(_state(order_context=angry_repeated_contact()))}
     assert factors["repeated_contact"].raw == 1.0
 
@@ -200,16 +201,29 @@ def test_route_repeated_contact():
 
 
 def test_route_low_confidence_with_no_context():
+    # low_confidence is severity 40 — below MIN_FLAG_ROUTE_SEVERITY (50), so it
+    # no longer auto-flags. It remains in matched_routes for explainability,
+    # but the band stays auto unless the weighted score crosses FLAG_THRESHOLD
+    # or a higher-severity route also matches. The graph's clarify node already
+    # handles very-low-confidence messages separately.
     out = check_risk(_state(intent="general_faq", confidence=0.2, order_context=empty_context()))
-    assert out["target_team"] == "senior_agent"
-    assert out["priority"] == "P3"
+    matched = [r["code"] for r in out.get("matched_routes") or []]
+    assert "low_confidence" in matched
+    assert out["risk_band"] == "auto"
+    assert out["target_team"] == ""
 
 
 def test_route_policy_exception_for_missing_policy():
+    # policy_exception is severity 30 — below MIN_FLAG_ROUTE_SEVERITY (50), so
+    # it no longer auto-flags. A KB coverage gap alone is not a customer-risk
+    # signal; it still appears in matched_routes for explainability so the
+    # auditor can see why the agent answered without policy backing.
     out = check_risk(_state(intent="warranty", confidence=0.9, order_context=regular_in_transit(),
                             policy_snippets=[]))
-    assert out["target_team"] in {"manager", "senior_agent"}
-    assert out["risk_band"] in {"approval_required", "escalate"}
+    matched = [r["code"] for r in out.get("matched_routes") or []]
+    assert "policy_exception" in matched
+    assert out["risk_band"] == "auto"
+    assert out["target_team"] == ""
 
 
 # ---------------------------------------------------------------------------

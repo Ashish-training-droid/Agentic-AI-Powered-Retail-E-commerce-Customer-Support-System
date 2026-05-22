@@ -41,14 +41,27 @@ ESCALATE_THRESHOLD: float = 0.70
 # Matched routes at or above this severity force "escalate" even on a low
 # score — for P1 emergencies the right answer is "skip the AI entirely".
 FORCE_ESCALATE_SEVERITY: int = 80
+# Matched routes BELOW this severity do not, on their own, push the case
+# into HITL. They still appear in `matched_routes` for explainability and
+# still contribute to the weighted risk_score, but a single low-severity
+# signal (e.g. policy_exception=30 because the KB had no snippet, or
+# low_confidence=40 from a vague message) is no longer enough to demand
+# human approval — that was making the agent trigger-happy on routine
+# order-tracking and FAQ traffic. Real risk signals (repeated_contact=50
+# and above) still flag.
+MIN_FLAG_ROUTE_SEVERITY: int = 50
 
 # Order-value bands (INR). Tuned for the ShopEase catalog distribution.
 HIGH_VALUE_THRESHOLD: int = 10_000
 MODERATE_VALUE_THRESHOLD: int = 5_000
 
 # Repeated-contact thresholds (number of CRM notes on file).
-REPEATED_CONTACT_HIGH: int = 3
-REPEATED_CONTACT_MODERATE: int = 2
+# Tuned to "only flag at 4 or above". The MODERATE band is set above HIGH on
+# purpose so it never fires — customers with 0-3 notes contribute nothing to
+# risk, only 4+ contribute the full weight. This avoids dragging chatty regular
+# customers into HITL on routine order-tracking traffic.
+REPEATED_CONTACT_HIGH: int = 4
+REPEATED_CONTACT_MODERATE: int = 5
 
 # Fraud signal: refunds inside the rolling window count toward suspicion.
 FRAUD_REFUND_COUNT_HIGH: int = 3
@@ -425,14 +438,21 @@ def _decide_band(score: float, top_route: EscalationRoute | None) -> str:
         1. ``top_route.severity >= FORCE_ESCALATE_SEVERITY`` -> escalate
            (P1 emergencies always skip the AI).
         2. ``score >= ESCALATE_THRESHOLD``                   -> escalate.
-        3. Matched route OR ``score >= FLAG_THRESHOLD``      -> approval_required.
+        3. ``score >= FLAG_THRESHOLD`` OR matched route at or above
+           ``MIN_FLAG_ROUTE_SEVERITY`` (50)                  -> approval_required.
+           Low-severity routes (policy_exception=30,
+           low_confidence=40) no longer auto-flag on their own; they
+           still contribute to the weighted risk_score and remain in
+           ``matched_routes`` for explainability.
         4. Otherwise                                         -> auto.
     """
     if top_route is not None and top_route.severity >= FORCE_ESCALATE_SEVERITY:
         return "escalate"
     if score >= ESCALATE_THRESHOLD:
         return "escalate"
-    if top_route is not None or score >= FLAG_THRESHOLD:
+    if score >= FLAG_THRESHOLD:
+        return "approval_required"
+    if top_route is not None and top_route.severity >= MIN_FLAG_ROUTE_SEVERITY:
         return "approval_required"
     return "auto"
 

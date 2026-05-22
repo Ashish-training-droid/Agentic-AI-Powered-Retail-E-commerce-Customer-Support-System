@@ -193,7 +193,7 @@ def lost_high_value_shipment() -> dict[str, Any]:
 
 
 def angry_repeated_contact() -> dict[str, Any]:
-    """Three CRM contacts on the same issue — repeated-contact escalation signal."""
+    """Four CRM contacts on the same issue — repeated-contact escalation signal."""
     return OrderContextFactory(
         order_id="SE20007",
         status="delivered",
@@ -208,6 +208,7 @@ def angry_repeated_contact() -> dict[str, Any]:
             "Called about screen flicker on 2026-05-12",
             "Followed up — issue persists on 2026-05-15",
             "Escalation requested on 2026-05-18",
+            "Pressing for resolution on 2026-05-20",
         ],
         customer_tier="regular",
     ).build()
