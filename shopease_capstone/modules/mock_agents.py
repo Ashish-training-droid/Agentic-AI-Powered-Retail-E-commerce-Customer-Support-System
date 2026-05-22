@@ -41,6 +41,23 @@ from typing import Any
 
 import pandas as pd
 
+# Hook into the real backend (LangGraph pipeline owned by Person 1)
+import sys
+import os as _os
+
+_REPO_ROOT = _os.path.abspath(_os.path.join(_os.path.dirname(__file__), "..", ".."))
+if _REPO_ROOT not in sys.path:
+    sys.path.insert(0, _REPO_ROOT)
+
+try:
+    from src.orchestrator.graph import app as _real_graph_app
+    _REAL_BACKEND_AVAILABLE = True
+    _BACKEND_IMPORT_ERROR = ""
+except Exception as _e:
+    _real_graph_app = None
+    _REAL_BACKEND_AVAILABLE = False
+    _BACKEND_IMPORT_ERROR = str(_e)
+
 # -----------------------------------------------------------------------------
 # Data loading
 # -----------------------------------------------------------------------------
@@ -685,4 +702,278 @@ def run_full_pipeline(
             {"agent": "Response Generation",   "owner": "Person 1 + 4",
              "output": {"response_preview": response_text[:120] + "..."}},
         ],
+    }
+
+
+# =============================================================================
+# REAL BACKEND ADAPTER  (calls Person 1's LangGraph instead of the mocks above)
+# =============================================================================
+# Field-mapping based on confirmed responses from `app.invoke()` across 7 demo
+# scenarios. Tested against the actual backend output, not guessed.
+
+def _intent_title(s: str) -> str:
+    """Convert their lowercase_underscore intent to Title Case for the UI."""
+    return s.replace("_", " ").title() if s else "Unknown"
+
+
+def _sentiment_title(s: str) -> str:
+    """Their backend uses lowercase ('angry'); UI shows ('Angry').
+    Also maps 'negative' -> 'Frustrated' to match the UI's color scheme."""
+    return {
+        "positive":   "Positive",
+        "neutral":    "Neutral",
+        "negative":   "Frustrated",
+        "angry":      "Angry",
+    }.get(s, "Neutral")
+
+
+def _urgency_title(u: str) -> str:
+    """Their backend has 'critical' which UI doesn't render — map to High."""
+    return {
+        "low":      "Low",
+        "medium":   "Medium",
+        "high":     "High",
+        "critical": "High",
+    }.get(u, "Low")
+
+
+def _risk_level_from_score(score: float) -> str:
+    """Bucket their float risk_score (0.0-1.0) into the UI's four levels."""
+    if score >= 0.7: return "High"
+    if score >= 0.4: return "Medium"
+    if score >= 0.15: return "Low"
+    return "None"
+
+
+def _verdict_from_quality(q: float) -> str:
+    if q >= 0.85: return "Excellent"
+    if q >= 0.65: return "Good"
+    if q >= 0.45: return "Acceptable"
+    return "Needs Review"
+
+
+def _adapt_order_context(raw_oc: dict, customer_id: str) -> dict | None:
+    """Translate their order_context shape to your UI's expected shape."""
+    if not raw_oc:
+        return None
+
+    items = raw_oc.get("items") or [{"name": "Item", "price": 0, "qty": 1}]
+    payment = raw_oc.get("payment") or {}
+    shipment = raw_oc.get("shipment") or {}
+
+    return {
+        "order_id":      raw_oc.get("order_id", "N/A"),
+        "customer_id":   customer_id,
+        "customer_name": "Customer " + customer_id.replace("CUST_", "").lstrip("0") if customer_id else "Customer",
+        "summary":       f"Order {raw_oc.get('order_id', 'N/A')} — {raw_oc.get('status', 'unknown')}",
+        "raw": {
+            "order_id":          raw_oc.get("order_id", "N/A"),
+            "customer_id":       customer_id,
+            "customer_name":     "Customer " + customer_id.replace("CUST_", "").lstrip("0") if customer_id else "Customer",
+            "order_date":        shipment.get("delivered_on") or "N/A",
+            "items":             items,
+            "total_amount":      payment.get("amount", 0),
+            "payment_status":    "Paid" if payment.get("status") == "captured" else (payment.get("status") or "N/A"),
+            "payment_method":    payment.get("method", "N/A"),
+            "shipment_status":   (shipment.get("status") or "N/A").replace("_", " ").title(),
+            "carrier":           shipment.get("carrier", "N/A"),
+            "tracking_id":       shipment.get("tracking", "N/A"),
+            "expected_delivery": shipment.get("eta") or shipment.get("delivered_on") or "N/A",
+            "delay_reason":      None,
+            "invoice_available": True,
+            "return_eligible":   raw_oc.get("status") == "delivered",
+            "issue_history":     [{"date": "—", "type": "CRM Note", "note": n}
+                                  for n in (raw_oc.get("crm_notes") or [])],
+        },
+    }
+
+
+def _adapt_policy(snippets: list[dict] | None) -> dict | None:
+    if not snippets:
+        return None
+    top = snippets[0]
+    return {
+        "policy_id":  top.get("reference_id", "N/A"),
+        "title":      top.get("explanation", "Relevant Policy")[:80] or "Policy",
+        "snippet":    top.get("rule", ""),
+        "category":   "Policy",
+        "confidence": float(top.get("confidence", 0.85)),
+    }
+
+
+def _adapt_workflow(action_taken: str | None, action_result: dict | None,
+                    escalation_required: bool) -> dict:
+    ar = action_result or {}
+    if not action_taken and not escalation_required:
+        return {"action": "None", "status": "Skipped",
+                "ticket_id": None, "detail": "No automated action taken.",
+                "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
+
+    if escalation_required:
+        status = "Escalated"
+    elif ar.get("success"):
+        status = "Completed"
+    else:
+        status = "Pending"
+
+    return {
+        "action":     action_taken or "escalate",
+        "status":     status,
+        "ticket_id":  ar.get("return_id") or ar.get("ticket_id"),
+        "detail":     ar.get("message") or ar.get("details", "Action processed."),
+        "timestamp":  datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+    }
+
+
+def _adapt_risk(risk_score: float, escalation_required: bool,
+                escalation_reason: str, target_team: str) -> dict:
+    return {
+        "risk_level":  _risk_level_from_score(risk_score),
+        "risk_score":  risk_score,
+        "escalate":    escalation_required,
+        "target_team": target_team or None,
+        "reasons":     [escalation_reason] if escalation_reason else
+                       ([f"Risk score {risk_score:.2f}"] if risk_score > 0.15 else
+                        ["No risk factors detected"]),
+    }
+
+
+def _adapt_trace(agents_called: list[str], audit_trail: list[dict]) -> list[dict]:
+    """Build the agent trace table. Match each called agent with its audit entry."""
+    owner_map = {
+        "intent_classifier":   "Person 1",
+        "order_context":       "Person 3",
+        "policy_retrieval":    "Person 2",
+        "product_advisory":    "Person 4",
+        "workflow_automation": "Person 3",
+        "escalation_risk":     "Person 5",
+        "evaluator":           "Person 5",
+        "response_generator":  "Person 1 + 4",
+        "escalation_handler":  "Person 5",
+        "clarification_handler": "Person 1",
+    }
+    trace = []
+    for name in agents_called:
+        clean_name = name.replace("(ERROR)", "").strip()
+        entry = next((a for a in audit_trail if a.get("agent") == clean_name), {})
+        trace.append({
+            "agent": clean_name.replace("_", " ").title(),
+            "owner": owner_map.get(clean_name, "Team"),
+            "output": {"action": entry.get("action", ""),
+                       "details": entry.get("details", "")[:80]},
+        })
+    return trace
+
+
+def run_real_pipeline(
+    query: str,
+    order_id: str | None = None,
+    customer_id: str | None = None,
+) -> dict[str, Any]:
+    """Invoke the team's LangGraph pipeline and translate its output into the
+    shape the existing UI components already expect.
+
+    This is the one true integration entry point. The UI itself doesn't change.
+    """
+    if not _REAL_BACKEND_AVAILABLE:
+        raise RuntimeError(
+            f"Real backend not available. Import error: {_BACKEND_IMPORT_ERROR}"
+        )
+
+    import time as _time
+    start = _time.time()
+
+    initial_state = {
+        "session_id":           f"ui-{int(start)}",
+        "customer_id":          customer_id or "CUST_1001",
+        "channel":              "web",
+        "message":              query,
+        "conversation_history": [],
+    }
+    if order_id:
+        initial_state["order_id"] = order_id
+
+    final = _real_graph_app.invoke(initial_state)
+    elapsed_ms = int((_time.time() - start) * 1000)
+
+    intent_out = {
+        "intent":            _intent_title(final.get("intent", "unknown")),
+        "confidence":        float(final.get("intent_confidence", 0.0)),
+        "sentiment":         _sentiment_title(final.get("sentiment", "neutral")),
+        "urgency":           _urgency_title(final.get("urgency", "low")),
+        "keywords_matched":  [],
+    }
+
+    order_ctx = _adapt_order_context(
+        final.get("order_context"),
+        customer_id or final.get("customer_id", ""),
+    )
+
+    policy_out = _adapt_policy(final.get("policy_snippets"))
+    workflow_out = _adapt_workflow(
+        final.get("action_taken"),
+        final.get("action_result"),
+        final.get("escalation_required", False),
+    )
+    risk_out = _adapt_risk(
+        float(final.get("risk_score", 0.0)),
+        bool(final.get("escalation_required", False)),
+        final.get("escalation_reason", ""),
+        final.get("target_team", ""),
+    )
+
+    product_out = final.get("product_context") or None
+    if product_out and "comparison" in product_out:
+        comp = product_out.get("comparison") or []
+        if len(comp) >= 2 and product_out.get("mode") == "comparison":
+            products = []
+            for p in comp[:2]:
+                specs = p.get("specs") or {}
+                products.append({
+                    "name":          p.get("name", ""),
+                    "brand":         p.get("name", "").split()[0] if p.get("name") else "",
+                    "processor":     specs.get("processor", "N/A"),
+                    "price_inr":     p.get("price", 0),
+                    "ram_gb":        int(str(specs.get("ram", "0")).replace("GB", "") or 0),
+                    "storage_gb":    int(str(specs.get("storage", "0")).replace("GB", "") or 0),
+                    "battery_hours": int(str(specs.get("battery", "0")).replace("h", "") or 0),
+                    "rating":        p.get("rating", 0),
+                    "in_stock":      p.get("in_stock", True),
+                    "best_for":      p.get("best_for", ""),
+                })
+            rec_text = product_out.get("recommendation", "")
+            winner_name = rec_text.split(" — ")[0].strip() if " — " in rec_text else products[0]["name"]
+            product_out = {
+                "mode":           "comparison",
+                "products":       products,
+                "scores":         product_out.get("scores", {}),
+                "recommendation": winner_name,
+                "reason":         rec_text.split(" — ", 1)[1] if " — " in rec_text else rec_text,
+                "alternatives":   product_out.get("alternatives", []),
+            }
+
+    quality = float(final.get("quality_score", 0.0))
+    eval_out = {
+        "score":   int(quality * 100),
+        "verdict": _verdict_from_quality(quality),
+        "notes":   final.get("quality_issues") or ["No issues flagged"],
+    }
+
+    trace = _adapt_trace(
+        final.get("agents_called") or [],
+        final.get("audit_trail") or [],
+    )
+
+    return {
+        "query":         query,
+        "intent":        intent_out,
+        "order_context": order_ctx,
+        "policy":        policy_out,
+        "product":       product_out,
+        "workflow":      workflow_out,
+        "risk":          risk_out,
+        "response":      final.get("response_text", "No response generated."),
+        "evaluation":    eval_out,
+        "latency_ms":    elapsed_ms,
+        "trace":         trace,
     }

@@ -36,7 +36,7 @@ import streamlit as st
 
 # Import the renamed agent functions and helpers.
 from modules import product_advisory as pa
-from modules.mock_agents import run_full_pipeline
+from modules.mock_agents import run_full_pipeline, run_real_pipeline, _REAL_BACKEND_AVAILABLE
 from modules.ui_components import (
     render_agent_trace,
     render_evaluation_panel,
@@ -290,6 +290,20 @@ with st.sidebar:
         st.rerun()
 
     st.divider()
+    st.markdown("### ⚙️ Backend")
+    backend_mode = st.radio(
+        "Pipeline:",
+        options=["Real (Team LangGraph)", "Mock (Standalone)"],
+        index=0 if _REAL_BACKEND_AVAILABLE else 1,
+        horizontal=False,
+        help="Real = the team's LangGraph orchestrator. Mock = Person 4's local mocks for fallback.",
+        disabled=not _REAL_BACKEND_AVAILABLE,
+        key="backend_mode_select",
+    )
+    if not _REAL_BACKEND_AVAILABLE:
+        st.caption("⚠️ Real backend not importable — falling back to mocks.")
+
+    st.divider()
     st.markdown("### 🤝 Team Ownership")
     st.markdown(
         """
@@ -378,10 +392,24 @@ with tab_chat:
             # 2. run the full multi-agent pipeline (this is the magic line)
             #    TODO: Person 1 — replace `run_full_pipeline` with the real
             #    orchestrator import once their LangGraph/CrewAI router lands.
-            state = run_full_pipeline(
-                query=user_msg,
-                order_id=order_id_input.strip() or None,
-            )
+            if backend_mode.startswith("Real") and _REAL_BACKEND_AVAILABLE:
+                try:
+                    state = run_real_pipeline(
+                        query=user_msg,
+                        order_id=order_id_input.strip() or None,
+                        customer_id=customer_id_input.strip() or None,
+                    )
+                except Exception as e:
+                    st.error(f"Real backend error — falling back to mocks: {e}")
+                    state = run_full_pipeline(
+                        query=user_msg,
+                        order_id=order_id_input.strip() or None,
+                    )
+            else:
+                state = run_full_pipeline(
+                    query=user_msg,
+                    order_id=order_id_input.strip() or None,
+                )
             st.session_state.last_state = state
 
             # 3. record the assistant's reply

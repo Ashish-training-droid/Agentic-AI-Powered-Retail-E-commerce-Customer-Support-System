@@ -50,32 +50,73 @@ Respond with ONLY valid JSON matching this exact schema:
 }"""
 
 
-MOCK_RESPONSES = {
-    "order": {"intent": "order_tracking", "sub_intent": None, "sentiment": "neutral", "urgency": "medium", "confidence": 0.92},
-    "return": {"intent": "return_request", "sub_intent": None, "sentiment": "neutral", "urgency": "medium", "confidence": 0.90},
-    "refund": {"intent": "refund_status", "sub_intent": None, "sentiment": "negative", "urgency": "high", "confidence": 0.88},
-    "product": {"intent": "product_inquiry", "sub_intent": None, "sentiment": "positive", "urgency": "low", "confidence": 0.95},
-    "warranty": {"intent": "warranty", "sub_intent": None, "sentiment": "neutral", "urgency": "medium", "confidence": 0.87},
-    "coupon": {"intent": "coupon_issue", "sub_intent": None, "sentiment": "negative", "urgency": "medium", "confidence": 0.91},
-    "deliver": {"intent": "delivery_complaint", "sub_intent": None, "sentiment": "negative", "urgency": "high", "confidence": 0.89},
-    "damage": {"intent": "damaged_product", "sub_intent": None, "sentiment": "angry", "urgency": "critical", "confidence": 0.93},
-    "broken": {"intent": "damaged_product", "sub_intent": None, "sentiment": "angry", "urgency": "critical", "confidence": 0.93},
-}
+# Priority-ordered keyword groups. Earlier groups win.
+# (more specific intents at the top so "MacBook is lost" doesn't fall through.)
+MOCK_KEYWORD_GROUPS = [
+    ("damaged_product",   ["cracked", "broken", "damaged", "damage", "defective", "not working", "doa", "arrived broken"],
+                          {"sentiment": "angry", "urgency": "critical", "confidence": 0.93}),
+    ("delivery_complaint",["lost", "missing", "never arrived", "not delivered", "no update", "stuck in transit"],
+                          {"sentiment": "negative", "urgency": "high", "confidence": 0.90}),
+    ("coupon_issue",      ["coupon", "promo", "discount code", "voucher", "save20", "festive10"],
+                          {"sentiment": "negative", "urgency": "medium", "confidence": 0.91}),
+    ("refund_status",     ["refund", "money back", "credited", "haven't received my refund", "havent received my refund"],
+                          {"sentiment": "negative", "urgency": "high", "confidence": 0.88}),
+    ("return_request",    ["return", "send back", "give back", "exchange"],
+                          {"sentiment": "neutral", "urgency": "medium", "confidence": 0.90}),
+    ("warranty",          ["warranty", "guarantee", "covered under"],
+                          {"sentiment": "neutral", "urgency": "medium", "confidence": 0.87}),
+    ("product_inquiry",   ["compare", "which is better", "recommend", "suggest", "vs ", " vs.", "difference between",
+                           "best laptop", "best phone", "product comparison"],
+                          {"sentiment": "positive", "urgency": "low", "confidence": 0.95}),
+    ("order_tracking",    ["where is my order", "track my", "track order", "delivery", "shipped", "arrive",
+                           "eta", "out for delivery", "where is", "hasn't arrived", "hasnt arrived"],
+                          {"sentiment": "neutral", "urgency": "medium", "confidence": 0.92}),
+]
+
+# Sentiment override words — escalate sentiment if these appear.
+_ANGRY_WORDS = ["unacceptable", "ridiculous", "appalling", "worst", "terrible",
+                "extremely frustrated", "fed up", "never again"]
+_FRUSTRATED_WORDS = ["frustrated", "disappointed", "annoying", "annoyed", "upset"]
 
 
 def _mock_classify(message: str) -> dict:
-    """Rule-based fallback when USE_MOCK=true or no API key."""
+    """Rule-based fallback when USE_MOCK=true or no API key.
+
+    Priority-ordered keyword matching so 'MacBook is lost' classifies as
+    delivery_complaint and 'cracked screen' classifies as damaged_product,
+    instead of both falling through to general_faq.
+    """
     message_lower = message.lower()
-    for keyword, result in MOCK_RESPONSES.items():
-        if keyword in message_lower:
-            return result
-    return {
-        "intent": "general_faq",
-        "sub_intent": None,
-        "sentiment": "neutral",
-        "urgency": "low",
-        "confidence": 0.75,
-    }
+
+    matched_intent = None
+    matched_meta: dict = {}
+    for intent_name, keywords, meta in MOCK_KEYWORD_GROUPS:
+        if any(kw in message_lower for kw in keywords):
+            matched_intent = intent_name
+            matched_meta = dict(meta)
+            break
+
+    if not matched_intent:
+        return {
+            "intent": "general_faq",
+            "sub_intent": None,
+            "sentiment": "neutral",
+            "urgency": "low",
+            "confidence": 0.75,
+        }
+
+    # Sentiment override based on emotional words
+    if any(w in message_lower for w in _ANGRY_WORDS):
+        matched_meta["sentiment"] = "angry"
+        matched_meta["urgency"] = "critical"
+    elif any(w in message_lower for w in _FRUSTRATED_WORDS) and matched_meta.get("sentiment") == "neutral":
+        matched_meta["sentiment"] = "negative"
+        if matched_meta.get("urgency") == "low":
+            matched_meta["urgency"] = "medium"
+
+    matched_meta["intent"] = matched_intent
+    matched_meta["sub_intent"] = None
+    return matched_meta
 
 
 def classify_intent(state: AgentState) -> AgentState:
