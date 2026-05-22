@@ -27,15 +27,15 @@ Analyze the customer message and extract:
 4. confidence - your confidence in the classification (0.0 to 1.0)
 
 Supported intents:
-- order_tracking: customer wants to know where their order is, delivery status
-- return_request: customer wants to return or exchange a product
-- refund_status: customer asking about refund timeline or status
-- product_inquiry: customer comparing products, asking about specs/availability
-- warranty: customer asking about warranty coverage or claims
-- coupon_issue: coupon not applied, discount not working
-- delivery_complaint: late delivery, wrong address, delivery failed
-- damaged_product: received broken, defective, or wrong item
-- general_faq: general questions about store, account, payment methods
+- order_tracking: customer wants to know where their order is, delivery status, shipment update
+- return_request: customer wants to return or exchange a product they already bought
+- refund_status: customer asking about refund timeline, when money will be credited back
+- product_inquiry: customer comparing products, asking which is better, looking for recommendations, asking about specs/features/price, mentioning specific product names like laptop, phone, headphones, or asking "which one should I buy". Examples: "compare HP and Lenovo", "which laptop is best for college", "suggest a phone under 50000"
+- warranty: customer asking about warranty coverage, claims, or service center
+- coupon_issue: coupon not applied, discount code not working, promo code rejected
+- delivery_complaint: late delivery, wrong address, delivery failed, missed delivery
+- damaged_product: received broken, defective, cracked, or wrong item
+- general_faq: general questions about store, account, payment methods, how to use the app
 
 Sentiment options: positive, neutral, negative, angry
 Urgency options: low, medium, high, critical
