@@ -273,105 +273,159 @@ with tab_chat:
         if not result:
             st.warning("Send a customer message to populate the console.")
         else:
-            console = st.container(border=True)
-            with console:
-                # Intent & Classification
-                st.markdown("**Intent Classification**")
-                col1, col2, col3, col4 = st.columns(4)
+            # Summary bar always visible
+            s1, s2, s3, s4, s5 = st.columns(5)
+            with s1:
+                st.metric("Intent", result.get("intent", "?"))
+            with s2:
+                st.metric("Confidence", f"{result.get('intent_confidence', 0):.0%}")
+            with s3:
+                st.metric("Risk", f"{result.get('risk_score', 0):.2f}")
+            with s4:
+                st.metric("Quality", f"{result.get('quality_score', 0):.0%}")
+            with s5:
+                st.metric("Latency", f"{result.get('_elapsed_ms', 0)}ms")
+
+            # Agent Pipeline always visible
+            agents = result.get("agents_called", [])
+            if agents:
+                st.code(" -> ".join(agents), language=None)
+
+            # Toggle sections
+            with st.expander("Intent & Sentiment", expanded=False):
+                col1, col2, col3 = st.columns(3)
                 with col1:
-                    st.metric("Intent", result.get("intent", "?"))
+                    st.write(f"**Intent:** {result.get('intent')}")
+                    st.write(f"**Sub-intent:** {result.get('sub_intent', 'N/A')}")
                 with col2:
-                    st.metric("Sentiment", result.get("sentiment", "?"))
+                    st.write(f"**Sentiment:** {result.get('sentiment')}")
+                    st.write(f"**Urgency:** {result.get('urgency')}")
                 with col3:
-                    st.metric("Confidence", f"{result.get('intent_confidence', 0):.0%}")
-                with col4:
-                    st.metric("Urgency", result.get("urgency", "?"))
+                    st.write(f"**Confidence:** {result.get('intent_confidence', 0):.0%}")
+                    st.write(f"**Channel:** {result.get('channel', 'web')}")
 
-                st.divider()
-
-                # Order Context
-                order_ctx = result.get("order_context", {})
-                if order_ctx and order_ctx.get("order_id"):
-                    st.markdown("**Order Context**")
+            order_ctx = result.get("order_context", {})
+            if order_ctx and order_ctx.get("order_id"):
+                with st.expander("Order Context", expanded=False):
                     oc1, oc2, oc3 = st.columns(3)
                     with oc1:
-                        st.write(f"Order: `{order_ctx.get('order_id')}`")
-                        st.write(f"Status: **{order_ctx.get('status')}**")
-                        st.write(f"Amount: Rs {order_ctx.get('total_amount', 'N/A')}")
+                        st.write(f"**Order:** `{order_ctx.get('order_id')}`")
+                        st.write(f"**Status:** {order_ctx.get('status')}")
+                        st.write(f"**Amount:** Rs {order_ctx.get('total_amount', 'N/A')}")
                     with oc2:
                         ship = order_ctx.get("shipment", {})
                         if ship:
-                            st.write(f"Carrier: {ship.get('carrier', 'N/A')}")
-                            st.write(f"Tracking: `{ship.get('tracking', 'N/A')}`")
-                            st.write(f"ETA: {ship.get('eta', 'N/A')}")
+                            st.write(f"**Carrier:** {ship.get('carrier', 'N/A')}")
+                            st.write(f"**Tracking:** `{ship.get('tracking', 'N/A')}`")
+                            st.write(f"**ETA:** {ship.get('eta', 'N/A')}")
                     with oc3:
                         cust = order_ctx.get("customer", {})
                         if cust:
-                            st.write(f"Name: {cust.get('name', 'N/A')}")
-                            st.write(f"Tier: **{cust.get('tier', 'regular')}**")
-                            st.write(f"City: {cust.get('city', 'N/A')}")
-                    st.divider()
+                            st.write(f"**Name:** {cust.get('name', 'N/A')}")
+                            st.write(f"**Tier:** {cust.get('tier', 'regular')}")
+                            st.write(f"**City:** {cust.get('city', 'N/A')}")
 
-                # Policy Retrieved
-                policies = result.get("policy_snippets", [])
-                if policies:
-                    st.markdown("**Policy Retrieved**")
+            policies = result.get("policy_snippets", [])
+            if policies:
+                with st.expander("Policy Retrieved (RAG)", expanded=False):
                     for p in policies:
                         st.write(f"`[{p.get('reference_id')}]` {p.get('rule', '')}")
-                        st.caption(f"Confidence: {p.get('confidence', 0):.0%}")
-                    st.divider()
+                        st.caption(f"Confidence: {p.get('confidence', 0):.0%} | {p.get('explanation', '')}")
 
-                # Workflow Action
-                if result.get("action_taken"):
-                    st.markdown("**Workflow Action**")
+            if result.get("action_taken"):
+                with st.expander("Workflow Action", expanded=False):
                     act = result.get("action_result", {})
-                    st.write(f"Action: `{result.get('action_taken')}`")
-                    st.write(f"Success: {'Yes' if act.get('success') else 'No'}")
+                    st.write(f"**Action:** `{result.get('action_taken')}`")
+                    st.write(f"**Success:** {'Yes' if act.get('success') else 'No'}")
                     if act.get("message"):
-                        st.write(f"Details: {act['message']}")
-                    st.divider()
+                        st.write(f"**Details:** {act['message']}")
 
-                # Risk Assessment
-                st.markdown("**Risk & Escalation**")
+            with st.expander("Risk & Escalation", expanded=False):
                 r1, r2, r3 = st.columns(3)
                 with r1:
                     st.metric("Risk Score", f"{result.get('risk_score', 0):.2f}")
                 with r2:
-                    band = result.get("risk_band", "auto")
-                    st.metric("Band", band)
+                    st.metric("Band", result.get("risk_band", "auto"))
                 with r3:
                     st.metric("Priority", result.get("priority", "P4"))
-
                 if result.get("escalation_required"):
                     st.error(f"ESCALATED to **{result.get('target_team')}** — {result.get('escalation_reason', '')}")
-                elif band == "approval_required":
-                    st.warning(f"Queued for human approval — Team: {result.get('target_team', 'N/A')}")
+                elif result.get("risk_band") == "approval_required":
+                    st.warning(f"Queued for approval — Team: {result.get('target_team', 'N/A')}")
+                if result.get("risk_factors"):
+                    st.write("**Factors:**")
+                    for f in result["risk_factors"]:
+                        st.caption(f"  {f.get('name')}: {f.get('detail')}")
 
-                st.divider()
+            with st.expander("Full Audit Trail", expanded=False):
+                st.json(result)
 
-                # Quality & Response
-                st.markdown("**Response Quality**")
-                q1, q2, q3 = st.columns(3)
-                with q1:
-                    st.metric("Quality Score", f"{result.get('quality_score', 0):.0%}")
-                with q2:
-                    st.metric("Response Confidence", f"{result.get('response_confidence', 0):.0%}")
-                with q3:
-                    st.metric("Latency", f"{result.get('_elapsed_ms', 0)}ms")
+            # Export as PDF
+            st.divider()
+            if st.button("Export Audit Trail as PDF", use_container_width=True):
+                try:
+                    from fpdf import FPDF
+                    pdf = FPDF()
+                    pdf.add_page()
+                    pdf.set_font("Helvetica", "B", 16)
+                    pdf.cell(0, 10, "ShopEase - Audit Trail Report", ln=True, align="C")
+                    pdf.set_font("Helvetica", "", 10)
+                    pdf.cell(0, 8, f"Session: {st.session_state.session_id}", ln=True)
+                    pdf.cell(0, 8, f"Customer: {customer_id}", ln=True)
+                    pdf.cell(0, 8, f"Generated: {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')}", ln=True)
+                    pdf.ln(5)
 
-                if result.get("references_cited"):
-                    st.write(f"References: {', '.join(result['references_cited'])}")
+                    pdf.set_font("Helvetica", "B", 12)
+                    pdf.cell(0, 8, "Classification", ln=True)
+                    pdf.set_font("Helvetica", "", 10)
+                    pdf.cell(0, 6, f"Intent: {result.get('intent')} | Sentiment: {result.get('sentiment')} | Confidence: {result.get('intent_confidence', 0):.0%}", ln=True)
+                    pdf.ln(3)
 
-                st.divider()
+                    if order_ctx and order_ctx.get("order_id"):
+                        pdf.set_font("Helvetica", "B", 12)
+                        pdf.cell(0, 8, "Order Context", ln=True)
+                        pdf.set_font("Helvetica", "", 10)
+                        pdf.cell(0, 6, f"Order: {order_ctx.get('order_id')} | Status: {order_ctx.get('status')} | Amount: Rs {order_ctx.get('total_amount', 'N/A')}", ln=True)
+                        pdf.ln(3)
 
-                # Agent Pipeline Trace
-                st.markdown("**Agent Pipeline**")
-                agents = result.get("agents_called", [])
-                if agents:
-                    st.code(" -> ".join(agents), language=None)
+                    if policies:
+                        pdf.set_font("Helvetica", "B", 12)
+                        pdf.cell(0, 8, "Policies Applied", ln=True)
+                        pdf.set_font("Helvetica", "", 10)
+                        for p in policies:
+                            pdf.cell(0, 6, f"[{p.get('reference_id')}] {p.get('rule', '')[:80]}", ln=True)
+                        pdf.ln(3)
 
-                with st.expander("Raw audit log (JSON)"):
-                    st.json(result)
+                    pdf.set_font("Helvetica", "B", 12)
+                    pdf.cell(0, 8, "Risk Assessment", ln=True)
+                    pdf.set_font("Helvetica", "", 10)
+                    pdf.cell(0, 6, f"Score: {result.get('risk_score', 0):.2f} | Band: {result.get('risk_band', 'auto')} | Priority: {result.get('priority', 'P4')}", ln=True)
+                    if result.get("escalation_required"):
+                        pdf.cell(0, 6, f"Escalated to: {result.get('target_team')} | Reason: {result.get('escalation_reason', '')}", ln=True)
+                    pdf.ln(3)
+
+                    pdf.set_font("Helvetica", "B", 12)
+                    pdf.cell(0, 8, "Response", ln=True)
+                    pdf.set_font("Helvetica", "", 10)
+                    response_text = result.get("response_text", "")[:500]
+                    pdf.multi_cell(0, 6, response_text)
+                    pdf.ln(3)
+
+                    pdf.set_font("Helvetica", "B", 12)
+                    pdf.cell(0, 8, "Agent Pipeline", ln=True)
+                    pdf.set_font("Helvetica", "", 10)
+                    pdf.cell(0, 6, " -> ".join(result.get("agents_called", [])), ln=True)
+
+                    pdf_bytes = pdf.output()
+                    st.download_button(
+                        label="Download PDF",
+                        data=pdf_bytes,
+                        file_name=f"audit_trail_{st.session_state.session_id[:8]}.pdf",
+                        mime="application/pdf",
+                        use_container_width=True,
+                    )
+                except ImportError:
+                    st.error("PDF library not installed. Run: pip install fpdf2")
 
 # ─────────────────────────────────────────────────────────────────────────────
 # TAB 2: HITL Approval Queue
