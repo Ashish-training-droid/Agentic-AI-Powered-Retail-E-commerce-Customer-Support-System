@@ -1,76 +1,129 @@
 {
-    "policy_category": "delivery",
-    "version": "1.0",
-    "last_updated": "2026-05-20",
-    "rules": [
-      {
-        "policy_id": "POL-DEL-DELAY-001",
-        "category": "delivery",
-        "subcategory": "delay_compensation",
-        "rule": "If delivery is delayed beyond estimated date by more than 3 days, customer is eligible for shipping fee refund or a goodwill coupon.",
-        "conditions": [
-          "Delay must exceed 3 days from promised ETA",
-          "Customer must contact support to claim"
-        ],
-        "exceptions": [
-          "Force majeure events (natural disasters, strikes) excluded",
-          "Incorrect address delays not eligible"
-        ],
-        "applicable_to": ["all_categories"],
-        "keywords": ["delivery delay", "late delivery", "not received", "where is order"],
-        "effective_from": "2026-01-01",
-        "last_updated": "2026-05-01"
-      },
-      {
-        "policy_id": "POL-DEL-REDEL-001",
-        "category": "delivery",
-        "subcategory": "redelivery",
-        "rule": "If first delivery attempt fails, two more attempts are made on the next two business days before the order is returned to seller.",
-        "conditions": [
-          "Customer must be reachable on registered phone number",
-          "Address must be accurate"
-        ],
-        "exceptions": [
-          "After 3 failed attempts, order is cancelled and refund is initiated"
-        ],
-        "applicable_to": ["all_categories"],
-        "keywords": ["redelivery", "missed delivery", "delivery attempt"],
-        "effective_from": "2026-01-01",
-        "last_updated": "2026-05-01"
-      },
-      {
-        "policy_id": "POL-DEL-ADDR-001",
-        "category": "delivery",
-        "subcategory": "address_change",
-        "rule": "Delivery address can be changed only before the order is shipped. Once shipped, address change is not possible.",
-        "conditions": [
-          "Order status must be 'Processing' or 'Confirmed'",
-          "Change must be in same pincode region for some sellers"
-        ],
-        "exceptions": [
-          "Address cannot be changed once shipped"
-        ],
-        "applicable_to": ["all_categories"],
-        "keywords": ["address change", "wrong address", "update address"],
-        "effective_from": "2026-01-01",
-        "last_updated": "2026-05-01"
-      },
-      {
-        "policy_id": "POL-DEL-LOST-001",
-        "category": "delivery",
-        "subcategory": "lost_shipment",
-        "rule": "Lost shipments are eligible for full refund or replacement after 5 business days of investigation by the logistics team.",
-        "conditions": [
-          "Customer must report non-delivery after ETA passes",
-          "Investigation by logistics partner required"
-        ],
-        "exceptions": [
-          "Shipments marked delivered but not received require additional verification"
-        ],
-        "applicable_to": ["all_categories"],
-        "keywords": ["lost shipment", "lost order", "package missing", "not delivered"],
-        "effective_from": "2026-01-01",
-        "last_updated": "2026-05-01"
-      }
-    ]
-  }
+  "policy_category": "delivery",
+  "version": "1.1",
+  "last_updated": "2026-05-25",
+  "rules": [
+    {
+      "policy_id": "POL-DEL-DELAY-001",
+      "category": "delivery",
+      "subcategory": "delay_compensation",
+      "rule": "If delivery is delayed beyond estimated date by more than 3 days, customer is eligible for shipping fee refund or a goodwill coupon.",
+      "conditions": [
+        "Delay must exceed 3 days from promised ETA",
+        "Customer must contact support to claim"
+      ],
+      "exceptions": [
+        "Force majeure events (natural disasters, strikes) excluded",
+        "Incorrect address delays not eligible"
+      ],
+      "applicable_to": ["all_categories"],
+      "keywords": ["delivery delay", "late delivery", "not received", "where is order"],
+      "effective_from": "2026-01-01",
+      "last_updated": "2026-05-01"
+    },
+    {
+      "policy_id": "POL-DEL-REDEL-001",
+      "category": "delivery",
+      "subcategory": "redelivery",
+      "rule": "If first delivery attempt fails, two more attempts are made on the next two business days before the order is returned to seller.",
+      "conditions": [
+        "Customer must be reachable on registered phone number",
+        "Address must be accurate"
+      ],
+      "exceptions": [
+        "After 3 failed attempts, order is cancelled and refund is initiated"
+      ],
+      "applicable_to": ["all_categories"],
+      "keywords": ["redelivery", "missed delivery", "delivery attempt"],
+      "effective_from": "2026-01-01",
+      "last_updated": "2026-05-01"
+    },
+    {
+      "policy_id": "POL-DEL-ADDR-001",
+      "category": "delivery",
+      "subcategory": "address_change",
+      "rule": "Delivery address can be changed only before the order is shipped. Once shipped, address change is not possible.",
+      "conditions": [
+        "Order status must be 'Processing' or 'Confirmed'",
+        "Change must be in same pincode region for some sellers"
+      ],
+      "exceptions": [
+        "Address cannot be changed once shipped"
+      ],
+      "applicable_to": ["all_categories"],
+      "keywords": ["address change", "wrong address", "update address"],
+      "effective_from": "2026-01-01",
+      "last_updated": "2026-05-01"
+    },
+    {
+      "policy_id": "POL-DEL-LOST-001",
+      "category": "delivery",
+      "subcategory": "lost_shipment",
+      "rule": "Lost shipments are eligible for full refund or replacement after 5 business days of investigation by the logistics team.",
+      "conditions": [
+        "Customer must report non-delivery after ETA passes",
+        "Investigation by logistics partner required"
+      ],
+      "exceptions": [
+        "Shipments marked delivered but not received require additional verification"
+      ],
+      "applicable_to": ["all_categories"],
+      "keywords": [
+  "lost shipment", "lost order", "package missing", "not delivered",
+  "package is lost", "order is lost", "lost", "missing package",
+  "shipment lost", "order missing"
+],
+      "effective_from": "2026-01-01",
+      "last_updated": "2026-05-01"
+    },
+    {
+      "policy_id": "POL-DEL-LOST-HVL-001",
+      "category": "delivery",
+      "subcategory": "lost_shipment_high_value",
+      "rule": "High-value lost shipments (order value above 40000 INR or approximately 500 USD) follow an expedited 3-day investigation with mandatory carrier escalation, GPS verification, fraud risk check, and manager approval for refunds above 100000 INR. Customers receive priority handling and resolution within 5 business days.",
+      "conditions": [
+        "Order value must exceed 40000 INR (~500 USD)",
+        "Customer must report non-receipt within 48 hours of expected delivery",
+        "Customer affidavit and government-issued ID required",
+        "Fraud risk score must clear before refund is released"
+      ],
+      "exceptions": [
+        "Refunds above 100000 INR require manager approval",
+        "Police report recommended for amounts above 100000 INR",
+        "Repeat-claim accounts may require additional verification"
+      ],
+      "applicable_to": ["electronics", "jewelry", "luxury", "all_categories"],
+      "keywords": [
+        "lost shipment", "high value lost", "expensive package missing",
+        "premium order lost", "valuable item missing", "lost order",
+        "expensive lost", "premium lost"
+      ],
+      "effective_from": "2026-05-25",
+      "last_updated": "2026-05-25"
+    },
+    {
+      "policy_id": "POL-DEL-LOST-DLV-001",
+      "category": "delivery",
+      "subcategory": "delivered_not_received",
+      "rule": "When tracking marks a shipment as delivered but the customer reports non-receipt, a 4-day investigation is launched including GPS coordinate verification, proof-of-delivery (POD) review, photo evidence check (if available from carrier), and inquiries with neighbors, security, or building reception. Refund or signed redelivery is offered based on investigation outcome.",
+      "conditions": [
+        "Customer must report non-receipt within 7 days of marked delivery",
+        "GPS and POD verification required",
+        "Customer must confirm delivery address details"
+      ],
+      "exceptions": [
+        "If signed POD exists with matching GPS coordinates, customer must file affidavit",
+        "Repeat 'delivered-not-received' claims trigger fraud review"
+      ],
+      "applicable_to": ["all_categories"],
+      "keywords": [
+        "delivered but not received", "tracking says delivered",
+        "package marked delivered", "POD dispute", "false delivery",
+        "lost shipment", "not delivered", "marked delivered",
+        "shows delivered"
+      ],
+      "effective_from": "2026-05-25",
+      "last_updated": "2026-05-25"
+    }
+  ]
+}

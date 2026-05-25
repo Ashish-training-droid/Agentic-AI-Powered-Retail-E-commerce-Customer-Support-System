@@ -15,8 +15,7 @@ import pytest
 from src.agents.policy_retrieval import retrieve_policy
 
 
-REF_ID_PATTERN = re.compile(r"^POL-[A-Z]+-[A-Z]+-\d+$")
-
+REF_ID_PATTERN = re.compile(r"^POL-[A-Z]+(?:-[A-Z]+)+-\d+$")
 
 def _run(intent: str, message: str) -> dict:
     """Helper to invoke the agent with a minimal state."""
@@ -116,3 +115,44 @@ def test_ambiguous_message_returns_best_guess():
 def test_top_snippets_capped_at_three():
     result = _run("return_request", "return refund warranty coupon delivery")
     assert len(result["policy_snippets"]) <= 3
+
+
+
+
+# --------------------------------------------------------------------------
+# Lost-Shipment Enhancement Tests (Person 2 — KB v1.1)
+# Covers: standard lost (regression), high-value lost, delivered-not-received
+# --------------------------------------------------------------------------
+
+def test_basic_lost_shipment_still_matches():
+    """Regression: generic lost-shipment query should still surface POL-DEL-LOST-001."""
+    result = _run(
+        "delivery_complaint",
+        "my package is missing, lost shipment never arrived"  
+    )
+
+
+def test_high_value_lost_shipment_matches_hvl_policy():
+    """High-value lost-shipment query should surface POL-DEL-LOST-HVL-001."""
+    result = _run(
+        "delivery_complaint",
+        "my expensive premium order is lost, valuable item missing from shipment"
+    )
+    assert result["policy_applies"] is True
+    refs = [s["reference_id"] for s in result["policy_snippets"]]
+    assert "POL-DEL-LOST-HVL-001" in refs, (
+        f"Expected POL-DEL-LOST-HVL-001 in retrieved policies, got {refs}"
+    )
+
+
+def test_delivered_not_received_matches_dlv_policy():
+    """Tracking-says-delivered-but-not-received should surface POL-DEL-LOST-DLV-001."""
+    result = _run(
+        "delivery_complaint",
+        "tracking says delivered but I never received the package, marked delivered falsely"
+    )
+    assert result["policy_applies"] is True
+    refs = [s["reference_id"] for s in result["policy_snippets"]]
+    assert "POL-DEL-LOST-DLV-001" in refs, (
+        f"Expected POL-DEL-LOST-DLV-001 in retrieved policies, got {refs}"
+    )
