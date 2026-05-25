@@ -146,13 +146,14 @@ Customer gets answer or specialist takes over
 | Layer | Technology |
 |-------|-----------|
 | Language | Python 3.12+ |
-| LLM Framework | LangChain / LangGraph |
-| Vector Store | FAISS / ChromaDB (for RAG) |
-| Backend API | FastAPI |
-| Frontend | Streamlit (prototype) |
-| Data | JSON mock APIs, CSV datasets |
-| Testing | pytest |
-| CI/CD | GitHub Actions |
+| LLM | OpenAI GPT-4o (classification + response generation) |
+| Embeddings | OpenAI text-embedding-3-small (semantic policy search) |
+| Orchestration | LangGraph (multi-agent state graph) |
+| RAG | Vector embeddings with cosine similarity for policy retrieval |
+| Frontend | Streamlit (customer chat + agent console + HITL queue) |
+| Data | JSON mock APIs (55 customers, 140+ orders, 23 policies) |
+| Testing | pytest + custom evaluation harness |
+| CI/CD | GitHub Actions (auto-test on push) |
 | Version Control | Git + GitHub |
 
 ## What is Where — Project Map
@@ -166,7 +167,8 @@ Customer gets answer or specialist takes over
 | **`src/agents/intent_classifier.py`** | Classifies customer intent, sentiment, urgency using OpenAI | Ashish |
 | **`src/agents/response_generator.py`** | Generates grounded, policy-cited customer responses | Ashish + Aditi |
 | **`src/agents/order_context.py`** | Retrieves order/payment/shipment data for the customer | Pallavi |
-| **`src/agents/policy_retrieval.py`** | Searches policy KB and returns relevant rules with citations | Gunjan |
+| **`src/agents/policy_retrieval.py`** | Searches policy KB using embeddings (LIVE) or keywords (MOCK) | Gunjan + Ashish |
+| **`src/knowledge/embedding_store.py`** | RAG vector store — embeds 23 policies, finds nearest match by cosine similarity | Ashish |
 | **`src/agents/product_advisory.py`** | Compares products, suggests alternatives, checks stock | Aditi |
 | **`src/agents/workflow_automation.py`** | Executes actions: return, refund check, ticket creation | Pallavi |
 | **`src/agents/escalation_risk.py`** | Risk scoring, HITL approval, escalation routing | Rohan |
@@ -290,12 +292,15 @@ See [`docs/architecture.md`](docs/architecture.md#8-scalability-and-production-d
 
 - Full end-to-end pipeline with live OpenAI GPT-4o responses
 - 7 agents collaborating through LangGraph orchestration
+- **RAG with vector embeddings** — semantic policy search using OpenAI embeddings (not keyword matching)
 - Conversation memory (multi-turn context)
 - HITL approval queue with Approve/Reject/Escalate actions
 - Natural, empathetic response generation
 - Escalation with supporting media request
+- 55 customers, 140+ orders, 23 policies in mock data
 - All demo scenarios functional
 - Deployed on Streamlit Cloud
+- CI/CD with GitHub Actions
 
 ### Running the Demo
 
