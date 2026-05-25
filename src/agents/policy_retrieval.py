@@ -125,30 +125,54 @@ def _build_snippet(rule: dict[str, Any], confidence: float) -> dict[str, Any]:
 # Public agent function — DO NOT change the signature
 # --------------------------------------------------------------------------
 
-def retrieve_policy(state: AgentState) -> AgentState:
-    """
-    LangGraph node: retrieves relevant policy snippets for the detected intent.
+def _retrieve_with_embeddings(intent: str, message: str) -> list[dict]:
+    """Use vector embeddings for semantic policy search (LIVE mode)."""
+    try:
+        from src.knowledge.embedding_store import get_embedding_store
+        store = get_embedding_store()
+        return store.search(query=message, intent=intent, top_k=3, min_score=0.3)
+    except Exception:
+        return []
 
-    Reads:  intent, message, order_context
-    Writes: policy_snippets, policy_applies, agents_called, audit_trail
-    """
-    intent = state.get("intent", "") or ""
-    message = state.get("message", "") or ""
 
+def _retrieve_with_keywords(intent: str, message: str) -> list[dict]:
+    """Use keyword matching for policy search (MOCK mode / fallback)."""
     rules = _load_all_policies()
-
-    # Score every rule, keep ones above a small threshold
     scored: list[tuple[float, dict[str, Any]]] = []
     for rule in rules:
         conf = _score_rule(rule, intent, message)
         if conf >= 0.5:
             scored.append((conf, rule))
-
-    # Sort by confidence (high to low) and take top 3
     scored.sort(key=lambda x: x[0], reverse=True)
     top = scored[:3]
+    return [_build_snippet(rule, conf) for conf, rule in top]
 
-    snippets = [_build_snippet(rule, conf) for conf, rule in top]
+
+def retrieve_policy(state: AgentState) -> AgentState:
+    """
+    LangGraph node: retrieves relevant policy snippets for the detected intent.
+
+    Uses vector embeddings (OpenAI) in LIVE mode for semantic search.
+    Falls back to keyword matching in MOCK mode or if embeddings fail.
+
+    Reads:  intent, message, order_context
+    Writes: policy_snippets, policy_applies, agents_called, audit_trail
+    """
+    from src.config import USE_MOCK, OPENAI_API_KEY
+
+    intent = state.get("intent", "") or ""
+    message = state.get("message", "") or ""
+    retrieval_method = "keywords"
+
+    if not USE_MOCK and OPENAI_API_KEY:
+        snippets = _retrieve_with_embeddings(intent, message)
+        if snippets:
+            retrieval_method = "embeddings"
+        else:
+            snippets = _retrieve_with_keywords(intent, message)
+    else:
+        snippets = _retrieve_with_keywords(intent, message)
+
     policy_applies = len(snippets) > 0
 
     return {
@@ -160,7 +184,7 @@ def retrieve_policy(state: AgentState) -> AgentState:
             "action": "retrieve_policy",
             "timestamp": datetime.now(timezone.utc).isoformat(),
             "details": (
-                f"intent={intent}, rules_loaded={len(rules)}, "
+                f"method={retrieval_method}, intent={intent}, "
                 f"matches_found={len(snippets)}, applies={policy_applies}"
             ),
         }],

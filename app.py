@@ -133,13 +133,23 @@ if "session_id" not in st.session_state:
 # ─────────────────────────────────────────────────────────────────────────────
 # Sidebar
 # ─────────────────────────────────────────────────────────────────────────────
-CUSTOMERS = {
-    "Rahul Patel (Premium) - CUST_1001": "CUST_1001",
-    "Priya Sharma (Regular) - CUST_1002": "CUST_1002",
-    "Vikram Singh (VIP) - CUST_1003": "CUST_1003",
-    "Ananya Gupta (Regular) - CUST_1004": "CUST_1004",
-    "Meera Joshi (Premium) - CUST_1005": "CUST_1005",
-}
+import json as _json
+from pathlib import Path as _Path
+
+def _load_customers():
+    """Load all customers from mock data for the sidebar dropdown."""
+    path = _Path(__file__).parent / "data" / "mock" / "customers.json"
+    if not path.exists():
+        return {"Rahul Patel (premium) - CUST_1001": "CUST_1001"}
+    with open(path, "r", encoding="utf-8") as f:
+        data = _json.load(f)
+    custs = data.get("customers", data) if isinstance(data, dict) else data
+    return {
+        f"{c.get('name', 'Unknown')} ({c.get('tier', 'standard')}) - {c['customer_id']}": c["customer_id"]
+        for c in custs
+    }
+
+CUSTOMERS = _load_customers()
 
 with st.sidebar:
     mode = "LIVE (OpenAI GPT-4o)" if not USE_MOCK else "MOCK (offline)"
