@@ -276,22 +276,43 @@ See [`docs/architecture.md`](docs/architecture.md#8-scalability-and-production-d
 
 ## Current Progress
 
-### Delivered and Merged
+### All Delivered and Merged
 
 | Who | What They Delivered | Status |
 |-----|-------------------|--------|
-| Ashish | Orchestrator, router, evaluator, intent classifier, response generator, utils, tests, CI, resilient routing | Merged |
+| Ashish | Orchestrator, router, evaluator, intent classifier, response generator (OpenAI GPT-4o), utils, tests, CI, resilient routing, unified Streamlit app, conversation memory | Merged |
 | Gunjan | Policy KB (7 files, 20+ rules), FAQ (20 entries), product catalog, real policy retrieval agent, grounding tests | Merged |
-| Pallavi | Mock data layer (orders, payments, shipments, customers, CRM, returns, refunds, inventory — 12,500+ lines) | Merged |
-| Aditi | Streamlit UI (customer chat + agent console + product comparison + demo script) | Branch `ui-agent-aditi` ready |
-| Rohan | Full risk agent (multi-factor scoring), HITL approval queue, audit logs, evaluation harness (25+ test cases), product catalog expansion (92 products), presentation outline | Merged |
+| Pallavi | Mock data (12,500+ lines), real order context agent (loads from JSON), real workflow automation agent, 7 mock API modules | Merged |
+| Aditi | Product advisory agent (real, loads 92-product catalog), priority-ordered intent classifier improvements, UI components | Merged |
+| Rohan | Full risk agent (multi-factor scoring), HITL approval queue, audit logs, evaluation harness (25+ test cases), product catalog (92 products), presentation outline, risk threshold tuning | Merged |
 
-### What's Next
+### What's Working
 
-1. Wire Pallavi's mock data into the order context and workflow agents
-2. Integrate Aditi's UI with the real LangGraph orchestrator
-3. Final end-to-end test with all real agents
-4. Demo rehearsal and presentation
+- Full end-to-end pipeline with live OpenAI GPT-4o responses
+- 7 agents collaborating through LangGraph orchestration
+- Conversation memory (multi-turn context)
+- HITL approval queue with Approve/Reject/Escalate actions
+- Natural, empathetic response generation
+- Escalation with supporting media request
+- All demo scenarios functional
+- Deployed on Streamlit Cloud
+
+### Running the Demo
+
+```bash
+# Local (with OpenAI)
+streamlit run app.py
+
+# Mock mode (no API key needed)
+set USE_MOCK=true
+streamlit run app.py
+```
+
+### What's Left
+
+1. Final presentation slides (Rohan leading)
+2. Demo rehearsal with all scenarios
+3. Minor tuning (product_inquiry classification edge case in mock mode)
 
 ## License
 
