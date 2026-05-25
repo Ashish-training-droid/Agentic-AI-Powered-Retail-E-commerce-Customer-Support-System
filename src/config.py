@@ -1,7 +1,10 @@
 import os
+from pathlib import Path
 from dotenv import load_dotenv
 
-load_dotenv()
+# Force load .env file and OVERRIDE any existing env vars
+_env_path = Path(__file__).parent.parent / ".env"
+load_dotenv(_env_path, override=True)
 
 
 def _get_secret(key: str, default: str = "") -> str:

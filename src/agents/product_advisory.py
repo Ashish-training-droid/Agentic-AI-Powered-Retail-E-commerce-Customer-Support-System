@@ -21,41 +21,26 @@ from src.orchestrator.state import AgentState
 
 
 # -----------------------------------------------------------------------------
-# Catalog loading (CSV from the shared shopease_capstone/data folder)
+# Catalog loading (JSON from src/knowledge/products/)
 # -----------------------------------------------------------------------------
 
 _CATALOG_PATH = (
-    Path(__file__).parent.parent.parent
-    / "shopease_capstone"
-    / "data"
-    / "products.csv"
+    Path(__file__).parent.parent
+    / "knowledge"
+    / "products"
+    / "catalog.json"
 )
 
 
 def _load_catalog() -> list[dict]:
-    """Load the product catalog from CSV. Returns a list of dict rows."""
+    """Load the product catalog from JSON. Returns a list of product dicts."""
     if not _CATALOG_PATH.exists():
         return []
-    rows: list[dict] = []
-    with open(_CATALOG_PATH, "r", encoding="utf-8", newline="") as f:
-        reader = csv.DictReader(f)
-        for r in reader:
-            # Normalize numeric fields
-            for num_field in ("price_inr", "ram_gb", "storage_gb",
-                              "battery_hours", "warranty_months",
-                              "stock_qty"):
-                try:
-                    r[num_field] = int(float(r.get(num_field) or 0))
-                except (ValueError, TypeError):
-                    r[num_field] = 0
-            for float_field in ("display_inch", "weight_kg", "rating"):
-                try:
-                    r[float_field] = float(r.get(float_field) or 0)
-                except (ValueError, TypeError):
-                    r[float_field] = 0.0
-            r["in_stock"] = str(r.get("in_stock", "")).lower() == "true"
-            rows.append(r)
-    return rows
+    import json as _json
+    with open(_CATALOG_PATH, "r", encoding="utf-8") as f:
+        data = _json.load(f)
+    products = data.get("products", []) if isinstance(data, dict) else data
+    return products
 
 
 # -----------------------------------------------------------------------------

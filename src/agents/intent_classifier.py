@@ -26,6 +26,10 @@ Analyze the customer message and extract:
 3. urgency - how time-sensitive the request is
 4. confidence - your confidence in the classification (0.0 to 1.0)
 
+IMPORTANT: You will also receive the conversation history. Use it to understand context.
+If the customer previously asked about a return and now says "I don't have my order ID",
+the intent is STILL return_request (not general_faq). Always consider the ongoing context.
+
 Supported intents:
 - order_tracking: customer wants to know where their order is, delivery status, shipment update
 - return_request: customer wants to return or exchange a product they already bought
@@ -147,16 +151,32 @@ def classify_intent(state: AgentState) -> AgentState:
                 api_key=OPENAI_API_KEY,
                 temperature=0.0,
             )
+
+            # Build context from conversation history
+            conversation_history = state.get("conversation_history", [])
+            context_str = ""
+            if conversation_history:
+                history_lines = []
+                for msg in conversation_history[-6:]:
+                    role = msg.get("role", "user")
+                    content = msg.get("content", "")
+                    history_lines.append(f"{role}: {content}")
+                context_str = "\n".join(history_lines)
+
+            prompt_content = f"Channel: {channel}\n"
+            if context_str:
+                prompt_content += f"Conversation history:\n{context_str}\n\n"
+            prompt_content += f"Current customer message: {message}"
+
             messages = [
                 SystemMessage(content=INTENT_SYSTEM_PROMPT),
-                HumanMessage(content=f"Channel: {channel}\nCustomer message: {message}"),
+                HumanMessage(content=prompt_content),
             ]
             response = llm.invoke(messages)
             result = json.loads(response.content)
         except json.JSONDecodeError:
             result = _mock_classify(message)
         except Exception:
-            # API timeout, rate limit, network error — fall back to rule-based
             result = _mock_classify(message)
 
     intent = result.get("intent", "general_faq")

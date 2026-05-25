@@ -114,16 +114,43 @@ def _escalate(state: AgentState) -> AgentState:
     Rohan (Person 5) wires the audit log here so every escalation is durably recorded
     even when the response generator is skipped.
     """
-    update: dict = {
-        "response_text": (
-            f"Your case has been escalated to our {state.get('target_team', 'specialist')} team. "
+    intent = state.get("intent", "")
+    order_id = state.get("order_context", {}).get("order_id", "your order")
+
+    # Build a natural, helpful escalation response based on the situation
+    if intent == "damaged_product":
+        response = (
+            f"I'm really sorry about the damage to your order ({order_id}). I completely understand how frustrating this is. "
+            f"I've escalated your case to our {state.get('target_team', 'specialist')} team with **{state.get('priority', 'P3')}** priority. "
+            f"A specialist will contact you within 2 hours to arrange a replacement or full refund.\n\n"
+            f"To help us resolve this faster, could you please:\n"
+            f"- Upload photos of the damaged product\n"
+            f"- Upload a photo of the packaging (if damaged)\n"
+            f"- Share a short description of the damage\n\n"
+            f"You can upload these via 'My Orders' > '{order_id}' > 'Report Issue', or simply reply here with the images."
+        )
+    elif intent == "delivery_complaint":
+        response = (
+            f"I understand how concerning this is. Your case regarding order {order_id} has been escalated to our "
+            f"{state.get('target_team', 'logistics')} team with {state.get('priority', 'P3')} priority. "
+            f"A specialist will investigate and reach out within 2 hours.\n\n"
+            f"If you have any delivery-related evidence (screenshots of tracking, messages from delivery partner), "
+            f"please share them to help speed up the resolution."
+        )
+    else:
+        response = (
+            f"I've escalated your case to our {state.get('target_team', 'specialist')} team. "
             f"Reason: {state.get('escalation_reason', 'requires specialist attention')}. "
             f"Priority: {state.get('priority', 'P3')}. "
-            f"A team member will contact you within 2 hours."
-        ),
+            f"A team member will contact you within 2 hours. "
+            f"If you have any supporting documents or screenshots related to your issue, please keep them ready."
+        )
+
+    update: dict = {
+        "response_text": response,
         "response_confidence": 0.95,
-        "references_cited": [],
-        "suggested_next_action": "Our specialist team will reach out to you shortly.",
+        "references_cited": [p.get("reference_id", "") for p in state.get("policy_snippets", []) if p.get("reference_id")],
+        "suggested_next_action": "Please upload photos/evidence via 'My Orders' to speed up resolution. Our team will contact you within 2 hours.",
         "approval_status": "n/a",
         "agents_called": ["escalation_handler"],
         "audit_trail": [{

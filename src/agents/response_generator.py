@@ -19,28 +19,33 @@ from src.config import OPENAI_API_KEY, OPENAI_MODEL, USE_MOCK
 from src.orchestrator.state import AgentState
 
 
-RESPONSE_SYSTEM_PROMPT = """You are the response generation agent for ShopEase customer support.
+RESPONSE_SYSTEM_PROMPT = """You are ShopEase's AI customer support assistant. You speak like a helpful, empathetic human — not a robot.
 
-Your job is to create a clear, helpful, and brand-aligned response to the customer based on the context provided.
+Your job: write a natural, warm response that solves the customer's problem using the context and data provided.
 
-Rules:
-1. ONLY state facts supported by the provided order context, policy snippets, or action results.
-2. If a policy applies, cite the reference ID in brackets like [POL-RET-ELEC-001].
-3. Adapt tone to the channel:
-   - web/mobile chat: friendly, concise, use short paragraphs
-   - email: professional, structured, include greeting/closing
-   - social: brief, empathetic, offer to move to DM for details
-4. If an action was taken (return initiated, ticket created), confirm it clearly.
-5. If escalation is required, explain that a specialist will take over.
-6. Never promise anything not backed by policy.
-7. Include a suggested next action for the customer.
+Guidelines:
+1. Be NATURAL and conversational. Sound like a friendly support agent, not a template.
+2. Use the actual data: mention order IDs, carrier names, dates, amounts when available.
+3. If a policy applies, weave it naturally into the response and cite the reference like [POL-RET-FASH-001].
+4. Show empathy for frustration: "I completely understand how frustrating this must be..."
+5. Be specific: don't say "your order is on the way" — say "Your order SE10234 is with BlueDart, tracking BD987120234, arriving May 22."
+6. If data is missing, ask for it politely and explain why you need it.
+7. If an action was taken (return initiated, ticket created), confirm with clear details (IDs, dates).
+8. Adapt tone to channel:
+   - web/mobile: friendly, concise, 2-3 short paragraphs max
+   - email: slightly more formal with greeting
+   - social: brief, empathetic
+9. Always end with a clear next step for the customer.
+10. If you don't have enough info to fully help, be honest about it and offer alternatives.
+
+IMPORTANT: Use the conversation history to maintain context. If the customer previously asked about a return and is now asking a follow-up, refer back to the earlier context.
 
 Respond with ONLY valid JSON:
 {
-  "response_text": "<the customer-facing response>",
+  "response_text": "<natural, helpful customer response>",
   "confidence": <float 0.0-1.0>,
   "references_cited": ["<ref_id1>", "<ref_id2>"],
-  "suggested_next_action": "<what customer should do next or null>",
+  "suggested_next_action": "<clear next step for the customer>",
   "internal_notes": "<any flags for quality review>"
 }"""
 
@@ -49,7 +54,17 @@ def _build_context_prompt(state: AgentState) -> str:
     """Assembles all agent outputs into a prompt for response generation."""
     parts = []
 
-    parts.append(f"Customer message: {state.get('message', '')}")
+    # Include conversation history for context-aware responses
+    conversation_history = state.get("conversation_history", [])
+    if conversation_history:
+        parts.append("Conversation history:")
+        for msg in conversation_history[-6:]:
+            role = msg.get("role", "user")
+            content = msg.get("content", "")
+            parts.append(f"  {role}: {content}")
+        parts.append("")
+
+    parts.append(f"Current customer message: {state.get('message', '')}")
     parts.append(f"Channel: {state.get('channel', 'web')}")
     parts.append(f"Detected intent: {state.get('intent', 'unknown')}")
     parts.append(f"Sentiment: {state.get('sentiment', 'neutral')}")
@@ -214,16 +229,52 @@ def _mock_generate_response(state: AgentState) -> dict:
         }
 
     if intent == "damaged_product":
+        ticket = action_result.get("ticket_id") or action_result.get("reference_ticket") or "pending"
+        policy_text = policy_snippets[0]["rule"] if policy_snippets else "Damaged items must be reported within 48 hours with photo evidence."
         return {
-            "response_text": f"I'm sorry to hear about the damaged product. A support ticket has been created ({action_result.get('ticket_id', 'pending')}). Our team will review your case and arrange a replacement or refund within 48 hours.",
+            "response_text": f"I'm very sorry about the damaged product. {policy_text} A support ticket ({ticket}) has been created. Our team will review your case and arrange a replacement or full refund within 48 hours.",
             "confidence": 0.88,
             "references_cited": refs,
-            "suggested_next_action": "Please upload photos of the damaged product for faster processing.",
+            "suggested_next_action": "Please upload photos of the damaged product via 'My Orders' for faster processing.",
+            "internal_notes": "",
+        }
+
+    if intent == "delivery_complaint":
+        shipment = order_ctx.get("shipment", {})
+        policy_text = policy_snippets[0]["rule"] if policy_snippets else "If delivery is delayed beyond 3 days of estimated date, you are eligible for a shipping fee refund."
+        status = shipment.get("status", "unknown")
+        eta = shipment.get("eta", "unknown")
+        return {
+            "response_text": f"I understand your delivery concern. Your shipment status is currently '{status}'. {policy_text} Expected delivery: {eta}. If it doesn't arrive by then, we'll automatically process compensation.",
+            "confidence": 0.87,
+            "references_cited": refs,
+            "suggested_next_action": "If the order doesn't arrive by the updated ETA, contact us for shipping fee refund.",
+            "internal_notes": "",
+        }
+
+    if intent == "refund_status":
+        policy_text = policy_snippets[0]["rule"] if policy_snippets else "Refunds are processed within 5-7 business days after return pickup."
+        payment_method = order_ctx.get("payment", {}).get("method", "your original payment method")
+        return {
+            "response_text": f"Regarding your refund: {policy_text} Your refund will be credited to {payment_method}. You can check the latest status under 'My Orders' > 'Refund Status'.",
+            "confidence": 0.88,
+            "references_cited": refs,
+            "suggested_next_action": "Check 'My Orders' for real-time refund status. UPI/wallet refunds are usually faster (24 hours).",
+            "internal_notes": "",
+        }
+
+    if intent == "warranty":
+        policy_text = policy_snippets[0]["rule"] if policy_snippets else "Electronics carry 1-year manufacturer warranty from date of delivery."
+        return {
+            "response_text": f"About your warranty query: {policy_text} To claim warranty, please visit the brand's authorized service center with your ShopEase invoice. We can email you a copy if needed.",
+            "confidence": 0.87,
+            "references_cited": refs,
+            "suggested_next_action": "Would you like us to email your invoice or help locate the nearest service center?",
             "internal_notes": "",
         }
 
     return {
-        "response_text": "Thank you for reaching out. How can I help you today? I can assist with orders, returns, product information, and more.",
+        "response_text": "Thank you for reaching out! I can help you with orders, returns, refunds, product comparisons, and more. What would you like help with?",
         "confidence": 0.70,
         "references_cited": [],
         "suggested_next_action": "Please describe your issue and I'll do my best to help.",
@@ -240,18 +291,17 @@ def generate_response(state: AgentState) -> AgentState:
     Writes: response_text, response_confidence, references_cited, suggested_next_action,
             agents_called, audit_trail
     """
-    # Check for fallback scenarios FIRST (missing data, errors)
-    fallback = _generate_fallback_response(state)
-    if fallback:
-        result = fallback
-    elif USE_MOCK or not OPENAI_API_KEY:
-        result = _mock_generate_response(state)
+    if USE_MOCK or not OPENAI_API_KEY:
+        # Mock mode: use fallback checks + template responses
+        fallback = _generate_fallback_response(state)
+        result = fallback if fallback else _mock_generate_response(state)
     else:
+        # LIVE mode: always use OpenAI for natural responses
         try:
             llm = ChatOpenAI(
                 model=OPENAI_MODEL,
                 api_key=OPENAI_API_KEY,
-                temperature=0.3,
+                temperature=0.4,
             )
             context_prompt = _build_context_prompt(state)
             messages = [
@@ -261,7 +311,8 @@ def generate_response(state: AgentState) -> AgentState:
             response = llm.invoke(messages)
             result = json.loads(response.content)
         except (json.JSONDecodeError, Exception):
-            result = _mock_generate_response(state)
+            fallback = _generate_fallback_response(state)
+            result = fallback if fallback else _mock_generate_response(state)
 
     return {
         "response_text": result.get("response_text", ""),
