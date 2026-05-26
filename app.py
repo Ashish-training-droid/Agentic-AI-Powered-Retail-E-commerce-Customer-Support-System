@@ -186,14 +186,16 @@ with tab_main:
         result = st.session_state.last_result
         if result:
             SUGGESTIONS = {
-                "order_tracking": ["Track another order", "Download invoice", "Change delivery address"],
-                "return_request": ["Check refund status", "Track pickup", "Return another item"],
-                "refund_status": ["Track return pickup", "Check order status", "Contact support"],
-                "damaged_product": ["Upload damage photos", "Check replacement status", "Track refund"],
-                "delivery_complaint": ["Track shipment live", "Request callback", "Change address"],
-                "coupon_issue": ["View eligible coupons", "Check cart requirements", "Try another code"],
-                "product_inquiry": ["Compare more products", "Check availability", "View alternatives"],
+                "order_tracking": ["Track another order", "Download invoice", "Request callback"],
+                "return_request": ["Check refund status", "Track pickup", "Request callback"],
+                "refund_status": ["Track return pickup", "Request callback", "Speak to agent"],
+                "damaged_product": ["Upload damage photos", "Request callback", "Speak to agent"],
+                "delivery_complaint": ["Track shipment live", "Request callback", "Speak to agent"],
+                "coupon_issue": ["View eligible coupons", "Try another code", "Request callback"],
+                "product_inquiry": ["Compare more products", "Check availability", "Add to cart"],
             }
+            ESCALATION_ACTIONS = {"Request callback", "Speak to agent"}
+
             intent = result.get("intent", "")
             suggestions = SUGGESTIONS.get(intent, [])
             if suggestions:
@@ -202,7 +204,10 @@ with tab_main:
                 for idx, sug in enumerate(suggestions):
                     with cols[idx]:
                         if st.button(sug, key=f"sug_{idx}", use_container_width=True):
-                            run(sug)
+                            if sug in ESCALATION_ACTIONS:
+                                run(f"I want to {sug.lower()}. Please connect me with a human agent immediately.")
+                            else:
+                                run(sug)
                             st.rerun()
 
         user_msg = st.chat_input("Type your message...")
@@ -295,37 +300,6 @@ with tab_main:
 
             with st.expander("Full Audit (JSON)"):
                 st.json(result)
-
-            if st.button("Export PDF", use_container_width=True, type="primary"):
-                try:
-                    from fpdf import FPDF
-                    pdf = FPDF()
-                    pdf.add_page()
-                    pdf.set_font("Helvetica", "B", 14)
-                    pdf.cell(0, 10, "ShopEase AI - Audit Trail", ln=True, align="C")
-                    pdf.set_font("Helvetica", "", 9)
-                    pdf.cell(0, 6, f"Session: {st.session_state.session_id} | Customer: {customer_id} | {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')}", ln=True)
-                    pdf.ln(4)
-                    pdf.set_font("Helvetica", "B", 10)
-                    pdf.cell(0, 6, f"Intent: {result.get('intent')} | Sentiment: {result.get('sentiment')} | Confidence: {result.get('intent_confidence', 0):.0%}", ln=True)
-                    pdf.cell(0, 6, f"Risk: {result.get('risk_score', 0):.2f} | Band: {result.get('risk_band', 'auto')} | Priority: {result.get('priority', 'P4')}", ln=True)
-                    if order_ctx and order_ctx.get("order_id"):
-                        pdf.cell(0, 6, f"Order: {order_ctx.get('order_id')} | Status: {order_ctx.get('status')} | Rs {order_ctx.get('total_amount', 'N/A')}", ln=True)
-                    pdf.ln(3)
-                    pdf.set_font("Helvetica", "", 9)
-                    if policies:
-                        for p in policies:
-                            pdf.cell(0, 5, f"[{p.get('reference_id')}] {p.get('rule', '')[:90]}", ln=True)
-                    pdf.ln(3)
-                    pdf.set_font("Helvetica", "B", 10)
-                    pdf.cell(0, 6, "Response:", ln=True)
-                    pdf.set_font("Helvetica", "", 9)
-                    pdf.multi_cell(0, 5, result.get("response_text", "")[:600])
-                    pdf.ln(2)
-                    pdf.cell(0, 5, f"Agents: {' -> '.join(result.get('agents_called', []))}", ln=True)
-                    st.download_button("Download PDF", data=pdf.output(), file_name=f"audit_{st.session_state.session_id[:8]}.pdf", mime="application/pdf", use_container_width=True)
-                except ImportError:
-                    st.error("Install fpdf2: pip install fpdf2")
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # TAB 3: HITL QUEUE
