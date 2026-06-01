@@ -276,49 +276,73 @@ The prototype uses JSON/CSV files for data. The architecture is designed so the 
 
 See [`docs/architecture.md`](docs/architecture.md#8-scalability-and-production-deployment) for full details.
 
-## Current Progress
+## Final System — Complete and Deployed
 
-### All Delivered and Merged
+### Team Contributions
 
-| Who | What They Delivered | Status |
-|-----|-------------------|--------|
-| Ashish | Orchestrator, router, evaluator, intent classifier, response generator (OpenAI GPT-4o), utils, tests, CI, resilient routing, unified Streamlit app, conversation memory | Merged |
-| Gunjan | Policy KB (7 files, 20+ rules), FAQ (20 entries), product catalog, real policy retrieval agent, grounding tests | Merged |
-| Pallavi | Mock data (12,500+ lines), real order context agent (loads from JSON), real workflow automation agent, 7 mock API modules | Merged |
-| Aditi | Product advisory agent (real, loads 92-product catalog), priority-ordered intent classifier improvements, UI components | Merged |
-| Rohan | Full risk agent (multi-factor scoring), HITL approval queue, audit logs, evaluation harness (25+ test cases), product catalog (92 products), presentation outline, risk threshold tuning | Merged |
+| Member | What They Built |
+|--------|----------------|
+| **Ashish** | LangGraph orchestrator, intent classifier, response generator (GPT-4o with few-shot), resilient routing, RAG embeddings, Streamlit UI, conversation memory, CI/CD, proactive suggestions, analytics dashboard |
+| **Gunjan** | Policy KB (7 files, 23 rules), FAQ (20 entries), product catalog, real policy retrieval agent, lost-shipment policies, grounding tests |
+| **Pallavi** | Mock data (12,500+ lines, 55 customers, 140+ orders), order context agent, workflow automation agent, 7 mock API modules |
+| **Aditi** | Product advisory agent (92-product catalog), priority-ordered intent classifier, UI components |
+| **Rohan** | Multi-factor risk agent, HITL approval queue, audit logs, evaluation harness (25+ test cases), risk threshold tuning, presentation outline |
 
-### What's Working
+### System Capabilities
 
-- Full end-to-end pipeline with live OpenAI GPT-4o responses
-- 7 agents collaborating through LangGraph orchestration
-- **RAG with vector embeddings** — semantic policy search using OpenAI embeddings (not keyword matching)
-- Conversation memory (multi-turn context)
-- HITL approval queue with Approve/Reject/Escalate actions
-- Natural, empathetic response generation
-- Escalation with supporting media request
-- 55 customers, 140+ orders, 23 policies in mock data
-- All demo scenarios functional
-- Deployed on Streamlit Cloud
-- CI/CD with GitHub Actions
+| Feature | Description |
+|---------|-------------|
+| Multi-Agent Orchestration | 7 AI agents collaborating through LangGraph state graph |
+| RAG with Embeddings | Semantic policy search using OpenAI text-embedding-3-small |
+| Live GPT-4o Responses | Natural, empathetic, data-grounded responses with few-shot examples |
+| Conversation Memory | Multi-turn context — remembers what customer asked before |
+| HITL Approval Queue | Risky cases queued for human review with Approve/Reject/Escalate |
+| Proactive Suggestions | Quick action buttons (Request callback, Track order, etc.) |
+| Escalation Detection | Multi-factor risk scoring with automatic human handoff |
+| Analytics Dashboard | Session metrics, resolution rate, business impact |
+| Resilient Pipeline | Error-safe wrappers — no agent crash kills the system |
+| Confidence Explanation | Shows why the system is confident or uncertain |
 
 ### Running the Demo
 
 ```bash
-# Local (with OpenAI)
+# Start the app (uses OpenAI GPT-4o from .env)
 streamlit run app.py
 
-# Mock mode (no API key needed)
+# Mock mode (no API key needed, for offline testing)
 set USE_MOCK=true
 streamlit run app.py
+
+# Run tests
+python tests/test_router.py
+python tests/test_resilience.py
 ```
 
-### What's Left
+### Demo Scenarios (use sidebar dropdown)
 
-1. Final presentation slides (Rohan leading)
-2. Demo rehearsal with all scenarios
-3. Minor tuning (product_inquiry classification edge case in mock mode)
+| Scenario | What It Shows |
+|----------|--------------|
+| Order Tracking | Happy path — auto-resolve with tracking details |
+| Return Request | Policy grounding + workflow initiation |
+| Damaged Product | Escalation to replacement team + media request |
+| Lost Shipment | High-risk escalation + HITL queue |
+| Coupon Issue | RAG policy retrieval + explanation |
+| Product Compare | Product advisory agent |
+| Refund Status | Multi-agent: order + policy + response |
+
+### Presentation Script (5 minutes)
+
+1. **Problem** (30s): Show business problem — fragmented support, slow resolution
+2. **Architecture** (1 min): Show System Overview tab — 7 agents, LangGraph, RAG
+3. **Demo - Happy Path** (1 min): Order tracking → natural response with real data
+4. **Demo - Escalation** (1 min): Damaged product → risk detected → HITL queue → Approve
+5. **Demo - RAG** (30s): Show Agent Console → Policy (RAG Embeddings) section
+6. **Analytics** (30s): Show Analytics tab — resolution rate, business metrics
+7. **Differentiators** (30s): Memory, proactive suggestions, confidence explanation
 
 ## License
 
 This project is developed as a capstone for academic purposes.
+
+---
+*PwC Capstone Project — Agentic AI-Powered Retail & E-commerce Customer Support System*
