@@ -46,7 +46,7 @@ def test_refund_status():
 
 
 def test_product_inquiry():
-    result = _classify("Tell me about this product specs")
+    result = _classify("Compare the HP Pavilion and Lenovo IdeaPad laptops")
     assert result["intent"] == "product_inquiry"
     assert result["intent_confidence"] >= 0.7
     print("PASS: product_inquiry")
@@ -60,14 +60,14 @@ def test_warranty():
 
 
 def test_coupon_issue():
-    result = _classify("My coupon code is not working")
+    result = _classify("My coupon SAVE20 was not applied to my cart")
     assert result["intent"] == "coupon_issue"
     assert result["intent_confidence"] >= 0.7
     print("PASS: coupon_issue")
 
 
 def test_delivery_complaint():
-    result = _classify("My delivery is very late")
+    result = _classify("My package is lost and never arrived")
     assert result["intent"] == "delivery_complaint"
     assert result["intent_confidence"] >= 0.7
     print("PASS: delivery_complaint")
