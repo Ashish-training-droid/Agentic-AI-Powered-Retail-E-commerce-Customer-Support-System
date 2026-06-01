@@ -144,7 +144,7 @@ def test_coupon_issue_policy_only():
     """Coupon issue — only needs policy, not order context."""
     result = run_test(
         "Coupon Issue - Policy Only",
-        "My coupon code SAVE20 is not working on my cart",
+        "My coupon SAVE20 was not applied to my cart",
         customer_id="CUST_1004",
     )
     assert result.get("intent") == "coupon_issue"
