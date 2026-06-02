@@ -207,8 +207,6 @@ sequenceDiagram
         ER->>C: Escalation message + photo request
     end
 ```
-```
-
 
 ## Agent Roles
 
