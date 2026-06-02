@@ -209,36 +209,6 @@ sequenceDiagram
 ```
 ```
 
-## How It All Connects
-
-```
-Customer sends message
-       |
-       v
- Intent Classifier --> "What do they want? How do they feel?"
-       |
-       v
- Router decides --> "Which agents do I need for this intent?"
-       |
-  +----+----+------------+
-  v    v    v            v
-Order Policy Product  Workflow
-  |    |    |            |
-  +----+----+------------+
-       |
-       v
- Evaluator --> "Do we have enough info? Is quality OK?"
-       |
-       v
- Risk Check --> "Safe to answer? Or escalate to human?"
-       |
-  +----+----+
-  v         v
-Response  Escalation
-  |         |
-  v         v
-Customer gets answer or specialist takes over
-```
 
 ## Agent Roles
 
