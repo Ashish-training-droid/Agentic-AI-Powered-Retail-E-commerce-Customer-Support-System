@@ -113,6 +113,7 @@ if "session_id" not in st.session_state:
     st.session_state.chat_history = []
     st.session_state.last_result = None
     st.session_state.hitl_queue = []
+    st.session_state.analytics_history = []  # persists across chat resets
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Sidebar
@@ -136,6 +137,7 @@ with st.sidebar:
         st.session_state.last_result = None
         st.session_state.hitl_queue = []
         st.session_state.session_id = generate_session_id()
+        # analytics_history is NOT cleared — persists across resets
         st.rerun()
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -151,6 +153,21 @@ def run(message: str):
     st.session_state.chat_history.append({"role": "user", "content": message})
     st.session_state.chat_history.append({"role": "assistant", "content": result.get("response_text", "")})
     st.session_state.last_result = result
+    # Save to persistent analytics (survives chat resets)
+    st.session_state.analytics_history.append({
+        "time": datetime.now(timezone.utc).isoformat(),
+        "customer_id": customer_id,
+        "message": message,
+        "intent": result.get("intent"),
+        "sentiment": result.get("sentiment"),
+        "confidence": result.get("intent_confidence", 0),
+        "risk_score": result.get("risk_score", 0),
+        "risk_band": result.get("risk_band", "auto"),
+        "quality_score": result.get("quality_score", 0),
+        "response_confidence": result.get("response_confidence", 0),
+        "latency_ms": result.get("_elapsed_ms", 0),
+        "escalated": result.get("escalation_required", False) or result.get("risk_band") == "escalate",
+    })
     if result.get("risk_band") in ("approval_required", "escalate") or result.get("escalation_required"):
         st.session_state.hitl_queue.append({
             "time": datetime.now(timezone.utc).isoformat(), "customer_id": customer_id,
@@ -335,78 +352,81 @@ with tab_hitl:
                     st.markdown(f"**Status:** :{color}[{case['status'].upper()}]")
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# TAB 3: ANALYTICS
+# TAB 3: ANALYTICS (persists across chat resets)
 # ═══════════════════════════════════════════════════════════════════════════════
 with tab_analytics:
     st.markdown("### Session Analytics")
+    st.caption("Data persists across chat resets — tracks all interactions this session.")
 
-    all_results = [r for r in [st.session_state.last_result] if r]
-    # Collect all results from session (approximate from HITL queue + last result)
-    if not st.session_state.last_result:
+    history = st.session_state.analytics_history
+    if not history:
         st.info("No data yet. Send messages in Chat tab to generate analytics.")
     else:
-        # Gather metrics from session
-        total_msgs = len([m for m in st.session_state.chat_history if m["role"] == "user"])
-        escalated = len([c for c in st.session_state.hitl_queue if c.get("risk_band") in ("escalate", "approval_required")])
-        resolved = total_msgs - escalated
+        total = len(history)
+        escalated = sum(1 for h in history if h.get("escalated"))
+        resolved = total - escalated
+        avg_confidence = sum(h.get("confidence", 0) for h in history) / total
+        avg_quality = sum(h.get("quality_score", 0) for h in history) / total
+        avg_latency = sum(h.get("latency_ms", 0) for h in history) / total
 
         # Top metrics
         a1, a2, a3, a4 = st.columns(4)
-        with a1: st.metric("Total Queries", total_msgs)
+        with a1: st.metric("Total Queries", total)
         with a2: st.metric("Resolved by AI", resolved)
         with a3: st.metric("Escalated", escalated)
         with a4:
-            rate = (resolved / total_msgs * 100) if total_msgs > 0 else 0
+            rate = (resolved / total * 100) if total > 0 else 0
             st.metric("Resolution Rate", f"{rate:.0f}%")
+
+        st.divider()
+
+        # Averages
+        avg1, avg2, avg3 = st.columns(3)
+        with avg1: st.metric("Avg Confidence", f"{avg_confidence:.0%}")
+        with avg2: st.metric("Avg Quality", f"{avg_quality:.0%}")
+        with avg3: st.metric("Avg Latency", f"{avg_latency:.0f}ms")
 
         st.divider()
 
         # Sentiment Timeline
         st.markdown("#### Sentiment Progression")
-        if st.session_state.last_result:
-            sentiments = []
-            for case in st.session_state.hitl_queue:
-                sentiments.append(case.get("intent", "?"))
-
-            result = st.session_state.last_result
-            sentiment_map = {"positive": 4, "neutral": 3, "negative": 2, "angry": 1}
-            current_sentiment = result.get("sentiment", "neutral")
-            st.markdown(f"**Current:** `{current_sentiment}` | **Urgency:** `{result.get('urgency', 'medium')}`")
-
-            if len(st.session_state.chat_history) > 2:
-                st.caption("Sentiment tracking across messages helps detect escalating frustration before it becomes critical.")
+        sentiments = [h.get("sentiment", "neutral") for h in history]
+        timeline_parts = []
+        for i, s in enumerate(sentiments, 1):
+            emoji = {"positive": "green", "neutral": "grey", "negative": "orange", "angry": "red"}.get(s, "grey")
+            timeline_parts.append(f":{emoji}[Msg {i}: {s}]")
+        st.markdown(" → ".join(timeline_parts))
 
         st.divider()
 
-        # Last result details
-        result = st.session_state.last_result
-        st.markdown("#### Last Interaction Breakdown")
-        b1, b2 = st.columns(2)
-        with b1:
-            st.markdown(f"""
-            - **Intent:** `{result.get('intent')}`
-            - **Confidence:** {result.get('intent_confidence', 0):.0%}
-            - **Quality Score:** {result.get('quality_score', 0):.0%}
-            - **Risk Score:** {result.get('risk_score', 0):.2f}
-            - **Band:** `{result.get('risk_band', 'auto')}`
-            """)
-        with b2:
-            st.markdown(f"""
-            - **Response Confidence:** {result.get('response_confidence', 0):.0%}
-            - **Latency:** {result.get('_elapsed_ms', 0)}ms
-            - **Agents Called:** {len(result.get('agents_called', []))}
-            - **Policies Matched:** {len(result.get('policy_snippets', []))}
-            - **Escalation:** {'Yes' if result.get('escalation_required') else 'No'}
-            """)
+        # Intent distribution
+        st.markdown("#### Intent Distribution")
+        intent_counts = {}
+        for h in history:
+            intent = h.get("intent", "unknown")
+            intent_counts[intent] = intent_counts.get(intent, 0) + 1
+        for intent, count in sorted(intent_counts.items(), key=lambda x: x[1], reverse=True):
+            st.write(f"`{intent}`: {count} queries")
+
+        st.divider()
+
+        # Customer breakdown
+        st.markdown("#### By Customer")
+        customer_counts = {}
+        for h in history:
+            cid = h.get("customer_id", "?")
+            customer_counts[cid] = customer_counts.get(cid, 0) + 1
+        for cid, count in sorted(customer_counts.items(), key=lambda x: x[1], reverse=True):
+            st.write(f"`{cid}`: {count} interactions")
 
         st.divider()
         st.markdown("#### Business Impact Metrics")
-        st.markdown("""
-        | Metric | Value | Industry Benchmark |
-        |--------|-------|-------------------|
-        | Avg Response Time | <3 sec | 45 sec (human agent) |
-        | Resolution Rate | ~85% | 60% (typical chatbot) |
-        | Escalation Accuracy | >90% | 70% (rule-based) |
+        st.markdown(f"""
+        | Metric | This Session | Industry Benchmark |
+        |--------|-------------|-------------------|
+        | Avg Response Time | {avg_latency:.0f}ms | 45,000ms (human agent) |
+        | Resolution Rate | {rate:.0f}% | 60% (typical chatbot) |
+        | Avg Confidence | {avg_confidence:.0%} | ~60% (rule-based) |
         | Policy Grounding | 100% | 40% (ungrounded bots) |
         | Customer Effort | 1 message | 3-5 messages (traditional) |
         """)
