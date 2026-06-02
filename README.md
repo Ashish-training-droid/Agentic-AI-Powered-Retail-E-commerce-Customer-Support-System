@@ -108,6 +108,60 @@ flowchart TD
     Escalation --> AuditLog
 ```
 
+## How It All Connects — Step by Step
+
+When a customer sends a message, here's exactly what happens:
+
+```
+STEP 1: Customer types "My phone arrived with a cracked screen!"
+           │
+STEP 2: ───┤ Intent Classifier (GPT-4o)
+           │  → intent: damaged_product
+           │  → sentiment: angry
+           │  → urgency: critical
+           │  → confidence: 93%
+           │
+STEP 3: ───┤ Router checks routing table
+           │  → damaged_product needs: [order_context, policy_retrieval, workflow]
+           │
+STEP 4: ───┤ Order Context Agent (calls Mock APIs)
+           │  → Order SE10890: Samsung Galaxy S24, Rs 74,999, VIP customer
+           │  → Payment: EMI captured
+           │  → Shipment: delivered on May 15
+           │
+STEP 5: ───┤ Policy Retrieval Agent (RAG Embeddings)
+           │  → Embeds query → cosine similarity → finds POL-GEN-DMG-001
+           │  → "Damaged products must be reported within 48 hours with photo evidence"
+           │
+STEP 6: ───┤ Workflow Agent
+           │  → Creates support ticket TKT_10890
+           │  → Flags for replacement team
+           │
+STEP 7: ───┤ Evaluator (Quality Gate)
+           │  → All required data present ✓
+           │  → Policy found ✓
+           │  → Quality score: 100%
+           │
+STEP 8: ───┤ Risk Agent (Multi-factor scoring)
+           │  → Sentiment: angry (0.25 weight)
+           │  → Order value: Rs 74,999 (0.20 weight)
+           │  → Customer tier: VIP (0.10 weight)
+           │  → Combined risk: 0.57 → Band: ESCALATE
+           │
+STEP 9: ───┤ ESCALATION (not Response Generator)
+           │  → Routes to replacement_team
+           │  → Priority: P2
+           │  → Asks customer for damage photos
+           │  → Logs to audit trail
+           │
+RESULT: ───┤ Customer sees:
+              "I'm really sorry about the damage to your order SE10890.
+               I've escalated to our replacement team (P2 priority).
+               Please upload photos via My Orders > Report Issue."
+```
+
+**Key insight:** Not all agents run every time. A simple "what payment methods do you accept?" skips Order Context, Policy, and Workflow entirely — goes straight from Intent Classifier to Response Generator.
+
 ## Orchestration Flow
 
 ```mermaid
