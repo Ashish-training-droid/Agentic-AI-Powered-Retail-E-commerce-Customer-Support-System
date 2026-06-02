@@ -45,57 +45,67 @@ flowchart TD
     end
 
     subgraph orchestration [Orchestration Layer]
-        Router[Intent Router / Controller]
-        StateManager[State Manager]
+        IntentAgent[Intent Classification Agent]
+        Router[Conditional Router]
+        Evaluator[Quality Evaluator]
     end
 
-    subgraph agents [AI Agent Layer]
-        IntentAgent[Intent Classification Agent]
+    subgraph contextAgents [Context Agents]
         OrderAgent[Order Context Agent]
-        PolicyAgent[Policy Retrieval Agent]
+        PolicyAgent["Policy Retrieval Agent (RAG)"]
         ProductAgent[Product Advisory Agent]
         WorkflowAgent[Workflow Automation Agent]
+    end
+
+    subgraph riskLayer [Risk and Response Layer]
         RiskAgent[Escalation and Risk Agent]
         ResponseAgent[Response Generation Agent]
+        HITLQueue[HITL Approval Queue]
+        Escalation[Human Escalation]
     end
 
     subgraph knowledge [Knowledge Layer]
-        PolicyKB[Policy KB]
-        ProductCatalog[Product Catalog]
-        FAQ[FAQ Repository]
+        PolicyKB[Policy KB - 23 Rules]
+        Embeddings[Vector Embeddings]
+        ProductCatalog[Product Catalog - 92 Items]
     end
 
     subgraph integrations [Mock Integration Layer]
-        OrderAPI[Order Management API]
+        OrderAPI[Order API]
         PaymentAPI[Payment API]
         LogisticsAPI[Logistics API]
-        InventoryAPI[Inventory API]
         CRMAPI[CRM API]
-        TicketAPI[Ticketing API]
     end
 
     subgraph governance [Governance Layer]
         AuditLog[Audit Logs]
-        AccessControl[Access Control]
         HumanApproval[Human Approval Gate]
     end
 
     channels --> ui
-    ui --> Router
-    Router --> IntentAgent
-    IntentAgent --> StateManager
-    StateManager --> OrderAgent
-    StateManager --> PolicyAgent
-    StateManager --> ProductAgent
-    StateManager --> WorkflowAgent
-    StateManager --> RiskAgent
+    ui --> IntentAgent
+    IntentAgent --> Router
+    Router --> OrderAgent
+    Router --> PolicyAgent
+    Router --> ProductAgent
+    Router --> WorkflowAgent
     OrderAgent --> integrations
-    PolicyAgent --> knowledge
-    ProductAgent --> knowledge
+    PolicyAgent --> Embeddings
+    Embeddings --> PolicyKB
+    ProductAgent --> ProductCatalog
     WorkflowAgent --> integrations
-    RiskAgent --> ResponseAgent
+    OrderAgent --> Evaluator
+    PolicyAgent --> Evaluator
+    ProductAgent --> Evaluator
+    WorkflowAgent --> Evaluator
+    Evaluator --> RiskAgent
+    RiskAgent -->|auto| ResponseAgent
+    RiskAgent -->|approval_required| HITLQueue
+    RiskAgent -->|escalate| Escalation
+    HITLQueue --> HumanApproval
     ResponseAgent --> ui
-    ResponseAgent --> governance
+    ResponseAgent --> AuditLog
+    Escalation --> AuditLog
 ```
 
 ## How It All Connects
