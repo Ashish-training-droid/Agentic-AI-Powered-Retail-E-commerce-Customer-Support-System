@@ -180,7 +180,7 @@ def run(message: str):
 # ─────────────────────────────────────────────────────────────────────────────
 # TABS
 # ─────────────────────────────────────────────────────────────────────────────
-tab_main, tab_hitl, tab_analytics, tab_about = st.tabs(["Chat + Agent Console", "HITL Queue", "Analytics", "About"])
+tab_main, tab_compare, tab_hitl, tab_analytics, tab_about = st.tabs(["Chat + Agent Console", "Product Compare", "HITL Queue", "Analytics", "About"])
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # TAB 1: CHAT + AGENT CONSOLE (side by side)
@@ -317,6 +317,103 @@ with tab_main:
 
             with st.expander("Full Audit (JSON)"):
                 st.json(result)
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# TAB 2: PRODUCT COMPARISON
+# ═══════════════════════════════════════════════════════════════════════════════
+with tab_compare:
+    st.markdown("### Product Comparison")
+    st.caption("Compare any two products from our 92-item catalog side-by-side.")
+
+    # Load catalog
+    import json as _cjson
+    _catalog_path = _Path(__file__).parent / "src" / "knowledge" / "products" / "catalog.json"
+    if _catalog_path.exists():
+        with open(_catalog_path, "r", encoding="utf-8") as _f:
+            _cat_data = _cjson.load(_f)
+        _products = _cat_data.get("products", _cat_data) if isinstance(_cat_data, dict) else _cat_data
+
+        # Get categories
+        _categories = sorted(set(p.get("subcategory", p.get("category", "other")) for p in _products))
+
+        cat_col, prod_a_col, prod_b_col = st.columns(3)
+        with cat_col:
+            selected_cat = st.selectbox("Category:", _categories, index=_categories.index("laptops") if "laptops" in _categories else 0)
+
+        # Filter products by category
+        cat_products = [p for p in _products if p.get("subcategory") == selected_cat or p.get("category") == selected_cat]
+        product_names = [p["name"] for p in cat_products]
+
+        if len(product_names) >= 2:
+            with prod_a_col:
+                prod_a_name = st.selectbox("Product A:", product_names, index=0)
+            with prod_b_col:
+                prod_b_name = st.selectbox("Product B:", product_names, index=min(1, len(product_names)-1))
+
+            if prod_a_name != prod_b_name:
+                prod_a = next(p for p in cat_products if p["name"] == prod_a_name)
+                prod_b = next(p for p in cat_products if p["name"] == prod_b_name)
+
+                if st.button("Compare", type="primary", use_container_width=True):
+                    st.divider()
+
+                    # Side-by-side comparison
+                    col1, col2 = st.columns(2)
+                    with col1:
+                        st.markdown(f"#### {prod_a['name']}")
+                        st.write(f"**Price:** Rs {prod_a.get('price', 'N/A'):,}")
+                        st.write(f"**Rating:** {'★' * int(prod_a.get('rating', 0))} ({prod_a.get('rating', 'N/A')})")
+                        st.write(f"**In Stock:** {'Yes' if prod_a.get('in_stock') else 'No'}")
+                        st.write(f"**Best For:** {', '.join(prod_a.get('best_for', []))}")
+                        if prod_a.get("specs"):
+                            st.markdown("**Specs:**")
+                            for k, v in prod_a["specs"].items():
+                                st.write(f"  - {k}: {v}")
+
+                    with col2:
+                        st.markdown(f"#### {prod_b['name']}")
+                        st.write(f"**Price:** Rs {prod_b.get('price', 'N/A'):,}")
+                        st.write(f"**Rating:** {'★' * int(prod_b.get('rating', 0))} ({prod_b.get('rating', 'N/A')})")
+                        st.write(f"**In Stock:** {'Yes' if prod_b.get('in_stock') else 'No'}")
+                        st.write(f"**Best For:** {', '.join(prod_b.get('best_for', []))}")
+                        if prod_b.get("specs"):
+                            st.markdown("**Specs:**")
+                            for k, v in prod_b["specs"].items():
+                                st.write(f"  - {k}: {v}")
+
+                    # Recommendation
+                    st.divider()
+                    price_diff = abs(prod_a.get("price", 0) - prod_b.get("price", 0))
+                    rating_a = prod_a.get("rating", 0)
+                    rating_b = prod_b.get("rating", 0)
+
+                    if rating_a > rating_b and prod_a.get("price", 0) <= prod_b.get("price", 0):
+                        winner = prod_a["name"]
+                        reason = "Better rating at same or lower price"
+                    elif rating_b > rating_a and prod_b.get("price", 0) <= prod_a.get("price", 0):
+                        winner = prod_b["name"]
+                        reason = "Better rating at same or lower price"
+                    elif rating_a >= rating_b:
+                        winner = prod_a["name"]
+                        reason = f"Higher rating ({rating_a} vs {rating_b})"
+                    else:
+                        winner = prod_b["name"]
+                        reason = f"Higher rating ({rating_b} vs {rating_a})"
+
+                    st.success(f"**Recommendation:** {winner} — {reason}")
+
+                    # Out of stock alternatives
+                    if not prod_a.get("in_stock") or not prod_b.get("in_stock"):
+                        st.warning("One or more products are out of stock.")
+                        alts = [p["name"] for p in cat_products if p.get("in_stock") and p["name"] not in (prod_a_name, prod_b_name)]
+                        if alts:
+                            st.write(f"**In-stock alternatives:** {', '.join(alts[:3])}")
+            else:
+                st.warning("Select two different products to compare.")
+        else:
+            st.info(f"Only {len(product_names)} product(s) in this category. Need at least 2 to compare.")
+    else:
+        st.error("Product catalog not found.")
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # TAB 3: HITL QUEUE
