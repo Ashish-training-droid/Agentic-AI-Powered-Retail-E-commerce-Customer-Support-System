@@ -108,35 +108,50 @@ flowchart TD
     Escalation --> AuditLog
 ```
 
-## How It All Connects
+## Orchestration Flow
 
-```
-Customer sends message
-       |
-       v
- Intent Classifier --> "What do they want? How do they feel?"
-       |
-       v
- Router decides --> "Which agents do I need for this intent?"
-       |
-  +----+----+------------+
-  v    v    v            v
-Order Policy Product  Workflow
-  |    |    |            |
-  +----+----+------------+
-       |
-       v
- Evaluator --> "Do we have enough info? Is quality OK?"
-       |
-       v
- Risk Check --> "Safe to answer? Or escalate to human?"
-       |
-  +----+----+
-  v         v
-Response  Escalation
-  |         |
-  v         v
-Customer gets answer or specialist takes over
+```mermaid
+sequenceDiagram
+    participant C as Customer
+    participant IC as Intent Classifier
+    participant R as Router
+    participant OC as Order Context
+    participant PR as Policy Retrieval RAG
+    participant WF as Workflow Agent
+    participant EV as Evaluator
+    participant ER as Risk Agent
+    participant RG as Response Generator
+    participant HITL as HITL Queue
+
+    C->>IC: Send message
+    IC->>R: intent, sentiment, urgency, confidence
+
+    alt Order-related intent
+        R->>OC: Fetch order context
+        OC->>EV: Order summary
+    end
+
+    alt Policy-related intent
+        R->>PR: Retrieve policy (embeddings)
+        PR->>EV: Policy snippets + references
+    end
+
+    alt Action needed
+        R->>WF: Execute workflow
+        WF->>EV: Action result
+    end
+
+    EV->>ER: Quality score + context
+    
+    alt auto (safe)
+        ER->>RG: Generate response
+        RG->>C: Natural answer with citations
+    else approval_required
+        ER->>RG: Generate draft
+        RG->>HITL: Queue for human review
+    else escalate
+        ER->>C: Escalation message + photo request
+    end
 ```
 
 ## Agent Roles
